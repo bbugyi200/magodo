@@ -14,6 +14,13 @@ The format is based on [Keep a Changelog], and this project adheres to
 No notable changes have been made.
 
 
+## [0.4.1](https://github.com/bbugyi200/magodo/compare/0.4.0...0.4.1) - 2022-01-12
+
+### Added
+
+* Migrated all code from old "bbugyi200/todotxt" GitHub repo to the new "bbugyi200/magodo" repo.
+
+
 ## [0.4.0](https://github.com/bbugyi200/magodo/releases/tag/0.4.0) - 2022-01-12
 
 ### Changed
