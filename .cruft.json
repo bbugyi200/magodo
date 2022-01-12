@@ -1,0 +1,23 @@
+{
+  "template": "https://github.com/python-boltons/cc-python",
+  "commit": "f23fc9fcb9c9a515842b87c3290e51b7e1ce1f0f",
+  "checkout": null,
+  "context": {
+    "cookiecutter": {
+      "author": "Bryan M Bugyi",
+      "email": "bryanbugyi34@gmail.com",
+      "github_username": "bbugyi200",
+      "git_org_name": "bbugyi200",
+      "git_repo_name": "magodo",
+      "package_name": "magodo",
+      "pypi_package_name": "magodo",
+      "read_the_docs_domain": "magodo",
+      "package_description": "A Python library for working with the todo.txt format, with some magic thrown in.",
+      "package_type": "library",
+      "_template": "https://github.com/python-boltons/cc-python",
+      "package_path": "magodo",
+      "package_module": "magodo"
+    }
+  },
+  "directory": null
+}
