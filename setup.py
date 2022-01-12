@@ -17,7 +17,10 @@ from setuptools import find_namespace_packages, setup
 ###############################################################################
 # Configuration variables that are likely to need changing at some point.
 ###############################################################################
-DESCRIPTION = "A Python library for working with the todo.txt format, with some magic thrown in."
+DESCRIPTION = (
+    "A Python library for working with the todo.txt format, with some magic"
+    " thrown in."
+)
 SUPPORTED_PYTHON_VERSIONS = [
     (3, 8),
     (3, 9),

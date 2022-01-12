@@ -1,4 +1,8 @@
-"""A Python library for working with the todo.txt format, with some magic thrown in."""
+"""magodo package
+
+A Python library for working with the todo.txt format, with some magic thrown
+in.
+"""
 
 import logging as _logging
 
