@@ -1,0 +1,12 @@
+[2022-01-10 20:14]
+===== A File =====
+I do lots of stuff in this file. Some lines are todo tasks, but some lines are headers. Some
+other lines are apart of text paragraphs.
+
+----- Todo List #1 -----
+(N) First item.
+(A) High-priority item @high
+
+----- Todo List #2 -----
+x (B) 2022-01-10 2022-01-01 Done item
+(N) 2022-01-11 Item is due:2022-01-31

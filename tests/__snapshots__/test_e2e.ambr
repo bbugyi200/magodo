@@ -1,0 +1,339 @@
+# name: test_group_From_file[bar]
+  <class 'list'> [
+    <class 'dict'> {
+      'contexts': <class 'tuple'> (
+      ),
+      'create_date': None,
+      'desc': 'This todo came from the +C.txt file.',
+      'done_date': None,
+      'marked_done': False,
+      'metadata': None,
+      'priority': 'O',
+      'projects': <class 'tuple'> (
+        'C.txt',
+      ),
+    },
+    <class 'dict'> {
+      'contexts': <class 'tuple'> (
+        'done',
+      ),
+      'create_date': None,
+      'desc': 'Some other @done todo.',
+      'done_date': None,
+      'marked_done': True,
+      'metadata': None,
+      'priority': 'N',
+      'projects': <class 'tuple'> (
+      ),
+    },
+    <class 'dict'> {
+      'contexts': <class 'tuple'> (
+      ),
+      'create_date': None,
+      'desc': 'And +another...',
+      'done_date': None,
+      'marked_done': False,
+      'metadata': None,
+      'priority': 'B',
+      'projects': <class 'tuple'> (
+        'another',
+      ),
+    },
+    <class 'dict'> {
+      'contexts': <class 'tuple'> (
+      ),
+      'create_date': datetime.date(2022, 1, 11),
+      'desc': 'And +finally... one:more!',
+      'done_date': None,
+      'marked_done': False,
+      'metadata': <class 'dict'> {
+        'one': 'more',
+      },
+      'priority': 'C',
+      'projects': <class 'tuple'> (
+        'finally',
+      ),
+    },
+    <class 'dict'> {
+      'contexts': <class 'tuple'> (
+      ),
+      'create_date': None,
+      'desc': 'First item.',
+      'done_date': None,
+      'marked_done': False,
+      'metadata': None,
+      'priority': 'N',
+      'projects': <class 'tuple'> (
+      ),
+    },
+    <class 'dict'> {
+      'contexts': <class 'tuple'> (
+        'high',
+      ),
+      'create_date': None,
+      'desc': 'High-priority item @high',
+      'done_date': None,
+      'marked_done': False,
+      'metadata': None,
+      'priority': 'A',
+      'projects': <class 'tuple'> (
+      ),
+    },
+    <class 'dict'> {
+      'contexts': <class 'tuple'> (
+      ),
+      'create_date': datetime.date(2022, 1, 1),
+      'desc': 'Done item',
+      'done_date': datetime.date(2022, 1, 10),
+      'marked_done': True,
+      'metadata': None,
+      'priority': 'B',
+      'projects': <class 'tuple'> (
+      ),
+    },
+    <class 'dict'> {
+      'contexts': <class 'tuple'> (
+      ),
+      'create_date': datetime.date(2022, 1, 11),
+      'desc': 'Item is due:2022-01-31',
+      'done_date': None,
+      'marked_done': False,
+      'metadata': <class 'dict'> {
+        'due': '2022-01-31',
+      },
+      'priority': 'N',
+      'projects': <class 'tuple'> (
+      ),
+    },
+  ]
+---
+# name: test_group_From_file[foo]
+  <class 'list'> [
+    <class 'dict'> {
+      'contexts': <class 'tuple'> (
+      ),
+      'create_date': None,
+      'desc': 'First item.',
+      'done_date': None,
+      'marked_done': False,
+      'metadata': None,
+      'priority': 'N',
+      'projects': <class 'tuple'> (
+      ),
+    },
+    <class 'dict'> {
+      'contexts': <class 'tuple'> (
+        'high',
+      ),
+      'create_date': None,
+      'desc': 'High-priority item @high',
+      'done_date': None,
+      'marked_done': False,
+      'metadata': None,
+      'priority': 'A',
+      'projects': <class 'tuple'> (
+      ),
+    },
+    <class 'dict'> {
+      'contexts': <class 'tuple'> (
+      ),
+      'create_date': datetime.date(2022, 1, 1),
+      'desc': 'Done item',
+      'done_date': datetime.date(2022, 1, 10),
+      'marked_done': True,
+      'metadata': None,
+      'priority': 'B',
+      'projects': <class 'tuple'> (
+      ),
+    },
+    <class 'dict'> {
+      'contexts': <class 'tuple'> (
+      ),
+      'create_date': datetime.date(2022, 1, 11),
+      'desc': 'Item is due:2022-01-31',
+      'done_date': None,
+      'marked_done': False,
+      'metadata': <class 'dict'> {
+        'due': '2022-01-31',
+      },
+      'priority': 'N',
+      'projects': <class 'tuple'> (
+      ),
+    },
+    <class 'dict'> {
+      'contexts': <class 'tuple'> (
+        'stuff',
+      ),
+      'create_date': datetime.date(1900, 1, 1),
+      'desc': 'This +test item is awesome:True and has lots of @stuff too_long:NoWay DoFoo:22',
+      'done_date': datetime.date(1999, 1, 1),
+      'marked_done': True,
+      'metadata': <class 'dict'> {
+        'DoFoo': '22',
+        'awesome': 'True',
+        'too_long': 'NoWay',
+      },
+      'priority': 'Z',
+      'projects': <class 'tuple'> (
+        'test',
+      ),
+    },
+    <class 'dict'> {
+      'contexts': <class 'tuple'> (
+      ),
+      'create_date': None,
+      'desc': 'Done item with no priority is a valid "strict" todo',
+      'done_date': None,
+      'marked_done': True,
+      'metadata': None,
+      'priority': 'N',
+      'projects': <class 'tuple'> (
+      ),
+    },
+    <class 'dict'> {
+      'contexts': <class 'tuple'> (
+      ),
+      'create_date': None,
+      'desc': 'A lowercase "o" can also be used when running in "strict" mode.',
+      'done_date': None,
+      'marked_done': False,
+      'metadata': None,
+      'priority': 'O',
+      'projects': <class 'tuple'> (
+      ),
+    },
+    <class 'dict'> {
+      'contexts': <class 'tuple'> (
+      ),
+      'create_date': None,
+      'desc': "Don't + make + normal + pluses + projects.",
+      'done_date': None,
+      'marked_done': False,
+      'metadata': None,
+      'priority': 'N',
+      'projects': <class 'tuple'> (
+      ),
+    },
+    <class 'dict'> {
+      'contexts': <class 'tuple'> (
+      ),
+      'create_date': None,
+      'desc': 'Ditto for keys: with no values.',
+      'done_date': None,
+      'marked_done': False,
+      'metadata': None,
+      'priority': 'N',
+      'projects': <class 'tuple'> (
+      ),
+    },
+    <class 'dict'> {
+      'contexts': <class 'tuple'> (
+        'punctuation',
+      ),
+      'create_date': None,
+      'desc': 'We strip +punctuation. But not if the value:. is just @punctuation, ya:dig?',
+      'done_date': None,
+      'marked_done': False,
+      'metadata': <class 'dict'> {
+        'value': '.',
+        'ya': 'dig',
+      },
+      'priority': 'N',
+      'projects': <class 'tuple'> (
+        'punctuation',
+      ),
+    },
+    <class 'dict'> {
+      'contexts': <class 'tuple'> (
+      ),
+      'create_date': None,
+      'desc': '+project We allow descriptions to start with projects.',
+      'done_date': None,
+      'marked_done': False,
+      'metadata': None,
+      'priority': 'N',
+      'projects': <class 'tuple'> (
+        'project',
+      ),
+    },
+    <class 'dict'> {
+      'contexts': <class 'tuple'> (
+        'context',
+      ),
+      'create_date': None,
+      'desc': '@context We allow descriptions to start with contexts.',
+      'done_date': None,
+      'marked_done': False,
+      'metadata': None,
+      'priority': 'N',
+      'projects': <class 'tuple'> (
+      ),
+    },
+    <class 'dict'> {
+      'contexts': <class 'tuple'> (
+      ),
+      'create_date': None,
+      'desc': '1234 Todos can start with numbers:5678.',
+      'done_date': None,
+      'marked_done': False,
+      'metadata': <class 'dict'> {
+        'numbers': '5678',
+      },
+      'priority': 'N',
+      'projects': <class 'tuple'> (
+      ),
+    },
+    <class 'dict'> {
+      'contexts': <class 'tuple'> (
+      ),
+      'create_date': None,
+      'desc': 'Todos can easily log their "done times" with this trick. dtime:1545',
+      'done_date': None,
+      'marked_done': True,
+      'metadata': <class 'dict'> {
+        'dtime': '1545',
+      },
+      'priority': 'N',
+      'projects': <class 'tuple'> (
+      ),
+    },
+    <class 'dict'> {
+      'contexts': <class 'tuple'> (
+      ),
+      'create_date': None,
+      'desc': 'Double colons should be::ignored.',
+      'done_date': None,
+      'marked_done': False,
+      'metadata': None,
+      'priority': 'O',
+      'projects': <class 'tuple'> (
+      ),
+    },
+    <class 'dict'> {
+      'contexts': <class 'tuple'> (
+        'contexts',
+      ),
+      'create_date': None,
+      'desc': "Sometimes we want to use apostrophe with +project's or @contexts'.",
+      'done_date': None,
+      'marked_done': False,
+      'metadata': None,
+      'priority': 'O',
+      'projects': <class 'tuple'> (
+        'project',
+      ),
+    },
+    <class 'dict'> {
+      'contexts': <class 'tuple'> (
+      ),
+      'create_date': None,
+      'desc': 'We also ignore double ++pluses and double @@at signs.',
+      'done_date': None,
+      'marked_done': False,
+      'metadata': None,
+      'priority': 'O',
+      'projects': <class 'tuple'> (
+      ),
+    },
+  ]
+---

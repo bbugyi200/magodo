@@ -1,0 +1,27 @@
+[2022-01-10 20:14]
+===== Foo File =====
+I do lots of stuff in this file. Some lines are todo tasks, but some lines are headers. Some
+other lines are apart of text paragraphs.
+
+----- Todo List #1 -----
+(N) First item.
+(A) High-priority item @high
+
+----- Todo List #2 -----
+x (B) 2022-01-10 2022-01-01 Done item
+(N) 2022-01-11 Item is due:2022-01-31
+x (Z) 1999-01-01 1900-01-01 This +test item is awesome:True and has lots of @stuff too_long:NoWay DoFoo:22
+Not a valid "strict" todo
+x Done item with no priority is a valid "strict" todo
+o A lowercase "o" can also be used when running in "strict" mode.
+o (N) But this "o" can only be used if a priority is NOT provided.
+(N) Don't + make + normal + pluses + projects.
+(N) Ditto for keys: with no values.
+(N) We strip +punctuation. But not if the value:. is just @punctuation, ya:dig?
+(N) +project We allow descriptions to start with projects.
+(N) @context We allow descriptions to start with contexts.
+(N) 1234 Todos can start with numbers:5678.
+x:1545 Todos can easily log their "done times" with this trick.
+o Double colons should be::ignored.
+o Sometimes we want to use apostrophe with +project's or @contexts'.
+o We also ignore double ++pluses and double @@at signs.

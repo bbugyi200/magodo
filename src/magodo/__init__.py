@@ -1,15 +1,13 @@
-"""magodo package
-
-A Python library for working with the todo.txt format, with some magic thrown
-in.
-"""
+"""A Python library for working with the todo.txt format."""
 
 import logging as _logging
 
-from ._core import dummy
+from . import types
+from ._group import TodoGroup
+from ._todo import DEFAULT_PRIORITY, Todo
 
 
-__all__ = ["dummy"]
+__all__ = ["DEFAULT_PRIORITY", "Todo", "TodoGroup", "types"]
 
 __author__ = "Bryan M Bugyi"
 __email__ = "bryanbugyi34@gmail.com"
