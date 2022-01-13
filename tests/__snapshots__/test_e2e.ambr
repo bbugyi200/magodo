@@ -14,6 +14,13 @@
           'C.txt',
         ),
       },
+      'post_spells': <class 'list'> [
+      ],
+      'pre_spells': <class 'list'> [
+        'x_tag',
+      ],
+      'spells': <class 'list'> [
+      ],
       'todo': <class 'dict'> {
         'contexts': <class 'tuple'> (
         ),
@@ -42,6 +49,13 @@
           'another',
         ),
       },
+      'post_spells': <class 'list'> [
+      ],
+      'pre_spells': <class 'list'> [
+        'x_tag',
+      ],
+      'spells': <class 'list'> [
+      ],
       'todo': <class 'dict'> {
         'contexts': <class 'tuple'> (
         ),
@@ -72,6 +86,13 @@
           'finally',
         ),
       },
+      'post_spells': <class 'list'> [
+      ],
+      'pre_spells': <class 'list'> [
+        'x_tag',
+      ],
+      'spells': <class 'list'> [
+      ],
       'todo': <class 'dict'> {
         'contexts': <class 'tuple'> (
         ),
@@ -101,6 +122,13 @@
         'projects': <class 'tuple'> (
         ),
       },
+      'post_spells': <class 'list'> [
+      ],
+      'pre_spells': <class 'list'> [
+        'x_tag',
+      ],
+      'spells': <class 'list'> [
+      ],
       'todo': <class 'dict'> {
         'contexts': <class 'tuple'> (
         ),
@@ -128,6 +156,13 @@
         'projects': <class 'tuple'> (
         ),
       },
+      'post_spells': <class 'list'> [
+      ],
+      'pre_spells': <class 'list'> [
+        'x_tag',
+      ],
+      'spells': <class 'list'> [
+      ],
       'todo': <class 'dict'> {
         'contexts': <class 'tuple'> (
           'high',
@@ -155,6 +190,13 @@
         'projects': <class 'tuple'> (
         ),
       },
+      'post_spells': <class 'list'> [
+      ],
+      'pre_spells': <class 'list'> [
+        'x_tag',
+      ],
+      'spells': <class 'list'> [
+      ],
       'todo': <class 'dict'> {
         'contexts': <class 'tuple'> (
         ),
@@ -183,6 +225,13 @@
         'projects': <class 'tuple'> (
         ),
       },
+      'post_spells': <class 'list'> [
+      ],
+      'pre_spells': <class 'list'> [
+        'x_tag',
+      ],
+      'spells': <class 'list'> [
+      ],
       'todo': <class 'dict'> {
         'contexts': <class 'tuple'> (
         ),
@@ -215,6 +264,13 @@
         'projects': <class 'tuple'> (
         ),
       },
+      'post_spells': <class 'list'> [
+      ],
+      'pre_spells': <class 'list'> [
+        'x_tag',
+      ],
+      'spells': <class 'list'> [
+      ],
       'todo': <class 'dict'> {
         'contexts': <class 'tuple'> (
         ),
@@ -242,6 +298,13 @@
         'projects': <class 'tuple'> (
         ),
       },
+      'post_spells': <class 'list'> [
+      ],
+      'pre_spells': <class 'list'> [
+        'x_tag',
+      ],
+      'spells': <class 'list'> [
+      ],
       'todo': <class 'dict'> {
         'contexts': <class 'tuple'> (
           'high',
@@ -269,6 +332,13 @@
         'projects': <class 'tuple'> (
         ),
       },
+      'post_spells': <class 'list'> [
+      ],
+      'pre_spells': <class 'list'> [
+        'x_tag',
+      ],
+      'spells': <class 'list'> [
+      ],
       'todo': <class 'dict'> {
         'contexts': <class 'tuple'> (
         ),
@@ -297,6 +367,13 @@
         'projects': <class 'tuple'> (
         ),
       },
+      'post_spells': <class 'list'> [
+      ],
+      'pre_spells': <class 'list'> [
+        'x_tag',
+      ],
+      'spells': <class 'list'> [
+      ],
       'todo': <class 'dict'> {
         'contexts': <class 'tuple'> (
         ),
@@ -331,6 +408,13 @@
           'test',
         ),
       },
+      'post_spells': <class 'list'> [
+      ],
+      'pre_spells': <class 'list'> [
+        'x_tag',
+      ],
+      'spells': <class 'list'> [
+      ],
       'todo': <class 'dict'> {
         'contexts': <class 'tuple'> (
           'stuff',
@@ -363,6 +447,13 @@
         'projects': <class 'tuple'> (
         ),
       },
+      'post_spells': <class 'list'> [
+      ],
+      'pre_spells': <class 'list'> [
+        'x_tag',
+      ],
+      'spells': <class 'list'> [
+      ],
       'todo': <class 'dict'> {
         'contexts': <class 'tuple'> (
         ),
@@ -389,6 +480,13 @@
         'projects': <class 'tuple'> (
         ),
       },
+      'post_spells': <class 'list'> [
+      ],
+      'pre_spells': <class 'list'> [
+        'x_tag',
+      ],
+      'spells': <class 'list'> [
+      ],
       'todo': <class 'dict'> {
         'contexts': <class 'tuple'> (
         ),
@@ -415,6 +513,13 @@
         'projects': <class 'tuple'> (
         ),
       },
+      'post_spells': <class 'list'> [
+      ],
+      'pre_spells': <class 'list'> [
+        'x_tag',
+      ],
+      'spells': <class 'list'> [
+      ],
       'todo': <class 'dict'> {
         'contexts': <class 'tuple'> (
         ),
@@ -441,6 +546,13 @@
         'projects': <class 'tuple'> (
         ),
       },
+      'post_spells': <class 'list'> [
+      ],
+      'pre_spells': <class 'list'> [
+        'x_tag',
+      ],
+      'spells': <class 'list'> [
+      ],
       'todo': <class 'dict'> {
         'contexts': <class 'tuple'> (
         ),
@@ -472,6 +584,13 @@
           'punctuation',
         ),
       },
+      'post_spells': <class 'list'> [
+      ],
+      'pre_spells': <class 'list'> [
+        'x_tag',
+      ],
+      'spells': <class 'list'> [
+      ],
       'todo': <class 'dict'> {
         'contexts': <class 'tuple'> (
           'punctuation',
@@ -504,6 +623,13 @@
           'project',
         ),
       },
+      'post_spells': <class 'list'> [
+      ],
+      'pre_spells': <class 'list'> [
+        'x_tag',
+      ],
+      'spells': <class 'list'> [
+      ],
       'todo': <class 'dict'> {
         'contexts': <class 'tuple'> (
         ),
@@ -532,6 +658,13 @@
         'projects': <class 'tuple'> (
         ),
       },
+      'post_spells': <class 'list'> [
+      ],
+      'pre_spells': <class 'list'> [
+        'x_tag',
+      ],
+      'spells': <class 'list'> [
+      ],
       'todo': <class 'dict'> {
         'contexts': <class 'tuple'> (
           'context',
@@ -561,6 +694,13 @@
         'projects': <class 'tuple'> (
         ),
       },
+      'post_spells': <class 'list'> [
+      ],
+      'pre_spells': <class 'list'> [
+        'x_tag',
+      ],
+      'spells': <class 'list'> [
+      ],
       'todo': <class 'dict'> {
         'contexts': <class 'tuple'> (
         ),
@@ -591,6 +731,13 @@
         'projects': <class 'tuple'> (
         ),
       },
+      'post_spells': <class 'list'> [
+      ],
+      'pre_spells': <class 'list'> [
+        'x_tag',
+      ],
+      'spells': <class 'list'> [
+      ],
       'todo': <class 'dict'> {
         'contexts': <class 'tuple'> (
         ),
@@ -619,6 +766,13 @@
         'projects': <class 'tuple'> (
         ),
       },
+      'post_spells': <class 'list'> [
+      ],
+      'pre_spells': <class 'list'> [
+        'x_tag',
+      ],
+      'spells': <class 'list'> [
+      ],
       'todo': <class 'dict'> {
         'contexts': <class 'tuple'> (
         ),
@@ -647,6 +801,13 @@
           'project',
         ),
       },
+      'post_spells': <class 'list'> [
+      ],
+      'pre_spells': <class 'list'> [
+        'x_tag',
+      ],
+      'spells': <class 'list'> [
+      ],
       'todo': <class 'dict'> {
         'contexts': <class 'tuple'> (
           'contexts',
@@ -675,6 +836,13 @@
         'projects': <class 'tuple'> (
         ),
       },
+      'post_spells': <class 'list'> [
+      ],
+      'pre_spells': <class 'list'> [
+        'x_tag',
+      ],
+      'spells': <class 'list'> [
+      ],
       'todo': <class 'dict'> {
         'contexts': <class 'tuple'> (
         ),
