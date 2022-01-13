@@ -36,9 +36,6 @@ class MagicTodoMixin(Generic[mtypes.MagicTodo_T], abc.ABC):
         if self.todo != other.todo:
             return False
 
-        if self.todo != other.todo:
-            return False
-
         return True
 
     def __lt__(self, other: mtypes.MagicTodo_T) -> bool:  # noqa: D105
