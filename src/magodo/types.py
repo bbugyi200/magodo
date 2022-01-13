@@ -84,7 +84,7 @@ class AbstractTodo(Protocol):
         pass
 
     @property
-    def create_date(self) -> dt.date | None:  # noqa: D102
+    def create_date(self) -> Optional[dt.date]:  # noqa: D102
         pass
 
     @property
@@ -92,7 +92,7 @@ class AbstractTodo(Protocol):
         pass
 
     @property
-    def done_date(self) -> dt.date | None:  # noqa: D102
+    def done_date(self) -> Optional[dt.date]:  # noqa: D102
         pass
 
     @property
