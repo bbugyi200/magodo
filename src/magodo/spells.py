@@ -64,7 +64,9 @@ def group_projects_contexts_and_metadata(todo: Todo) -> Todo:
         if word == "|" and all_next_words_are_special:
             return todo
 
-        if has_special_prefix(word) and not all_next_words_are_special:
+        if has_special_prefix(word) and (
+            word[-1] in PUNCTUATION or not all_next_words_are_special
+        ):
             if non_special_words_found:
                 new_words.append(word[1:])
             continue

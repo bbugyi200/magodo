@@ -5,7 +5,7 @@
         'contexts': <class 'tuple'> (
         ),
         'create_date': None,
-        'desc': 'o This todo came from the +C.txt file.',
+        'desc': 'o This todo came from the C.txt file. | +C.txt',
         'done_date': None,
         'marked_done': False,
         'metadata': None,
@@ -15,6 +15,7 @@
         ),
       },
       'post_spells': <class 'list'> [
+        'group_projects_contexts_and_metadata',
       ],
       'pre_spells': <class 'list'> [
         'x_tag',
@@ -50,6 +51,7 @@
         ),
       },
       'post_spells': <class 'list'> [
+        'group_projects_contexts_and_metadata',
       ],
       'pre_spells': <class 'list'> [
         'x_tag',
@@ -87,6 +89,7 @@
         ),
       },
       'post_spells': <class 'list'> [
+        'group_projects_contexts_and_metadata',
       ],
       'pre_spells': <class 'list'> [
         'x_tag',
@@ -123,6 +126,7 @@
         ),
       },
       'post_spells': <class 'list'> [
+        'group_projects_contexts_and_metadata',
       ],
       'pre_spells': <class 'list'> [
         'x_tag',
@@ -157,6 +161,7 @@
         ),
       },
       'post_spells': <class 'list'> [
+        'group_projects_contexts_and_metadata',
       ],
       'pre_spells': <class 'list'> [
         'x_tag',
@@ -191,6 +196,7 @@
         ),
       },
       'post_spells': <class 'list'> [
+        'group_projects_contexts_and_metadata',
       ],
       'pre_spells': <class 'list'> [
         'x_tag',
@@ -226,6 +232,7 @@
         ),
       },
       'post_spells': <class 'list'> [
+        'group_projects_contexts_and_metadata',
       ],
       'pre_spells': <class 'list'> [
         'x_tag',
@@ -265,6 +272,7 @@
         ),
       },
       'post_spells': <class 'list'> [
+        'group_projects_contexts_and_metadata',
       ],
       'pre_spells': <class 'list'> [
         'x_tag',
@@ -299,6 +307,7 @@
         ),
       },
       'post_spells': <class 'list'> [
+        'group_projects_contexts_and_metadata',
       ],
       'pre_spells': <class 'list'> [
         'x_tag',
@@ -322,6 +331,42 @@
     <class 'dict'> {
       'enchanted_todo': <class 'dict'> {
         'contexts': <class 'tuple'> (
+          'high',
+        ),
+        'create_date': None,
+        'desc': 'High-priority item. | @high',
+        'done_date': None,
+        'marked_done': False,
+        'metadata': None,
+        'priority': 'A',
+        'projects': <class 'tuple'> (
+        ),
+      },
+      'post_spells': <class 'list'> [
+        'group_projects_contexts_and_metadata',
+      ],
+      'pre_spells': <class 'list'> [
+        'x_tag',
+      ],
+      'spells': <class 'list'> [
+      ],
+      'todo': <class 'dict'> {
+        'contexts': <class 'tuple'> (
+          'high',
+        ),
+        'create_date': None,
+        'desc': 'High-priority item. @high',
+        'done_date': None,
+        'marked_done': False,
+        'metadata': None,
+        'priority': 'A',
+        'projects': <class 'tuple'> (
+        ),
+      },
+    },
+    <class 'dict'> {
+      'enchanted_todo': <class 'dict'> {
+        'contexts': <class 'tuple'> (
         ),
         'create_date': datetime.date(2022, 1, 1),
         'desc': 'Done item',
@@ -333,6 +378,7 @@
         ),
       },
       'post_spells': <class 'list'> [
+        'group_projects_contexts_and_metadata',
       ],
       'pre_spells': <class 'list'> [
         'x_tag',
@@ -368,6 +414,7 @@
         ),
       },
       'post_spells': <class 'list'> [
+        'group_projects_contexts_and_metadata',
       ],
       'pre_spells': <class 'list'> [
         'x_tag',
@@ -409,6 +456,7 @@
         ),
       },
       'post_spells': <class 'list'> [
+        'group_projects_contexts_and_metadata',
       ],
       'pre_spells': <class 'list'> [
         'x_tag',
@@ -448,6 +496,7 @@
         ),
       },
       'post_spells': <class 'list'> [
+        'group_projects_contexts_and_metadata',
       ],
       'pre_spells': <class 'list'> [
         'x_tag',
@@ -481,6 +530,7 @@
         ),
       },
       'post_spells': <class 'list'> [
+        'group_projects_contexts_and_metadata',
       ],
       'pre_spells': <class 'list'> [
         'x_tag',
@@ -514,6 +564,7 @@
         ),
       },
       'post_spells': <class 'list'> [
+        'group_projects_contexts_and_metadata',
       ],
       'pre_spells': <class 'list'> [
         'x_tag',
@@ -547,6 +598,7 @@
         ),
       },
       'post_spells': <class 'list'> [
+        'group_projects_contexts_and_metadata',
       ],
       'pre_spells': <class 'list'> [
         'x_tag',
@@ -585,6 +637,7 @@
         ),
       },
       'post_spells': <class 'list'> [
+        'group_projects_contexts_and_metadata',
       ],
       'pre_spells': <class 'list'> [
         'x_tag',
@@ -614,7 +667,7 @@
         'contexts': <class 'tuple'> (
         ),
         'create_date': None,
-        'desc': '+project We allow descriptions to start with projects.',
+        'desc': 'We allow descriptions to start with projects. | +project',
         'done_date': None,
         'marked_done': False,
         'metadata': None,
@@ -624,6 +677,7 @@
         ),
       },
       'post_spells': <class 'list'> [
+        'group_projects_contexts_and_metadata',
       ],
       'pre_spells': <class 'list'> [
         'x_tag',
@@ -650,7 +704,7 @@
           'context',
         ),
         'create_date': None,
-        'desc': '@context We allow descriptions to start with contexts.',
+        'desc': 'We allow descriptions to start with contexts. | @context',
         'done_date': None,
         'marked_done': False,
         'metadata': None,
@@ -659,6 +713,7 @@
         ),
       },
       'post_spells': <class 'list'> [
+        'group_projects_contexts_and_metadata',
       ],
       'pre_spells': <class 'list'> [
         'x_tag',
@@ -695,6 +750,7 @@
         ),
       },
       'post_spells': <class 'list'> [
+        'group_projects_contexts_and_metadata',
       ],
       'pre_spells': <class 'list'> [
         'x_tag',
@@ -721,7 +777,7 @@
         'contexts': <class 'tuple'> (
         ),
         'create_date': None,
-        'desc': 'Todos can easily log their "done times" with this trick. dtime:1545',
+        'desc': 'Todos can easily log their "done times" with this trick. | dtime:1545',
         'done_date': None,
         'marked_done': True,
         'metadata': <class 'dict'> {
@@ -732,6 +788,7 @@
         ),
       },
       'post_spells': <class 'list'> [
+        'group_projects_contexts_and_metadata',
       ],
       'pre_spells': <class 'list'> [
         'x_tag',
@@ -767,6 +824,7 @@
         ),
       },
       'post_spells': <class 'list'> [
+        'group_projects_contexts_and_metadata',
       ],
       'pre_spells': <class 'list'> [
         'x_tag',
@@ -802,6 +860,7 @@
         ),
       },
       'post_spells': <class 'list'> [
+        'group_projects_contexts_and_metadata',
       ],
       'pre_spells': <class 'list'> [
         'x_tag',
@@ -837,6 +896,7 @@
         ),
       },
       'post_spells': <class 'list'> [
+        'group_projects_contexts_and_metadata',
       ],
       'pre_spells': <class 'list'> [
         'x_tag',

@@ -25,7 +25,23 @@ params = mark.parametrize
                 metadata={"x": "1030"},
             ),
             Todo(
-                desc="Some done todo. dtime:1030",
+                desc="Some done todo. | dtime:1030",
+                marked_done=True,
+                create_date=to_date("2022-01-12"),
+                metadata={"dtime": "1030"},
+            ),
+        ),
+        (
+            "x:1030 2022-01-12 Some done todo with a @ctx.",
+            MagicTodo,
+            Todo(
+                desc="x:1030 2022-01-12 Some done todo with a @ctx.",
+                contexts=("ctx",),
+                metadata={"x": "1030"},
+            ),
+            Todo(
+                desc="Some done todo with a ctx. | @ctx dtime:1030",
+                contexts=("ctx",),
                 marked_done=True,
                 create_date=to_date("2022-01-12"),
                 metadata={"dtime": "1030"},
@@ -43,4 +59,4 @@ def test_magic_todo(
     actual = magic_todo_type.from_line(line).unwrap()
     expected = magic_todo_type(todo)
     assert expected.enchanted_todo == etodo
-    assert actual == expected
+    assert actual.to_dict() == expected.to_dict()

@@ -84,6 +84,14 @@ params = mark.parametrize
                 metadata={"dep": ["123", "456", "789"], "foo": "bar"},
             ),
         ),
+        (
+            "x:1030 2022-01-12 Some done todo with a @ctx.",
+            Todo(
+                desc="x:1030 2022-01-12 Some done todo with a @ctx.",
+                contexts=("ctx",),
+                metadata={"x": "1030"},
+            ),
+        ),
     ],
 )
 def test_todo(line: str, expected: Todo) -> None:
