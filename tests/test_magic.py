@@ -46,7 +46,7 @@ params = mark.parametrize
                 create_date=to_date("2022-01-12"),
                 metadata={"dtime": "1030"},
             ),
-        )
+        ),
     ],
 )
 def test_magic_todo(
