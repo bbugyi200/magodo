@@ -15,7 +15,7 @@
         ),
       },
       'post_spells': <class 'list'> [
-        'group_projects_contexts_and_metadata',
+        'group_tags',
       ],
       'pre_spells': <class 'list'> [
         'x_tag',
@@ -51,7 +51,7 @@
         ),
       },
       'post_spells': <class 'list'> [
-        'group_projects_contexts_and_metadata',
+        'group_tags',
       ],
       'pre_spells': <class 'list'> [
         'x_tag',
@@ -89,7 +89,7 @@
         ),
       },
       'post_spells': <class 'list'> [
-        'group_projects_contexts_and_metadata',
+        'group_tags',
       ],
       'pre_spells': <class 'list'> [
         'x_tag',
@@ -126,7 +126,7 @@
         ),
       },
       'post_spells': <class 'list'> [
-        'group_projects_contexts_and_metadata',
+        'group_tags',
       ],
       'pre_spells': <class 'list'> [
         'x_tag',
@@ -161,7 +161,7 @@
         ),
       },
       'post_spells': <class 'list'> [
-        'group_projects_contexts_and_metadata',
+        'group_tags',
       ],
       'pre_spells': <class 'list'> [
         'x_tag',
@@ -196,7 +196,7 @@
         ),
       },
       'post_spells': <class 'list'> [
-        'group_projects_contexts_and_metadata',
+        'group_tags',
       ],
       'pre_spells': <class 'list'> [
         'x_tag',
@@ -232,7 +232,7 @@
         ),
       },
       'post_spells': <class 'list'> [
-        'group_projects_contexts_and_metadata',
+        'group_tags',
       ],
       'pre_spells': <class 'list'> [
         'x_tag',
@@ -272,7 +272,7 @@
         ),
       },
       'post_spells': <class 'list'> [
-        'group_projects_contexts_and_metadata',
+        'group_tags',
       ],
       'pre_spells': <class 'list'> [
         'x_tag',
@@ -307,7 +307,7 @@
         ),
       },
       'post_spells': <class 'list'> [
-        'group_projects_contexts_and_metadata',
+        'group_tags',
       ],
       'pre_spells': <class 'list'> [
         'x_tag',
@@ -343,7 +343,7 @@
         ),
       },
       'post_spells': <class 'list'> [
-        'group_projects_contexts_and_metadata',
+        'group_tags',
       ],
       'pre_spells': <class 'list'> [
         'x_tag',
@@ -378,7 +378,7 @@
         ),
       },
       'post_spells': <class 'list'> [
-        'group_projects_contexts_and_metadata',
+        'group_tags',
       ],
       'pre_spells': <class 'list'> [
         'x_tag',
@@ -414,7 +414,7 @@
         ),
       },
       'post_spells': <class 'list'> [
-        'group_projects_contexts_and_metadata',
+        'group_tags',
       ],
       'pre_spells': <class 'list'> [
         'x_tag',
@@ -456,7 +456,7 @@
         ),
       },
       'post_spells': <class 'list'> [
-        'group_projects_contexts_and_metadata',
+        'group_tags',
       ],
       'pre_spells': <class 'list'> [
         'x_tag',
@@ -496,7 +496,7 @@
         ),
       },
       'post_spells': <class 'list'> [
-        'group_projects_contexts_and_metadata',
+        'group_tags',
       ],
       'pre_spells': <class 'list'> [
         'x_tag',
@@ -530,7 +530,7 @@
         ),
       },
       'post_spells': <class 'list'> [
-        'group_projects_contexts_and_metadata',
+        'group_tags',
       ],
       'pre_spells': <class 'list'> [
         'x_tag',
@@ -564,7 +564,7 @@
         ),
       },
       'post_spells': <class 'list'> [
-        'group_projects_contexts_and_metadata',
+        'group_tags',
       ],
       'pre_spells': <class 'list'> [
         'x_tag',
@@ -598,7 +598,7 @@
         ),
       },
       'post_spells': <class 'list'> [
-        'group_projects_contexts_and_metadata',
+        'group_tags',
       ],
       'pre_spells': <class 'list'> [
         'x_tag',
@@ -637,7 +637,7 @@
         ),
       },
       'post_spells': <class 'list'> [
-        'group_projects_contexts_and_metadata',
+        'group_tags',
       ],
       'pre_spells': <class 'list'> [
         'x_tag',
@@ -677,7 +677,7 @@
         ),
       },
       'post_spells': <class 'list'> [
-        'group_projects_contexts_and_metadata',
+        'group_tags',
       ],
       'pre_spells': <class 'list'> [
         'x_tag',
@@ -713,7 +713,7 @@
         ),
       },
       'post_spells': <class 'list'> [
-        'group_projects_contexts_and_metadata',
+        'group_tags',
       ],
       'pre_spells': <class 'list'> [
         'x_tag',
@@ -750,7 +750,7 @@
         ),
       },
       'post_spells': <class 'list'> [
-        'group_projects_contexts_and_metadata',
+        'group_tags',
       ],
       'pre_spells': <class 'list'> [
         'x_tag',
@@ -788,7 +788,7 @@
         ),
       },
       'post_spells': <class 'list'> [
-        'group_projects_contexts_and_metadata',
+        'group_tags',
       ],
       'pre_spells': <class 'list'> [
         'x_tag',
@@ -824,7 +824,7 @@
         ),
       },
       'post_spells': <class 'list'> [
-        'group_projects_contexts_and_metadata',
+        'group_tags',
       ],
       'pre_spells': <class 'list'> [
         'x_tag',
@@ -860,7 +860,7 @@
         ),
       },
       'post_spells': <class 'list'> [
-        'group_projects_contexts_and_metadata',
+        'group_tags',
       ],
       'pre_spells': <class 'list'> [
         'x_tag',
@@ -896,7 +896,7 @@
         ),
       },
       'post_spells': <class 'list'> [
-        'group_projects_contexts_and_metadata',
+        'group_tags',
       ],
       'pre_spells': <class 'list'> [
         'x_tag',
@@ -932,7 +932,7 @@
         ),
       },
       'post_spells': <class 'list'> [
-        'group_projects_contexts_and_metadata',
+        'group_tags',
       ],
       'pre_spells': <class 'list'> [
         'x_tag',

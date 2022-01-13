@@ -50,7 +50,7 @@ def x_tag(todo: Todo) -> Todo:
 
 
 @post_spell
-def group_projects_contexts_and_metadata(todo: Todo) -> Todo:
+def group_tags(todo: Todo) -> Todo:
     """Groups all @ctxs, +projs, and meta:data at the end of the line."""
     if not (todo.contexts or todo.projects or todo.metadata is not None):
         return todo
