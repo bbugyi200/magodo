@@ -14,7 +14,7 @@ from ._todo import DEFAULT_PRIORITY, Todo
 from .spells import POST_BUILTIN_SPELLS, PRE_BUILTIN_SPELLS
 
 
-TODO_PREFIXES = ("x", "o")
+TODO_PREFIXES = ("x ", "x:", "o ")
 
 
 class MagicTodoMixin(Generic[mtypes.MagicTodo_T], abc.ABC):
