@@ -90,9 +90,6 @@ def group_tags(todo: Todo) -> Todo:
         return todo
 
     desc = " ".join(new_words).strip()
-    if not desc[-1] in PUNCTUATION:
-        return todo
-
     desc += " |"
 
     if todo.contexts:

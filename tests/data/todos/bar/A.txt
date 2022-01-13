@@ -9,4 +9,4 @@ other lines are apart of text paragraphs.
 
 ----- Todo List #2 -----
 x (B) 2022-01-10 2022-01-01 Done item
-(N) 2022-01-11 Item is due:2022-01-31
+(N) 2022-01-11 Item is due:2022-01-31.

@@ -10,7 +10,7 @@ other lines are apart of text paragraphs.
 
 ----- Todo List #2 -----
 x (B) 2022-01-10 2022-01-01 Done item
-(N) 2022-01-11 Item is due:2022-01-31
+(N) 2022-01-11 Item is due:2022-01-31.
 x (Z) 1999-01-01 1900-01-01 This +test item is awesome:True and has lots of @stuff too_long:NoWay DoFoo:22
 Not a valid "strict" todo
 x Done item with no priority is a valid "strict" todo
