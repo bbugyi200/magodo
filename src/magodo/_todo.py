@@ -186,6 +186,10 @@ class Todo:
 
         return result
 
+    def to_dict(self) -> dict[str, Any]:
+        """Converts this Todo into a dictionary."""
+        return self.__dict__
+
     def new(self, **kwargs: Any) -> Todo:
         """Creates a new Todo using the current Todo's attrs as defaults."""
         contexts = kwargs.get("contexts", self.contexts)

@@ -86,6 +86,13 @@ class MagicTodoMixin(Generic[mtypes.MagicTodo_T], abc.ABC):
         """Converts this MagicTodo back to a string."""
         return self.enchanted_todo.to_line()
 
+    def to_dict(self) -> dict[str, Any]:
+        """Converts this MagicTodo into a dictionary."""
+        result = {}
+        result["todo"] = self.todo.to_dict()
+        result["enchanted_todo"] = self.enchanted_todo.to_dict()
+        return result
+
     @property
     def contexts(self) -> Tuple[str, ...]:  # noqa: D102
         return self.todo.contexts

@@ -5,6 +5,7 @@ from __future__ import annotations
 import datetime as dt
 from typing import (
     TYPE_CHECKING,
+    Any,
     Callable,
     Dict,
     List,
@@ -74,6 +75,9 @@ class AbstractTodo(Protocol):
 
     def to_line(self) -> str:
         """Converts a Todo object back to a string."""
+
+    def to_dict(self) -> dict[str, Any]:
+        """Converts a Todo object into a dictionary."""
 
     @property
     def contexts(self) -> Tuple[str, ...]:  # noqa: D102
