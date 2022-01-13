@@ -62,7 +62,7 @@ Priority = Literal[
     "Z",
 ]
 # Type of spell functions used by MagicTodo objects.
-TodoSpell = Callable[["Todo"], "Todo"]
+TodoSpell = Callable[["Todo"], Result["Todo", ErisError]]
 
 
 @runtime_checkable
@@ -122,6 +122,10 @@ class AbstractMagicTodo(AbstractTodo, Protocol):
 
     def __init__(self, todo: "Todo") -> None:
         pass
+
+    @classmethod
+    def cast_spells(cls, todo: "Todo") -> Result["Todo", ErisError]:
+        """Casts all spells associated with this MagicTodo on `todo`."""
 
     @property
     def todo(self) -> "Todo":

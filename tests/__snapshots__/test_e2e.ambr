@@ -5,7 +5,7 @@
         'contexts': <class 'tuple'> (
         ),
         'create_date': None,
-        'desc': 'o This todo came from the C.txt file. | +C.txt',
+        'desc': 'This todo came from the C.txt file. | +C.txt',
         'done_date': None,
         'marked_done': False,
         'metadata': None,
@@ -18,6 +18,7 @@
         'group_tags',
       ],
       'pre_spells': <class 'list'> [
+        'handle_prefix',
         'x_tag',
       ],
       'spells': <class 'list'> [
@@ -54,6 +55,7 @@
         'group_tags',
       ],
       'pre_spells': <class 'list'> [
+        'handle_prefix',
         'x_tag',
       ],
       'spells': <class 'list'> [
@@ -92,6 +94,7 @@
         'group_tags',
       ],
       'pre_spells': <class 'list'> [
+        'handle_prefix',
         'x_tag',
       ],
       'spells': <class 'list'> [
@@ -129,6 +132,7 @@
         'group_tags',
       ],
       'pre_spells': <class 'list'> [
+        'handle_prefix',
         'x_tag',
       ],
       'spells': <class 'list'> [
@@ -164,6 +168,7 @@
         'group_tags',
       ],
       'pre_spells': <class 'list'> [
+        'handle_prefix',
         'x_tag',
       ],
       'spells': <class 'list'> [
@@ -199,6 +204,7 @@
         'group_tags',
       ],
       'pre_spells': <class 'list'> [
+        'handle_prefix',
         'x_tag',
       ],
       'spells': <class 'list'> [
@@ -235,6 +241,7 @@
         'group_tags',
       ],
       'pre_spells': <class 'list'> [
+        'handle_prefix',
         'x_tag',
       ],
       'spells': <class 'list'> [
@@ -275,6 +282,7 @@
         'group_tags',
       ],
       'pre_spells': <class 'list'> [
+        'handle_prefix',
         'x_tag',
       ],
       'spells': <class 'list'> [
@@ -310,6 +318,7 @@
         'group_tags',
       ],
       'pre_spells': <class 'list'> [
+        'handle_prefix',
         'x_tag',
       ],
       'spells': <class 'list'> [
@@ -346,6 +355,7 @@
         'group_tags',
       ],
       'pre_spells': <class 'list'> [
+        'handle_prefix',
         'x_tag',
       ],
       'spells': <class 'list'> [
@@ -381,6 +391,7 @@
         'group_tags',
       ],
       'pre_spells': <class 'list'> [
+        'handle_prefix',
         'x_tag',
       ],
       'spells': <class 'list'> [
@@ -417,6 +428,7 @@
         'group_tags',
       ],
       'pre_spells': <class 'list'> [
+        'handle_prefix',
         'x_tag',
       ],
       'spells': <class 'list'> [
@@ -459,6 +471,7 @@
         'group_tags',
       ],
       'pre_spells': <class 'list'> [
+        'handle_prefix',
         'x_tag',
       ],
       'spells': <class 'list'> [
@@ -487,7 +500,7 @@
         'contexts': <class 'tuple'> (
         ),
         'create_date': None,
-        'desc': 'o A lowercase "o" can also be used when running in "strict" mode.',
+        'desc': 'A lowercase "o" can also be used when running in "strict" mode.',
         'done_date': None,
         'marked_done': False,
         'metadata': None,
@@ -499,6 +512,7 @@
         'group_tags',
       ],
       'pre_spells': <class 'list'> [
+        'handle_prefix',
         'x_tag',
       ],
       'spells': <class 'list'> [
@@ -521,7 +535,7 @@
         'contexts': <class 'tuple'> (
         ),
         'create_date': None,
-        'desc': 'o (N) But this "o" can only be used if a priority is NOT provided.',
+        'desc': '(N) But this "o" can only be used if a priority is NOT provided.',
         'done_date': None,
         'marked_done': False,
         'metadata': None,
@@ -533,6 +547,7 @@
         'group_tags',
       ],
       'pre_spells': <class 'list'> [
+        'handle_prefix',
         'x_tag',
       ],
       'spells': <class 'list'> [
@@ -567,6 +582,7 @@
         'group_tags',
       ],
       'pre_spells': <class 'list'> [
+        'handle_prefix',
         'x_tag',
       ],
       'spells': <class 'list'> [
@@ -601,6 +617,7 @@
         'group_tags',
       ],
       'pre_spells': <class 'list'> [
+        'handle_prefix',
         'x_tag',
       ],
       'spells': <class 'list'> [
@@ -640,6 +657,7 @@
         'group_tags',
       ],
       'pre_spells': <class 'list'> [
+        'handle_prefix',
         'x_tag',
       ],
       'spells': <class 'list'> [
@@ -680,6 +698,7 @@
         'group_tags',
       ],
       'pre_spells': <class 'list'> [
+        'handle_prefix',
         'x_tag',
       ],
       'spells': <class 'list'> [
@@ -716,6 +735,7 @@
         'group_tags',
       ],
       'pre_spells': <class 'list'> [
+        'handle_prefix',
         'x_tag',
       ],
       'spells': <class 'list'> [
@@ -753,6 +773,7 @@
         'group_tags',
       ],
       'pre_spells': <class 'list'> [
+        'handle_prefix',
         'x_tag',
       ],
       'spells': <class 'list'> [
@@ -791,6 +812,7 @@
         'group_tags',
       ],
       'pre_spells': <class 'list'> [
+        'handle_prefix',
         'x_tag',
       ],
       'spells': <class 'list'> [
@@ -815,7 +837,7 @@
         'contexts': <class 'tuple'> (
         ),
         'create_date': None,
-        'desc': 'o Double colons should be::ignored.',
+        'desc': 'Double colons should be::ignored.',
         'done_date': None,
         'marked_done': False,
         'metadata': None,
@@ -827,6 +849,7 @@
         'group_tags',
       ],
       'pre_spells': <class 'list'> [
+        'handle_prefix',
         'x_tag',
       ],
       'spells': <class 'list'> [
@@ -850,7 +873,7 @@
           'contexts',
         ),
         'create_date': None,
-        'desc': "o Sometimes we want to use apostrophe with project's or contexts'. | @contexts +project",
+        'desc': "Sometimes we want to use apostrophe with project's or contexts'. | @contexts +project",
         'done_date': None,
         'marked_done': False,
         'metadata': None,
@@ -863,6 +886,7 @@
         'group_tags',
       ],
       'pre_spells': <class 'list'> [
+        'handle_prefix',
         'x_tag',
       ],
       'spells': <class 'list'> [
@@ -887,7 +911,7 @@
         'contexts': <class 'tuple'> (
         ),
         'create_date': None,
-        'desc': 'o We also ignore double ++pluses and double @@at signs.',
+        'desc': 'We also ignore double ++pluses and double @@at signs.',
         'done_date': None,
         'marked_done': False,
         'metadata': None,
@@ -899,6 +923,7 @@
         'group_tags',
       ],
       'pre_spells': <class 'list'> [
+        'handle_prefix',
         'x_tag',
       ],
       'spells': <class 'list'> [
@@ -921,7 +946,7 @@
         'contexts': <class 'tuple'> (
         ),
         'create_date': None,
-        'desc': 'o We also do not group:tags when a metadata tag is in the middle.',
+        'desc': 'We also do not group:tags when a metadata tag is in the middle.',
         'done_date': None,
         'marked_done': False,
         'metadata': <class 'dict'> {
@@ -935,6 +960,7 @@
         'group_tags',
       ],
       'pre_spells': <class 'list'> [
+        'handle_prefix',
         'x_tag',
       ],
       'spells': <class 'list'> [

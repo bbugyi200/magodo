@@ -14,6 +14,7 @@ DEFAULT_PRIORITY: Final[Priority] = "O"
 PROJECT_PREFIX: Final = "+"
 PUNCTUATION: Final = ",.?!;"
 RE_DATE: Final = r"[1-9][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9]"
+TODO_PREFIXES: Final = ("x ", "x:", "o ")
 
 
 def to_date(yyyymmdd: str) -> dt.date:
