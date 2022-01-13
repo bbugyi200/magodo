@@ -77,7 +77,7 @@
         'contexts': <class 'tuple'> (
         ),
         'create_date': datetime.date(2022, 1, 11),
-        'desc': 'And finally... | +finally one:more',
+        'desc': 'And +finally... one:more!',
         'done_date': None,
         'marked_done': False,
         'metadata': <class 'dict'> {
@@ -624,7 +624,7 @@
           'punctuation',
         ),
         'create_date': None,
-        'desc': 'We strip punctuation. But not if the value:. is just punctuation, | @punctuation +punctuation value:. ya:dig',
+        'desc': 'We strip +punctuation. But not if the value:. is just @punctuation, ya:dig?',
         'done_date': None,
         'marked_done': False,
         'metadata': <class 'dict'> {
