@@ -108,6 +108,7 @@ class AbstractTodo(Protocol):
         pass
 
 
+@runtime_checkable
 class AbstractMagicTodo(AbstractTodo, Protocol):
     """Describes how subclasses of MagicTodoMixin should look."""
 
