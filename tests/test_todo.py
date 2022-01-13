@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from pytest import mark
 
-from magodo import Todo
+from magodo import Todo, DEFAULT_PRIORITY
 from magodo._dates import to_date
 
 
@@ -15,9 +15,9 @@ params = mark.parametrize
     "line,strict,expected",
     [
         ("no priority todo", False, Todo(desc="no priority todo")),
-        ("(N) basic todo", False, Todo(desc="basic todo")),
+        (f"({DEFAULT_PRIORITY}) basic todo", False, Todo(desc="basic todo")),
         (
-            "(N) 2022-01-10 todo with create date",
+            f"({DEFAULT_PRIORITY}) 2022-01-10 todo with create date",
             True,
             Todo(
                 desc="todo with create date",
@@ -25,7 +25,7 @@ params = mark.parametrize
             ),
         ),
         (
-            "(N) 2022-03-04 2022-01-10 todo with done date",
+            f"({DEFAULT_PRIORITY}) 2022-03-04 2022-01-10 todo with done date",
             True,
             Todo(
                 desc="todo with done date",
@@ -34,7 +34,7 @@ params = mark.parametrize
             ),
         ),
         (
-            "x (N) 2022-01-10 done todo",
+            f"x ({DEFAULT_PRIORITY}) 2022-01-10 done todo",
             True,
             Todo(
                 desc="done todo",
@@ -52,7 +52,7 @@ params = mark.parametrize
             ),
         ),
         (
-            "(N) todo for +some +project",
+            f"({DEFAULT_PRIORITY}) todo for +some +project",
             True,
             Todo(
                 desc="todo for +some +project",
@@ -60,7 +60,7 @@ params = mark.parametrize
             ),
         ),
         (
-            "(N) todo for +some +project and a @context.",
+            f"({DEFAULT_PRIORITY}) todo for +some +project and a @context.",
             True,
             Todo(
                 desc="todo for +some +project and a @context.",
@@ -69,7 +69,8 @@ params = mark.parametrize
             ),
         ),
         (
-            "(N) todo with +some meta:data and a @context due:2022-12-31",
+            f"({DEFAULT_PRIORITY}) todo with +some meta:data and a @context"
+            " due:2022-12-31",
             True,
             Todo(
                 desc="todo with +some meta:data and a @context due:2022-12-31",
@@ -79,8 +80,8 @@ params = mark.parametrize
             ),
         ),
         (
-            "(N) todo with some dep:123, another dep:456, and a 3rd dep:789..."
-            " foo:bar @crazy",
+            f"({DEFAULT_PRIORITY}) todo with some dep:123, another dep:456,"
+            " and a 3rd dep:789... foo:bar @crazy",
             True,
             Todo(
                 desc=(
