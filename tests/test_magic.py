@@ -58,5 +58,5 @@ def test_magic_todo(
     """Test the MagicTodo.from_line() function."""
     actual = magic_todo_type.from_line(line).unwrap()
     expected = magic_todo_type(todo)
-    assert expected.enchanted_todo == etodo
+    assert expected.todo == etodo
     assert actual.to_dict() == expected.to_dict()

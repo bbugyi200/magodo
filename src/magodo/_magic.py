@@ -21,18 +21,11 @@ class MagicTodoMixin(Generic[mtypes.MagicTodo_T], abc.ABC):
     post_spells: List[mtypes.TodoSpell] = POST_BUILTIN_SPELLS
 
     def __init__(self: mtypes.MagicTodo_T, todo: Todo):
-        self.todo = todo
-        self.enchanted_todo = self.cast_spells(todo).unwrap()
+        self._todo = todo
+        self.todo = self.cast_spells(todo).unwrap()
 
     def __repr__(self) -> str:  # noqa: D105
-        result = ""
-        result += cname(self)
-        result += "(\n    TODO:           "
-        result += repr(self.todo) + "\n"
-        result += "    ENCHANTED TODO: "
-        result += repr(self.enchanted_todo) + "\n"
-        result += ")"
-        return result
+        return f"{cname(self)}(todo={self.todo})"
 
     def __eq__(self, other: object) -> bool:  # noqa: D105
         if not isinstance(other, type(self)):
@@ -41,7 +34,7 @@ class MagicTodoMixin(Generic[mtypes.MagicTodo_T], abc.ABC):
         if self.todo != other.todo:
             return False
 
-        if self.enchanted_todo != other.enchanted_todo:
+        if self.todo != other.todo:
             return False
 
         return True
@@ -69,13 +62,13 @@ class MagicTodoMixin(Generic[mtypes.MagicTodo_T], abc.ABC):
 
     def to_line(self) -> str:
         """Converts this MagicTodo back to a string."""
-        return self.enchanted_todo.to_line()
+        return self.todo.to_line()
 
     def to_dict(self: mtypes.MagicTodo_T) -> dict[str, Any]:
         """Converts this MagicTodo into a dictionary."""
         result: Dict[str, Any] = {}
+        result["_todo"] = self.todo.to_dict()
         result["todo"] = self.todo.to_dict()
-        result["enchanted_todo"] = self.enchanted_todo.to_dict()
         result["pre_spells"] = [spell.__name__ for spell in self.pre_spells]
         result["spells"] = [spell.__name__ for spell in self.spells]
         result["post_spells"] = [spell.__name__ for spell in self.post_spells]
@@ -103,35 +96,35 @@ class MagicTodoMixin(Generic[mtypes.MagicTodo_T], abc.ABC):
 
     @property
     def contexts(self) -> Tuple[str, ...]:  # noqa: D102
-        return self.enchanted_todo.contexts
+        return self.todo.contexts
 
     @property
     def create_date(self) -> dt.date | None:  # noqa: D102
-        return self.enchanted_todo.create_date
+        return self.todo.create_date
 
     @property
     def desc(self) -> str:  # noqa: D102
-        return self.enchanted_todo.desc
+        return self.todo.desc
 
     @property
     def done_date(self) -> dt.date | None:  # noqa: D102
-        return self.enchanted_todo.done_date
+        return self.todo.done_date
 
     @property
     def marked_done(self) -> bool:  # noqa: D102
-        return self.enchanted_todo.marked_done
+        return self.todo.marked_done
 
     @property
     def metadata(self) -> Optional[mtypes.Metadata]:  # noqa: D102
-        return self.enchanted_todo.metadata
+        return self.todo.metadata
 
     @property
     def priority(self) -> mtypes.Priority:  # noqa: D102
-        return self.enchanted_todo.priority
+        return self.todo.priority
 
     @property
     def projects(self) -> Tuple[str, ...]:  # noqa: D102
-        return self.enchanted_todo.projects
+        return self.todo.projects
 
 
 class MagicTodo(MagicTodoMixin):

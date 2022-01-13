@@ -1,7 +1,7 @@
 # name: test_group_From_file[bar]
   <class 'list'> [
     <class 'dict'> {
-      'enchanted_todo': <class 'dict'> {
+      '_todo': <class 'dict'> {
         'contexts': <class 'tuple'> (
         ),
         'create_date': None,
@@ -27,7 +27,7 @@
         'contexts': <class 'tuple'> (
         ),
         'create_date': None,
-        'desc': 'o This todo came from the +C.txt file.',
+        'desc': 'This todo came from the C.txt file. | +C.txt',
         'done_date': None,
         'marked_done': False,
         'metadata': None,
@@ -38,7 +38,7 @@
       },
     },
     <class 'dict'> {
-      'enchanted_todo': <class 'dict'> {
+      '_todo': <class 'dict'> {
         'contexts': <class 'tuple'> (
         ),
         'create_date': None,
@@ -64,7 +64,7 @@
         'contexts': <class 'tuple'> (
         ),
         'create_date': None,
-        'desc': 'And +another...',
+        'desc': 'And another... | +another',
         'done_date': None,
         'marked_done': False,
         'metadata': None,
@@ -75,7 +75,7 @@
       },
     },
     <class 'dict'> {
-      'enchanted_todo': <class 'dict'> {
+      '_todo': <class 'dict'> {
         'contexts': <class 'tuple'> (
         ),
         'create_date': datetime.date(2022, 1, 11),
@@ -116,7 +116,7 @@
       },
     },
     <class 'dict'> {
-      'enchanted_todo': <class 'dict'> {
+      '_todo': <class 'dict'> {
         'contexts': <class 'tuple'> (
         ),
         'create_date': None,
@@ -151,7 +151,7 @@
       },
     },
     <class 'dict'> {
-      'enchanted_todo': <class 'dict'> {
+      '_todo': <class 'dict'> {
         'contexts': <class 'tuple'> (
           'high',
         ),
@@ -178,7 +178,7 @@
           'high',
         ),
         'create_date': None,
-        'desc': 'High-priority item @high',
+        'desc': 'High-priority item | @high',
         'done_date': None,
         'marked_done': False,
         'metadata': None,
@@ -188,7 +188,7 @@
       },
     },
     <class 'dict'> {
-      'enchanted_todo': <class 'dict'> {
+      '_todo': <class 'dict'> {
         'contexts': <class 'tuple'> (
         ),
         'create_date': datetime.date(2022, 1, 1),
@@ -223,7 +223,7 @@
       },
     },
     <class 'dict'> {
-      'enchanted_todo': <class 'dict'> {
+      '_todo': <class 'dict'> {
         'contexts': <class 'tuple'> (
         ),
         'create_date': datetime.date(2022, 1, 11),
@@ -266,7 +266,7 @@
 # name: test_group_From_file[foo]
   <class 'list'> [
     <class 'dict'> {
-      'enchanted_todo': <class 'dict'> {
+      '_todo': <class 'dict'> {
         'contexts': <class 'tuple'> (
         ),
         'create_date': None,
@@ -301,7 +301,7 @@
       },
     },
     <class 'dict'> {
-      'enchanted_todo': <class 'dict'> {
+      '_todo': <class 'dict'> {
         'contexts': <class 'tuple'> (
           'high',
         ),
@@ -328,7 +328,7 @@
           'high',
         ),
         'create_date': None,
-        'desc': 'High-priority item @high',
+        'desc': 'High-priority item | @high',
         'done_date': None,
         'marked_done': False,
         'metadata': None,
@@ -338,7 +338,7 @@
       },
     },
     <class 'dict'> {
-      'enchanted_todo': <class 'dict'> {
+      '_todo': <class 'dict'> {
         'contexts': <class 'tuple'> (
           'high',
         ),
@@ -365,7 +365,7 @@
           'high',
         ),
         'create_date': None,
-        'desc': 'High-priority item. @high',
+        'desc': 'High-priority item. | @high',
         'done_date': None,
         'marked_done': False,
         'metadata': None,
@@ -375,7 +375,7 @@
       },
     },
     <class 'dict'> {
-      'enchanted_todo': <class 'dict'> {
+      '_todo': <class 'dict'> {
         'contexts': <class 'tuple'> (
         ),
         'create_date': datetime.date(2022, 1, 1),
@@ -410,7 +410,7 @@
       },
     },
     <class 'dict'> {
-      'enchanted_todo': <class 'dict'> {
+      '_todo': <class 'dict'> {
         'contexts': <class 'tuple'> (
         ),
         'create_date': datetime.date(2022, 1, 11),
@@ -449,7 +449,7 @@
       },
     },
     <class 'dict'> {
-      'enchanted_todo': <class 'dict'> {
+      '_todo': <class 'dict'> {
         'contexts': <class 'tuple'> (
           'stuff',
         ),
@@ -496,7 +496,7 @@
       },
     },
     <class 'dict'> {
-      'enchanted_todo': <class 'dict'> {
+      '_todo': <class 'dict'> {
         'contexts': <class 'tuple'> (
         ),
         'create_date': None,
@@ -521,7 +521,7 @@
         'contexts': <class 'tuple'> (
         ),
         'create_date': None,
-        'desc': 'o A lowercase "o" can also be used when running in "strict" mode.',
+        'desc': 'A lowercase "o" can also be used when running in "strict" mode.',
         'done_date': None,
         'marked_done': False,
         'metadata': None,
@@ -531,7 +531,7 @@
       },
     },
     <class 'dict'> {
-      'enchanted_todo': <class 'dict'> {
+      '_todo': <class 'dict'> {
         'contexts': <class 'tuple'> (
         ),
         'create_date': None,
@@ -556,7 +556,7 @@
         'contexts': <class 'tuple'> (
         ),
         'create_date': None,
-        'desc': 'o (N) But this "o" can only be used if a priority is NOT provided.',
+        'desc': '(N) But this "o" can only be used if a priority is NOT provided.',
         'done_date': None,
         'marked_done': False,
         'metadata': None,
@@ -566,7 +566,7 @@
       },
     },
     <class 'dict'> {
-      'enchanted_todo': <class 'dict'> {
+      '_todo': <class 'dict'> {
         'contexts': <class 'tuple'> (
         ),
         'create_date': None,
@@ -601,7 +601,7 @@
       },
     },
     <class 'dict'> {
-      'enchanted_todo': <class 'dict'> {
+      '_todo': <class 'dict'> {
         'contexts': <class 'tuple'> (
         ),
         'create_date': None,
@@ -636,7 +636,7 @@
       },
     },
     <class 'dict'> {
-      'enchanted_todo': <class 'dict'> {
+      '_todo': <class 'dict'> {
         'contexts': <class 'tuple'> (
           'punctuation',
         ),
@@ -681,7 +681,7 @@
       },
     },
     <class 'dict'> {
-      'enchanted_todo': <class 'dict'> {
+      '_todo': <class 'dict'> {
         'contexts': <class 'tuple'> (
         ),
         'create_date': None,
@@ -707,7 +707,7 @@
         'contexts': <class 'tuple'> (
         ),
         'create_date': None,
-        'desc': '+project We allow descriptions to start with projects.',
+        'desc': 'We allow descriptions to start with projects. | +project',
         'done_date': None,
         'marked_done': False,
         'metadata': None,
@@ -718,7 +718,7 @@
       },
     },
     <class 'dict'> {
-      'enchanted_todo': <class 'dict'> {
+      '_todo': <class 'dict'> {
         'contexts': <class 'tuple'> (
           'context',
         ),
@@ -745,7 +745,7 @@
           'context',
         ),
         'create_date': None,
-        'desc': '@context We allow descriptions to start with contexts.',
+        'desc': 'We allow descriptions to start with contexts. | @context',
         'done_date': None,
         'marked_done': False,
         'metadata': None,
@@ -755,7 +755,7 @@
       },
     },
     <class 'dict'> {
-      'enchanted_todo': <class 'dict'> {
+      '_todo': <class 'dict'> {
         'contexts': <class 'tuple'> (
         ),
         'create_date': None,
@@ -794,7 +794,7 @@
       },
     },
     <class 'dict'> {
-      'enchanted_todo': <class 'dict'> {
+      '_todo': <class 'dict'> {
         'contexts': <class 'tuple'> (
         ),
         'create_date': None,
@@ -821,11 +821,11 @@
         'contexts': <class 'tuple'> (
         ),
         'create_date': None,
-        'desc': 'x:1545 Todos can easily log their "done times" with this trick.',
+        'desc': 'Todos can easily log their "done times" with this trick. | dtime:1545',
         'done_date': None,
-        'marked_done': False,
+        'marked_done': True,
         'metadata': <class 'dict'> {
-          'x': '1545',
+          'dtime': '1545',
         },
         'priority': 'O',
         'projects': <class 'tuple'> (
@@ -833,7 +833,7 @@
       },
     },
     <class 'dict'> {
-      'enchanted_todo': <class 'dict'> {
+      '_todo': <class 'dict'> {
         'contexts': <class 'tuple'> (
         ),
         'create_date': None,
@@ -858,7 +858,7 @@
         'contexts': <class 'tuple'> (
         ),
         'create_date': None,
-        'desc': 'o Double colons should be::ignored.',
+        'desc': 'Double colons should be::ignored.',
         'done_date': None,
         'marked_done': False,
         'metadata': None,
@@ -868,7 +868,7 @@
       },
     },
     <class 'dict'> {
-      'enchanted_todo': <class 'dict'> {
+      '_todo': <class 'dict'> {
         'contexts': <class 'tuple'> (
           'contexts',
         ),
@@ -896,7 +896,7 @@
           'contexts',
         ),
         'create_date': None,
-        'desc': "o Sometimes we want to use apostrophe with +project's or @contexts'.",
+        'desc': "Sometimes we want to use apostrophe with project's or contexts'. | @contexts +project",
         'done_date': None,
         'marked_done': False,
         'metadata': None,
@@ -907,7 +907,7 @@
       },
     },
     <class 'dict'> {
-      'enchanted_todo': <class 'dict'> {
+      '_todo': <class 'dict'> {
         'contexts': <class 'tuple'> (
         ),
         'create_date': None,
@@ -932,7 +932,7 @@
         'contexts': <class 'tuple'> (
         ),
         'create_date': None,
-        'desc': 'o We also ignore double ++pluses and double @@at signs.',
+        'desc': 'We also ignore double ++pluses and double @@at signs.',
         'done_date': None,
         'marked_done': False,
         'metadata': None,
@@ -942,7 +942,7 @@
       },
     },
     <class 'dict'> {
-      'enchanted_todo': <class 'dict'> {
+      '_todo': <class 'dict'> {
         'contexts': <class 'tuple'> (
         ),
         'create_date': None,
@@ -969,7 +969,7 @@
         'contexts': <class 'tuple'> (
         ),
         'create_date': None,
-        'desc': 'o We also do not group:tags when a metadata tag is in the middle.',
+        'desc': 'We also do not group:tags when a metadata tag is in the middle.',
         'done_date': None,
         'marked_done': False,
         'metadata': <class 'dict'> {

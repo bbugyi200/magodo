@@ -130,7 +130,3 @@ class AbstractMagicTodo(AbstractTodo, Protocol):
     @property
     def todo(self) -> "Todo":
         """The raw Todo object used by this MagicTodo."""
-
-    @property
-    def enchanted_todo(self) -> "Todo":
-        """The todo created by casting spells on self.todo."""
