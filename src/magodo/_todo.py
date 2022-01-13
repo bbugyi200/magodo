@@ -4,12 +4,12 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
 import datetime as dt
 import re
-from typing import Any, Final, List, Optional, Tuple, cast
+from typing import Any, Dict, Final, List, Optional, Tuple, cast
 
 from eris import ErisError, Err, Ok, Result
+from metaman import cname
 
 from ._shared import (
     CONTEXT_PREFIX,
@@ -38,19 +38,77 @@ RE_TODO: Final = r"""
 )
 
 
-@dataclass(frozen=True)
 class Todo:
     """Represents a single task in a todo list."""
 
-    desc: str
+    def __init__(
+        self,
+        desc: str,
+        *,
+        contexts: Tuple[str, ...] = (),
+        create_date: Optional[dt.date] = None,
+        done_date: Optional[dt.date] = None,
+        marked_done: bool = False,
+        metadata: Optional[Metadata] = None,
+        priority: Priority = DEFAULT_PRIORITY,
+        projects: Tuple[str, ...] = (),
+    ):
+        self.desc = desc
+        self.contexts = contexts
+        self.create_date = create_date
+        self.done_date = done_date
+        self.marked_done = marked_done
+        self.metadata = metadata
+        self.priority = priority
+        self.projects = projects
 
-    contexts: Tuple[str, ...] = ()
-    create_date: Optional[dt.date] = None
-    done_date: Optional[dt.date] = None
-    marked_done: bool = False
-    metadata: Optional[Metadata] = None
-    priority: Priority = DEFAULT_PRIORITY
-    projects: Tuple[str, ...] = ()
+    def __repr__(self) -> str:  # noqa: D105
+        kwargs: Dict[str, Any] = {}
+
+        if self.contexts:
+            kwargs["contexts"] = self.contexts
+
+        if self.create_date is not None:
+            kwargs["create_date"] = self.create_date
+
+        if self.done_date is not None:
+            kwargs["done_date"] = self.done_date
+
+        if self.marked_done:
+            kwargs["marked_done"] = self.marked_done
+
+        if self.metadata is not None:
+            kwargs["metadata"] = self.metadata
+
+        if self.priority != DEFAULT_PRIORITY:
+            kwargs["priority"] = self.priority
+
+        if self.projects:
+            kwargs["projects"] = self.projects
+
+        if kwargs:
+            pretty_kwargs = ", ".join(f"{k}={v}" for (k, v) in kwargs.items())
+        else:
+            pretty_kwargs = ""
+
+        return f"{cname(self)}(desc={self.desc!r}{pretty_kwargs})"
+
+    def __eq__(self, other: object) -> bool:  # noqa: D105
+        if not isinstance(other, type(self)):
+            return False
+
+        return all(
+            [
+                self.desc == other.desc,
+                self.contexts == other.contexts,
+                self.create_date == other.create_date,
+                self.done_date == other.done_date,
+                self.marked_done == other.marked_done,
+                self.metadata == other.metadata,
+                self.priority == other.priority,
+                self.projects == other.projects,
+            ]
+        )
 
     @classmethod
     def from_line(cls, line: str) -> Result[Todo, ErisError]:
