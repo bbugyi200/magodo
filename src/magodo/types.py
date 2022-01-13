@@ -122,3 +122,7 @@ class AbstractMagicTodo(AbstractTodo, Protocol):
     @property
     def todo(self) -> "Todo":
         pass
+
+    @property
+    def enchanted_todo(self) -> "Todo":
+        pass

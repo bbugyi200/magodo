@@ -7,6 +7,7 @@ import datetime as dt
 from typing import Any, Generic, List, Optional, Tuple, Type
 
 from eris import ErisError, Err, Ok, Result
+from metaman import cname
 
 from . import types as mtypes
 from ._todo import DEFAULT_PRIORITY, Todo
@@ -22,17 +23,42 @@ class MagicTodoMixin(Generic[mtypes.MagicTodo_T], abc.ABC):
     pre_spells: List[mtypes.TodoSpell] = PRE_BUILTIN_SPELLS
     post_spells: List[mtypes.TodoSpell] = POST_BUILTIN_SPELLS
 
-    def __init__(self, todo: Todo):
+    def __init__(
+        self: mtypes.MagicTodo_T, todo: Todo, *, enchanted_todo: Todo = None
+    ):
         self.todo = todo
 
+        if enchanted_todo is None:
+            etodo = todo.new()
+            for spell_list in [self.pre_spells, self.spells, self.post_spells]:
+                for spell in spell_list:
+                    etodo = spell(etodo)
+        else:
+            etodo = enchanted_todo
+
+        self.enchanted_todo = etodo
+
     def __repr__(self) -> str:
-        return repr(self.todo)
+        result = ""
+        result += cname(self)
+        result += "(\n    TODO:           "
+        result += repr(self.todo) + "\n"
+        result += "    ENCHANTED TODO: "
+        result += repr(self.enchanted_todo) + "\n"
+        result += ")"
+        return result
 
     def __eq__(self, other: object) -> bool:
-        if isinstance(other, type(self)):
-            return self.todo == other.todo
-        else:
+        if not isinstance(other, type(self)):
             return False
+
+        if self.todo != other.todo:
+            return False
+
+        if self.enchanted_todo != other.enchanted_todo:
+            return False
+
+        return True
 
     @classmethod
     def from_line(
@@ -46,6 +72,7 @@ class MagicTodoMixin(Generic[mtypes.MagicTodo_T], abc.ABC):
             )
             return err.chain(todo_result)
 
+        # TODO(bugyi): Replace this with 'validator' spell (spell that returns Err)
         todo = todo_result.ok()
         if todo.priority == DEFAULT_PRIORITY and not todo.desc.startswith(
             TODO_PREFIXES
@@ -57,15 +84,11 @@ class MagicTodoMixin(Generic[mtypes.MagicTodo_T], abc.ABC):
                 f" prefix. todo={todo!r}"
             )
 
-        for spell_list in [cls.pre_spells, cls.spells, cls.post_spells]:
-            for spell in spell_list:
-                todo = spell(todo)
-
         return Ok(cls(todo))
 
     def to_line(self) -> str:
         """Converts this MagicTodo back to a string."""
-        return self.todo.to_line()
+        return self.enchanted_todo.to_line()
 
     @property
     def contexts(self) -> Tuple[str, ...]:
