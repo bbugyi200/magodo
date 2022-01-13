@@ -29,9 +29,6 @@ if TYPE_CHECKING:
 Todo_T = TypeVar("Todo_T", bound="AbstractTodo")
 MagicTodo_T = TypeVar("MagicTodo_T", bound="AbstractMagicTodo")
 
-TodoSpell = Callable[["Todo"], "Todo"]
-TodoValidator = Callable[["Todo"], Result[None, ErisError]]
-
 # Type of the Todo.metadata attribute.
 Metadata = Dict[str, Union[str, List[str]]]
 # A todo item's priority is always a capital letter.
@@ -63,6 +60,8 @@ Priority = Literal[
     "Y",
     "Z",
 ]
+# Type of spell functions used by MagicTodo objects.
+TodoSpell = Callable[["Todo"], "Todo"]
 
 
 @runtime_checkable
