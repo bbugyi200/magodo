@@ -7,8 +7,8 @@ from typing import Type
 from pytest import mark
 
 from magodo import MagicTodo, Todo
-from magodo.types import AbstractMagicTodo
 from magodo._dates import to_date
+from magodo.types import AbstractMagicTodo
 
 
 params = mark.parametrize

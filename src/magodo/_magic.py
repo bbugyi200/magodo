@@ -23,9 +23,7 @@ class MagicTodoMixin(Generic[mtypes.MagicTodo_T], abc.ABC):
     pre_spells: List[mtypes.TodoSpell] = PRE_BUILTIN_SPELLS
     post_spells: List[mtypes.TodoSpell] = POST_BUILTIN_SPELLS
 
-    def __init__(
-        self: mtypes.MagicTodo_T, todo: Todo
-    ):
+    def __init__(self: mtypes.MagicTodo_T, todo: Todo):
         self.todo = todo
 
         etodo = todo.new()
