@@ -6,7 +6,7 @@ from typing import Sequence
 
 from pytest import mark
 
-from magodo import DEFAULT_PRIORITY, Todo
+from magodo import DEFAULT_PRIORITY, MagicTodo, Todo
 from magodo._shared import to_date
 
 
@@ -103,43 +103,53 @@ def test_todo(line: str, expected: Todo) -> None:
 
 
 @params(
-    "todos,idx_seq",
+    "todos,idxs",
     [
         (
             [
                 Todo("baz", priority="M"),
                 Todo("foo", priority="G"),
-                Todo("bar"),
+                Todo("o bar"),
             ],
             [1, 0, 2],
         ),
-        ([Todo("foo"), Todo("bar"), Todo("baz", marked_done=True)], [1, 0, 2]),
+        (
+            [Todo("o foo"), Todo("o bar"), Todo("o baz", marked_done=True)],
+            [1, 0, 2],
+        ),
         (
             [
-                Todo("foo"),
-                Todo("A", done_date=to_date("2022-01-01")),
+                Todo("o foo"),
+                Todo("o foo"),
+                Todo("o A", done_date=to_date("2022-01-01")),
                 Todo(
-                    "B",
+                    "o B",
                     done_date=to_date("1999-01-01"),
                     metadata={"dtime": "0123"},
                 ),
                 Todo(
-                    "C",
+                    "o C",
                     done_date=to_date("2022-01-01"),
                     metadata={"dtime": "1100"},
                 ),
                 Todo(
-                    "D",
+                    "o D",
                     done_date=to_date("2022-01-01"),
                     metadata={"dtime": "1000"},
                 ),
             ],
-            [0, 2, 1, 4, 3],
+            [0, 1, 3, 2, 5, 4],
         ),
     ],
 )
-def test_sort(todos: Sequence[Todo], idx_seq: Sequence[int]) -> None:
+def test_sort(todos: Sequence[Todo], idxs: Sequence[int]) -> None:
     """Test that Todo objects sort properly."""
-    assert len(todos) == len(idx_seq)
-    expected = [todos[idx_seq[i]] for i in range(len(todos))]
+    assert len(todos) == len(idxs)
+    N = len(todos)
+
+    expected = [todos[idxs[i]] for i in range(N)]
     assert sorted(todos) == expected
+
+    magic_todos = [MagicTodo(todo) for todo in todos]
+    magic_expected = [magic_todos[idxs[i]] for i in range(N)]
+    assert sorted(magic_todos) == magic_expected
