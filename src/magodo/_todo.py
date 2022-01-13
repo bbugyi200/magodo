@@ -5,6 +5,7 @@
 from __future__ import annotations
 
 import datetime as dt
+from functools import total_ordering
 import re
 from typing import Any, Dict, Final, List, Optional, Tuple, cast
 
@@ -38,6 +39,7 @@ RE_TODO: Final = r"""
 )
 
 
+@total_ordering
 class Todo:
     """Represents a single task in a todo list."""
 
@@ -109,6 +111,42 @@ class Todo:
                 self.projects == other.projects,
             ]
         )
+
+    def __lt__(self, other: object) -> bool:  # noqa: D105
+        if not isinstance(other, type(self)):
+            raise ValueError(
+                f"Unable to compare '{type(other)}' object with 'Todo' object."
+            )
+
+        if self.marked_done != other.marked_done:
+            return not self.marked_done and other.marked_done
+
+        if self.priority != other.priority:
+            return self.priority < other.priority
+
+        if other.done_date is not None:
+            if self.done_date is None:
+                return True
+
+            self_mdata = self.metadata or {}
+            other_mdata = other.metadata or {}
+            if self.done_date != other.done_date:
+                return self.done_date < other.done_date
+            elif (self_dtime := self_mdata.get("dtime", None)) and (
+                other_dtime := other_mdata.get("dtime", None)
+            ):
+                assert isinstance(self_dtime, str)
+                assert isinstance(other_dtime, str)
+                return self_dtime < other_dtime
+
+        if (
+            self.create_date
+            and other.create_date
+            and self.create_date != other.create_date
+        ):
+            return self.create_date < other.create_date
+
+        return self.desc < other.desc
 
     @classmethod
     def from_line(cls, line: str) -> Result[Todo, ErisError]:

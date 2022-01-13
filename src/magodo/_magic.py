@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import abc
 import datetime as dt
+from functools import total_ordering
 from typing import Any, Dict, Generic, List, Optional, Tuple, Type
 
 from eris import ErisError, Err, Ok, Result
@@ -14,6 +15,7 @@ from ._todo import Todo
 from .spells import POST_BUILTIN_SPELLS, PRE_BUILTIN_SPELLS
 
 
+@total_ordering
 class MagicTodoMixin(Generic[mtypes.MagicTodo_T], abc.ABC):
     """Mixin class that implements the Todo protocol."""
 
@@ -38,6 +40,9 @@ class MagicTodoMixin(Generic[mtypes.MagicTodo_T], abc.ABC):
             return False
 
         return True
+
+    def __lt__(self, other: mtypes.MagicTodo_T) -> bool:  # noqa: D105
+        return self.todo < other.todo
 
     @classmethod
     def from_line(
