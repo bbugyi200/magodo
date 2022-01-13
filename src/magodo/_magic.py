@@ -30,13 +30,10 @@ class MagicTodoMixin(Generic[mtypes.MagicTodo_T], abc.ABC):
         return f"{cname(self)}(todo={self.todo})"
 
     def __eq__(self, other: object) -> bool:  # noqa: D105
-        if not isinstance(other, type(self)):
+        if not isinstance(other, type(self)):  # pragma: no cover
             return False
 
-        if self.todo != other.todo:
-            return False
-
-        return True
+        return self.todo == other.todo
 
     def __lt__(self, other: mtypes.MagicTodo_T) -> bool:  # noqa: D105
         return self.todo < other.todo

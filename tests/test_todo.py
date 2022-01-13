@@ -114,6 +114,28 @@ def test_todo(line: str, expected: Todo) -> None:
             [1, 0, 2],
         ),
         ([Todo("foo"), Todo("bar"), Todo("baz", marked_done=True)], [1, 0, 2]),
+        (
+            [
+                Todo("foo"),
+                Todo("A", done_date=to_date("2022-01-01")),
+                Todo(
+                    "B",
+                    done_date=to_date("1999-01-01"),
+                    metadata={"dtime": "0123"},
+                ),
+                Todo(
+                    "C",
+                    done_date=to_date("2022-01-01"),
+                    metadata={"dtime": "1100"},
+                ),
+                Todo(
+                    "D",
+                    done_date=to_date("2022-01-01"),
+                    metadata={"dtime": "1000"},
+                ),
+            ],
+            [0, 2, 1, 4, 3],
+        ),
     ],
 )
 def test_sort(todos: Sequence[Todo], idx_seq: Sequence[int]) -> None:

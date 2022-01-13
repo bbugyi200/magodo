@@ -98,7 +98,7 @@ class Todo:
         return f"{cname(self)}(desc={self.desc!r}{pretty_kwargs})"
 
     def __eq__(self, other: object) -> bool:  # noqa: D105
-        if not isinstance(other, type(self)):
+        if not isinstance(other, type(self)):  # pragma: no cover
             return False
 
         return all(
@@ -126,10 +126,13 @@ class Todo:
         if self.priority != other.priority:
             return self.priority < other.priority
 
-        if other.done_date is not None:
-            if self.done_date is None:
-                return True
+        if self.done_date is None and other.done_date is not None:
+            return True
 
+        if other.done_date is None and self.done_date is not None:
+            return False
+
+        if self.done_date is not None and other.done_date is not None:
             self_mdata = self.metadata or {}
             other_mdata = other.metadata or {}
             if self.done_date != other.done_date:
