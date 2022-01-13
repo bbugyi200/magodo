@@ -89,7 +89,9 @@ class Todo:
             kwargs["projects"] = self.projects
 
         if kwargs:
-            pretty_kwargs = ", ".join(f"{k}={v}" for (k, v) in kwargs.items())
+            pretty_kwargs = ", " + ", ".join(
+                f"{k}={v}" for (k, v) in kwargs.items()
+            )
         else:
             pretty_kwargs = ""
 

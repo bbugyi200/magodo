@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from typing import Sequence
+
 from pytest import mark
 
 from magodo import DEFAULT_PRIORITY, Todo
@@ -98,3 +100,24 @@ def test_todo(line: str, expected: Todo) -> None:
     """Test the Todo type."""
     actual = Todo.from_line(line)
     assert actual.unwrap() == expected
+
+
+@params(
+    "todos,idx_seq",
+    [
+        (
+            [
+                Todo("baz", priority="M"),
+                Todo("foo", priority="G"),
+                Todo("bar"),
+            ],
+            [1, 0, 2],
+        ),
+        ([Todo("foo"), Todo("bar"), Todo("baz", marked_done=True)], [1, 0, 2]),
+    ],
+)
+def test_sort(todos: Sequence[Todo], idx_seq: Sequence[int]) -> None:
+    """Test that Todo objects sort properly."""
+    assert len(todos) == len(idx_seq)
+    expected = [todos[idx_seq[i]] for i in range(len(todos))]
+    assert sorted(todos) == expected
