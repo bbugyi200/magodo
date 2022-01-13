@@ -4,32 +4,34 @@ from __future__ import annotations
 
 from logging import Logger
 from pathlib import Path
-from typing import Iterable, Iterator, List
+from typing import Generic, Iterable, Iterator, List, Type
 
 from eris import Err
 from typist import PathLike
 
-from ._todo import Todo
+from .types import Todo_T
 
 
 logger = Logger(__name__)
 
 
-class TodoGroup:
+class TodoGroup(Generic[Todo_T]):
     """Manages a group of Todo objects."""
 
-    def __init__(self, todos: Iterable[Todo]) -> None:
+    def __init__(self, todos: Iterable[Todo_T]) -> None:
         self._todos = list(todos)
 
     def __repr__(self) -> str:  # noqa: D105
         return f"{self.__class__.__name__}(todos={self._todos})"
 
-    def __iter__(self) -> Iterator[Todo]:
+    def __iter__(self) -> Iterator[Todo_T]:
         """Yields the Todo objects that belong to this group."""
         yield from self._todos
 
     @classmethod
-    def from_path(cls, path_like: PathLike) -> TodoGroup:
+    def from_path(
+        cls, todo_type: Type[Todo_T], path_like: PathLike
+    ) -> TodoGroup:
         """Reads all todo lines from a given file or directory (recursively).
 
         Pre-conditions:
@@ -39,7 +41,7 @@ class TodoGroup:
 
         assert path.exists(), f"The provided path does not exist: {path}"
 
-        todos: List[Todo] = []
+        todos: List[Todo_T] = []
         if path.is_file():
             logger.debug(
                 "Attempting to load todos from text file: file=%r", str(path)
@@ -47,7 +49,7 @@ class TodoGroup:
 
             for line in path.read_text().split("\n"):
                 line = line.strip()
-                todo_result = Todo.from_line(line, strict=True)
+                todo_result = todo_type.from_line(line)
                 if isinstance(todo_result, Err):
                     continue
 
@@ -65,7 +67,7 @@ class TodoGroup:
                 if other_path.is_file() and other_path.suffix != ".txt":
                     continue
 
-                other_todo_group = TodoGroup.from_path(other_path)
+                other_todo_group = TodoGroup.from_path(todo_type, other_path)
                 todos.extend(other_todo_group)
 
         return cls(todos)

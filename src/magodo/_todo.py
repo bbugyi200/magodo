@@ -1,4 +1,4 @@
-"""Contains the Todo class definition."""
+"""Contains the basic / standard Todo class definition."""
 
 # pylint: disable=format-string-without-interpolation
 
@@ -7,11 +7,11 @@ from __future__ import annotations
 from dataclasses import dataclass
 import datetime as dt
 import re
-from typing import Final, List, Optional, Tuple, cast
+from typing import Any, Final, List, Optional, Tuple, cast
 
 from eris import ErisError, Err, Ok, Result
 
-from ._dates import RE_DATE, to_date
+from ._dates import RE_DATE, from_date, to_date
 from .types import Metadata, Priority
 
 
@@ -29,7 +29,7 @@ re_todo_fmt = r"""
 re_opt_fmt = r"(?:{})?".format
 
 CONTEXT_PREFIX: Final = "@"
-DEFAULT_PRIORITY: Final[Priority] = "N"
+DEFAULT_PRIORITY: Final[Priority] = "O"
 PROJECT_PREFIX: Final = "+"
 PUNCTUATION: Final = ",.?!;"
 RE_PRIORITY: Final = r"\((?P<priority>[A-Z])\)[ ]+"
@@ -80,12 +80,7 @@ class Todo:
             line = " ".join(new_line_words)
 
         if strict and line.startswith("o "):
-            o_priority = (
-                DEFAULT_PRIORITY
-                if DEFAULT_PRIORITY == "Z"
-                else chr(ord(DEFAULT_PRIORITY) + 1)
-            )
-            line = f"({o_priority})" + line[1:]
+            line = f"({DEFAULT_PRIORITY})" + line[1:]
 
         if strict and not line.startswith("x "):
             RE_TODO = re_todo_fmt(RE_PRIORITY)
@@ -171,6 +166,47 @@ class Todo:
             projects=projects,
         )
         return Ok(todo)
+
+    def to_line(self) -> str:
+        """Converts this Todo object back to a line."""
+        result = ""
+        if self.marked_done:
+            result += "x "
+
+        if self.priority != DEFAULT_PRIORITY:
+            result += f"({self.priority})"
+
+        if self.done_date is not None:
+            result += from_date(self.done_date) + " "
+
+        if self.create_date is not None:
+            result += from_date(self.create_date) + " "
+
+        result += self.desc
+
+        return result
+
+    def new(self, **kwargs: Any) -> Todo:
+        """Creates a new Todo using the current Todo's attrs as defaults."""
+        contexts = kwargs.get("contexts", self.contexts)
+        create_date = kwargs.get("create_date", self.create_date)
+        desc = kwargs.get("desc", self.desc)
+        done_date = kwargs.get("done_date", self.done_date)
+        marked_done = kwargs.get("marked_done", self.marked_done)
+        metadata = kwargs.get("metadata", self.metadata)
+        priority: Priority = kwargs.get("priority", self.priority)
+        projects = kwargs.get("projects", self.projects)
+
+        return Todo(
+            contexts=contexts,
+            create_date=create_date,
+            desc=desc,
+            done_date=done_date,
+            marked_done=marked_done,
+            metadata=metadata,
+            priority=priority,
+            projects=projects,
+        )
 
 
 def _clean_value(word: str) -> str:

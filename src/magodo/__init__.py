@@ -2,12 +2,21 @@
 
 import logging as _logging
 
-from . import types
+from . import spells, types
 from ._group import TodoGroup
+from ._magic import MagicTodo, MagicTodoMixin
 from ._todo import DEFAULT_PRIORITY, Todo
 
 
-__all__ = ["DEFAULT_PRIORITY", "Todo", "TodoGroup", "types"]
+__all__ = [
+    "DEFAULT_PRIORITY",
+    "MagicTodo",
+    "MagicTodoMixin",
+    "Todo",
+    "TodoGroup",
+    "spells",
+    "types",
+]
 
 __author__ = "Bryan M Bugyi"
 __email__ = "bryanbugyi34@gmail.com"

@@ -13,3 +13,8 @@ RE_DATE: Final = r"[1-9][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9]"
 def to_date(yyyymmdd: str) -> dt.date:
     """Helper function for constructing a date object."""
     return dt.datetime.strptime(yyyymmdd, DATE_FMT).date()
+
+
+def from_date(date: dt.date) -> str:
+    """Helper function for converting a date object to a string."""
+    return date.strftime(DATE_FMT)

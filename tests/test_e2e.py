@@ -18,5 +18,5 @@ params = mark.parametrize
 @params("todo_file", get_all_todo_paths())
 def test_group_From_file(snapshot: Snapshot, todo_file: Path) -> None:
     """Test the TodoGroup.from_file() function."""
-    todo_group = magodo.TodoGroup.from_path(todo_file)
+    todo_group = magodo.TodoGroup.from_path(magodo.Todo, todo_file)
     assert [todo.__dict__ for todo in todo_group] == snapshot
