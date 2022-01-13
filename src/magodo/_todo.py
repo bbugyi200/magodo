@@ -15,9 +15,9 @@ from ._dates import RE_DATE, from_date, to_date
 from .types import Metadata, Priority
 
 
-re_todo_fmt = r"""
+RE_TODO: Final = r"""
 (?P<x>x[ ]+)?                        # optional 'x'
-{{0}}                                # priority
+(?:\((?P<priority>[A-Z])\)[ ]+)?     # priority
 (?:
     (?:(?P<done_date>{0})[ ]+)?      # optional date of completion
     (?:(?P<create_date>{0})[ ]+)     # optional date of creation
@@ -25,15 +25,12 @@ re_todo_fmt = r"""
 (?P<desc>[A-Za-z0-9+@].*)            # description
 """.format(
     RE_DATE
-).format
-re_opt_fmt = r"(?:{})?".format
+)
 
 CONTEXT_PREFIX: Final = "@"
 DEFAULT_PRIORITY: Final[Priority] = "O"
 PROJECT_PREFIX: Final = "+"
 PUNCTUATION: Final = ",.?!;"
-RE_PRIORITY: Final = r"\((?P<priority>[A-Z])\)[ ]+"
-RE_OPTIONAL_PRIORITY: Final = re_opt_fmt(RE_PRIORITY)
 
 
 @dataclass(frozen=True)
@@ -51,49 +48,20 @@ class Todo:
     projects: Tuple[str, ...] = ()
 
     @classmethod
-    def from_line(
-        cls, line: str, *, strict: bool = False
-    ) -> Result[Todo, ErisError]:
+    def from_line(cls, line: str) -> Result[Todo, ErisError]:
         """Contructs a Todo object from a string (usually a line in a file).
 
         Args:
             line: The line to use to construct our new Todo object.
-            strict: If this option is set, require that valid todo lines
-              either explicitly specify a priority OR have been marked done /
-              not done with an "x " or "o " at the start of the line,
-              respectively. NOTE: The special "o " prefix is treated as
-              short-hand for the next letter after the default priority letter
-              and is ONLY allowed when this option is set.
         """
         line = line.strip()
-
-        if (
-            strict
-            and line
-            and line.startswith("x:")
-            and line[2:6].isnumeric()
-            and line[6].isspace()
-        ):
-            xword, *rest = line.split(" ")
-            dtime = xword[2:]
-            new_line_words = ["x"] + rest + ["dtime:" + dtime]
-            line = " ".join(new_line_words)
-
-        if strict and line.startswith("o "):
-            line = f"({DEFAULT_PRIORITY})" + line[1:]
-
-        if strict and not line.startswith("x "):
-            RE_TODO = re_todo_fmt(RE_PRIORITY)
-        else:
-            RE_TODO = re_todo_fmt(RE_OPTIONAL_PRIORITY)
 
         re_todo_match = re.match(RE_TODO, line, re.VERBOSE)
         if re_todo_match is None:
             return Err(
                 f"The provided string ({line!r}) does not appear to properly"
                 " adhere to the todo.txt format. See"
-                " https://github.com/todotxt/todo.txt for the specification. "
-                f" |  require_priority={strict}"
+                " https://github.com/todotxt/todo.txt for the specification."
             )
 
         marked_done: bool = False

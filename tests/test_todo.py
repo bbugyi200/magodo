@@ -12,13 +12,12 @@ params = mark.parametrize
 
 
 @params(
-    "line,strict,expected",
+    "line,expected",
     [
-        ("no priority todo", False, Todo(desc="no priority todo")),
-        (f"({DEFAULT_PRIORITY}) basic todo", False, Todo(desc="basic todo")),
+        ("no priority todo", Todo(desc="no priority todo")),
+        (f"({DEFAULT_PRIORITY}) basic todo", Todo(desc="basic todo")),
         (
             f"({DEFAULT_PRIORITY}) 2022-01-10 todo with create date",
-            True,
             Todo(
                 desc="todo with create date",
                 create_date=to_date("2022-01-10"),
@@ -26,7 +25,6 @@ params = mark.parametrize
         ),
         (
             f"({DEFAULT_PRIORITY}) 2022-03-04 2022-01-10 todo with done date",
-            True,
             Todo(
                 desc="todo with done date",
                 create_date=to_date("2022-01-10"),
@@ -35,7 +33,6 @@ params = mark.parametrize
         ),
         (
             f"x ({DEFAULT_PRIORITY}) 2022-01-10 done todo",
-            True,
             Todo(
                 desc="done todo",
                 create_date=to_date("2022-01-10"),
@@ -44,7 +41,6 @@ params = mark.parametrize
         ),
         (
             "x (A) todo with priority",
-            True,
             Todo(
                 desc="todo with priority",
                 marked_done=True,
@@ -53,7 +49,6 @@ params = mark.parametrize
         ),
         (
             f"({DEFAULT_PRIORITY}) todo for +some +project",
-            True,
             Todo(
                 desc="todo for +some +project",
                 projects=("some", "project"),
@@ -61,7 +56,6 @@ params = mark.parametrize
         ),
         (
             f"({DEFAULT_PRIORITY}) todo for +some +project and a @context.",
-            True,
             Todo(
                 desc="todo for +some +project and a @context.",
                 projects=("some", "project"),
@@ -71,7 +65,6 @@ params = mark.parametrize
         (
             f"({DEFAULT_PRIORITY}) todo with +some meta:data and a @context"
             " due:2022-12-31",
-            True,
             Todo(
                 desc="todo with +some meta:data and a @context due:2022-12-31",
                 projects=("some",),
@@ -82,7 +75,6 @@ params = mark.parametrize
         (
             f"({DEFAULT_PRIORITY}) todo with some dep:123, another dep:456,"
             " and a 3rd dep:789... foo:bar @crazy",
-            True,
             Todo(
                 desc=(
                     "todo with some dep:123, another dep:456, and a 3rd"
@@ -92,28 +84,9 @@ params = mark.parametrize
                 metadata={"dep": ["123", "456", "789"], "foo": "bar"},
             ),
         ),
-        (
-            "x:1030 Shorthand 'dtime' syntax.",
-            True,
-            Todo(
-                desc="Shorthand 'dtime' syntax. dtime:1030",
-                metadata={"dtime": "1030"},
-                marked_done=True,
-            ),
-        ),
-        (
-            "x:1030 2022-01-01 Bug with shorthand 'dtime' syntax.",
-            True,
-            Todo(
-                desc="Bug with shorthand 'dtime' syntax. dtime:1030",
-                metadata={"dtime": "1030"},
-                marked_done=True,
-                create_date=to_date("2022-01-01"),
-            ),
-        ),
     ],
 )
-def test_todo(line: str, strict: bool, expected: Todo) -> None:
+def test_todo(line: str, expected: Todo) -> None:
     """Test the Todo type."""
-    actual = Todo.from_line(line, strict=strict)
+    actual = Todo.from_line(line)
     assert actual.unwrap() == expected
