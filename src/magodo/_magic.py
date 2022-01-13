@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import abc
 import datetime as dt
-from typing import Any, Generic, List, Optional, Tuple, Type
+from typing import Any, Dict, Generic, List, Optional, Tuple, Type
 
 from eris import ErisError, Err, Ok, Result
 from metaman import cname
@@ -84,11 +84,14 @@ class MagicTodoMixin(Generic[mtypes.MagicTodo_T], abc.ABC):
         """Converts this MagicTodo back to a string."""
         return self.enchanted_todo.to_line()
 
-    def to_dict(self) -> dict[str, Any]:
+    def to_dict(self: mtypes.MagicTodo_T) -> dict[str, Any]:
         """Converts this MagicTodo into a dictionary."""
-        result = {}
+        result: Dict[str, Any] = {}
         result["todo"] = self.todo.to_dict()
         result["enchanted_todo"] = self.enchanted_todo.to_dict()
+        result["pre_spells"] = [spell.__name__ for spell in self.pre_spells]
+        result["spells"] = [spell.__name__ for spell in self.spells]
+        result["post_spells"] = [spell.__name__ for spell in self.post_spells]
         return result
 
     @property
