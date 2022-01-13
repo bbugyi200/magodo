@@ -58,7 +58,7 @@ def group_projects_contexts_and_metadata(todo: Todo) -> Todo:
     new_words = []
     non_special_words_found = False
     for i, word in enumerate(all_words[:]):
-        all_next_words_are_special = all_words_are_special(
+        all_next_words_are_special = _all_words_are_special(
             all_words[i + 1 :]
         ) and not word.endswith(PUNCTUATION)
         if word == "|" and all_next_words_are_special:
@@ -71,14 +71,14 @@ def group_projects_contexts_and_metadata(todo: Todo) -> Todo:
         ):
             return todo
 
-        if has_special_prefix(word) and (
+        if _has_special_prefix(word) and (
             word[-1] in PUNCTUATION or not all_next_words_are_special
         ):
             if non_special_words_found:
                 new_words.append(word[1:])
             continue
 
-        if is_special_word(word) and all_next_words_are_special:
+        if _is_special_word(word) and all_next_words_are_special:
             continue
 
         non_special_words_found = True
@@ -111,18 +111,18 @@ def group_projects_contexts_and_metadata(todo: Todo) -> Todo:
     return todo.new(desc=desc)
 
 
-def has_special_prefix(word: str) -> bool:
+def _has_special_prefix(word: str) -> bool:
     """Returns True if `word` is a project or context."""
     return is_prefix_word(CONTEXT_PREFIX, word) or is_prefix_word(
         PROJECT_PREFIX, word
     )
 
 
-def is_special_word(word: str) -> bool:
+def _is_special_word(word: str) -> bool:
     """Returns True if `word` is a project, context, or metadata."""
-    return has_special_prefix(word) or is_metadata_word(word)
+    return _has_special_prefix(word) or is_metadata_word(word)
 
 
-def all_words_are_special(words: Iterable[str]) -> bool:
+def _all_words_are_special(words: Iterable[str]) -> bool:
     """Returns True if all `words` are special words."""
-    return all(is_special_word(w) for w in words)
+    return all(_is_special_word(w) for w in words)
