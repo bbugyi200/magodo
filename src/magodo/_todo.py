@@ -11,7 +11,17 @@ from typing import Any, Final, List, Optional, Tuple, cast
 
 from eris import ErisError, Err, Ok, Result
 
-from ._dates import RE_DATE, from_date, to_date
+from ._shared import (
+    CONTEXT_PREFIX,
+    DEFAULT_PRIORITY,
+    PROJECT_PREFIX,
+    PUNCTUATION,
+    RE_DATE,
+    from_date,
+    is_meta_data,
+    is_prefix_word,
+    to_date,
+)
 from .types import Metadata, Priority
 
 
@@ -26,11 +36,6 @@ RE_TODO: Final = r"""
 """.format(
     RE_DATE
 )
-
-CONTEXT_PREFIX: Final = "@"
-DEFAULT_PRIORITY: Final[Priority] = "O"
-PROJECT_PREFIX: Final = "+"
-PUNCTUATION: Final = ",.?!;"
 
 
 @dataclass(frozen=True)
@@ -90,11 +95,7 @@ class Todo:
             (context_list, CONTEXT_PREFIX),
         ]:
             for word in all_words:
-                if (
-                    word.startswith(prefix)
-                    and not word.startswith(prefix + prefix)
-                    and len(prefix) < len(word)
-                ):
+                if is_prefix_word(prefix, word):
                     value = word[len(prefix) :]
                     value = _clean_value(value)
                     some_list.append(value)
@@ -105,8 +106,8 @@ class Todo:
         metadata: Optional[Metadata] = None
         mdata: Metadata = {}
         for word in all_words:
-            kv = word.split(":", maxsplit=1)
-            if len(kv) == 2 and kv[1] and not kv[1].startswith(":"):
+            if is_meta_data(word):
+                kv = word.split(":", maxsplit=1)
                 key, value = kv
                 value = _clean_value(value)
 

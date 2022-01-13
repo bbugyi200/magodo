@@ -5,7 +5,7 @@ from __future__ import annotations
 from pytest import mark
 
 from magodo import DEFAULT_PRIORITY, Todo
-from magodo._dates import to_date
+from magodo._shared import to_date
 
 
 params = mark.parametrize

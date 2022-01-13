@@ -7,7 +7,7 @@ from typing import Type
 from pytest import mark
 
 from magodo import MagicTodo, Todo
-from magodo._dates import to_date
+from magodo._shared import to_date
 from magodo.types import AbstractMagicTodo
 
 

@@ -10,7 +10,8 @@ from eris import ErisError, Err, Ok, Result
 from metaman import cname
 
 from . import types as mtypes
-from ._todo import DEFAULT_PRIORITY, Todo
+from ._shared import DEFAULT_PRIORITY
+from ._todo import Todo
 from .spells import POST_BUILTIN_SPELLS, PRE_BUILTIN_SPELLS
 
 

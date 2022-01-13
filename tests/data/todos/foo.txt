@@ -6,6 +6,7 @@ other lines are apart of text paragraphs.
 ----- Todo List #1 -----
 (N) First item.
 (A) High-priority item @high
+(A) High-priority item. @high
 
 ----- Todo List #2 -----
 x (B) 2022-01-10 2022-01-01 Done item

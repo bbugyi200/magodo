@@ -3,9 +3,10 @@
 import logging as _logging
 
 from . import spells, types
+from ._shared import DEFAULT_PRIORITY
 from ._group import TodoGroup
 from ._magic import MagicTodo, MagicTodoMixin
-from ._todo import DEFAULT_PRIORITY, Todo
+from ._todo import Todo
 
 
 __all__ = [
