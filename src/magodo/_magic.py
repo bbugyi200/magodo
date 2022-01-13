@@ -57,8 +57,9 @@ class MagicTodoMixin(Generic[mtypes.MagicTodo_T], abc.ABC):
                 f" prefix. todo={todo!r}"
             )
 
-        for spell in cls.spells:
-            todo = spell(todo)
+        for spell_list in [cls.pre_spells, cls.spells, cls.post_spells]:
+            for spell in spell_list:
+                todo = spell(todo)
 
         return Ok(cls(todo))
 
