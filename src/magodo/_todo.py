@@ -18,7 +18,7 @@ from ._shared import (
     PUNCTUATION,
     RE_DATE,
     from_date,
-    is_meta_data,
+    is_metadata_word,
     is_prefix_word,
     to_date,
 )
@@ -106,7 +106,7 @@ class Todo:
         metadata: Optional[Metadata] = None
         mdata: Metadata = {}
         for word in all_words:
-            if is_meta_data(word):
+            if is_metadata_word(word):
                 kv = word.split(":", maxsplit=1)
                 key, value = kv
                 value = _clean_value(value)

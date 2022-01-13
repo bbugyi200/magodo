@@ -8,7 +8,7 @@ from ._shared import (
     CONTEXT_PREFIX,
     PROJECT_PREFIX,
     PUNCTUATION,
-    is_meta_data,
+    is_metadata_word,
     is_prefix_word,
 )
 from ._todo import Todo
@@ -64,6 +64,13 @@ def group_projects_contexts_and_metadata(todo: Todo) -> Todo:
         if word == "|" and all_next_words_are_special:
             return todo
 
+        if (
+            is_metadata_word(word)
+            and all_next_words_are_special
+            and word[-1] in PUNCTUATION
+        ):
+            return todo
+
         if has_special_prefix(word) and (
             word[-1] in PUNCTUATION or not all_next_words_are_special
         ):
@@ -113,7 +120,7 @@ def has_special_prefix(word: str) -> bool:
 
 def is_special_word(word: str) -> bool:
     """Returns True if `word` is a project, context, or metadata."""
-    return has_special_prefix(word) or is_meta_data(word)
+    return has_special_prefix(word) or is_metadata_word(word)
 
 
 def all_words_are_special(words: Iterable[str]) -> bool:

@@ -26,7 +26,7 @@ def from_date(date: dt.date) -> str:
     return date.strftime(DATE_FMT)
 
 
-def is_meta_data(word: str) -> bool:
+def is_metadata_word(word: str) -> bool:
     """Predicate that tells us if `word` is a metadata tag or not."""
     kv = word.split(":", maxsplit=1)
     return bool(len(kv) == 2 and kv[1] and not kv[1].startswith(":"))
