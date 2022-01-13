@@ -24,17 +24,14 @@ class MagicTodoMixin(Generic[mtypes.MagicTodo_T], abc.ABC):
     post_spells: List[mtypes.TodoSpell] = POST_BUILTIN_SPELLS
 
     def __init__(
-        self: mtypes.MagicTodo_T, todo: Todo, *, enchanted_todo: Todo = None
+        self: mtypes.MagicTodo_T, todo: Todo
     ):
         self.todo = todo
 
-        if enchanted_todo is None:
-            etodo = todo.new()
-            for spell_list in [self.pre_spells, self.spells, self.post_spells]:
-                for spell in spell_list:
-                    etodo = spell(etodo)
-        else:
-            etodo = enchanted_todo
+        etodo = todo.new()
+        for spell_list in [self.pre_spells, self.spells, self.post_spells]:
+            for spell in spell_list:
+                etodo = spell(etodo)
 
         self.enchanted_todo = etodo
 
