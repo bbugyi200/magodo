@@ -76,35 +76,35 @@ class AbstractTodo(Protocol):
         """Converts a Todo object back to a string."""
 
     @property
-    def contexts(self) -> Tuple[str, ...]:
+    def contexts(self) -> Tuple[str, ...]:  # noqa: D102
         pass
 
     @property
-    def create_date(self) -> dt.date | None:
+    def create_date(self) -> dt.date | None:  # noqa: D102
         pass
 
     @property
-    def desc(self) -> str:
+    def desc(self) -> str:  # noqa: D102
         pass
 
     @property
-    def done_date(self) -> dt.date | None:
+    def done_date(self) -> dt.date | None:  # noqa: D102
         pass
 
     @property
-    def marked_done(self) -> bool:
+    def marked_done(self) -> bool:  # noqa: D102
         pass
 
     @property
-    def metadata(self) -> Optional[Metadata]:
+    def metadata(self) -> Optional[Metadata]:  # noqa: D102
         pass
 
     @property
-    def priority(self) -> Priority:
+    def priority(self) -> Priority:  # noqa: D102
         pass
 
     @property
-    def projects(self) -> Tuple[str, ...]:
+    def projects(self) -> Tuple[str, ...]:  # noqa: D102
         pass
 
 

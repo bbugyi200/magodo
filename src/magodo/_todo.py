@@ -196,7 +196,6 @@ class Todo:
         metadata = kwargs.get("metadata", self.metadata)
         priority: Priority = kwargs.get("priority", self.priority)
         projects = kwargs.get("projects", self.projects)
-
         return Todo(
             contexts=contexts,
             create_date=create_date,

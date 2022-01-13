@@ -38,7 +38,7 @@ class MagicTodoMixin(Generic[mtypes.MagicTodo_T], abc.ABC):
 
         self.enchanted_todo = etodo
 
-    def __repr__(self) -> str:
+    def __repr__(self) -> str:  # noqa: D105
         result = ""
         result += cname(self)
         result += "(\n    TODO:           "
@@ -48,7 +48,7 @@ class MagicTodoMixin(Generic[mtypes.MagicTodo_T], abc.ABC):
         result += ")"
         return result
 
-    def __eq__(self, other: object) -> bool:
+    def __eq__(self, other: object) -> bool:  # noqa: D105
         if not isinstance(other, type(self)):
             return False
 
@@ -72,7 +72,6 @@ class MagicTodoMixin(Generic[mtypes.MagicTodo_T], abc.ABC):
             )
             return err.chain(todo_result)
 
-        # TODO(bugyi): Replace this with 'validator' spell (spell that returns Err)
         todo = todo_result.ok()
         if todo.priority == DEFAULT_PRIORITY and not todo.desc.startswith(
             TODO_PREFIXES
@@ -91,35 +90,35 @@ class MagicTodoMixin(Generic[mtypes.MagicTodo_T], abc.ABC):
         return self.enchanted_todo.to_line()
 
     @property
-    def contexts(self) -> Tuple[str, ...]:
+    def contexts(self) -> Tuple[str, ...]:  # noqa: D102
         return self.todo.contexts
 
     @property
-    def create_date(self) -> dt.date | None:
+    def create_date(self) -> dt.date | None:  # noqa: D102
         return self.todo.create_date
 
     @property
-    def desc(self) -> str:
+    def desc(self) -> str:  # noqa: D102
         return self.todo.desc
 
     @property
-    def done_date(self) -> dt.date | None:
+    def done_date(self) -> dt.date | None:  # noqa: D102
         return self.todo.done_date
 
     @property
-    def marked_done(self) -> bool:
+    def marked_done(self) -> bool:  # noqa: D102
         return self.todo.marked_done
 
     @property
-    def metadata(self) -> Optional[mtypes.Metadata]:
+    def metadata(self) -> Optional[mtypes.Metadata]:  # noqa: D102
         return self.todo.metadata
 
     @property
-    def priority(self) -> mtypes.Priority:
+    def priority(self) -> mtypes.Priority:  # noqa: D102
         return self.todo.priority
 
     @property
-    def projects(self) -> Tuple[str, ...]:
+    def projects(self) -> Tuple[str, ...]:  # noqa: D102
         return self.todo.projects
 
 
