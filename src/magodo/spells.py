@@ -8,8 +8,9 @@ from ._shared import (
     CONTEXT_PREFIX,
     PROJECT_PREFIX,
     PUNCTUATION,
-    is_metadata_word,
-    is_prefix_word,
+    is_any_prefix_tag,
+    is_any_tag,
+    is_metadata_tag,
 )
 from ._todo import Todo
 from .types import TodoSpell
@@ -56,35 +57,36 @@ def group_projects_contexts_and_metadata(todo: Todo) -> Todo:
 
     all_words = todo.desc.split(" ")
     new_words = []
-    non_special_words_found = False
+    regular_words_found = False
     for i, word in enumerate(all_words[:]):
-        all_next_words_are_special = _all_words_are_special(
-            all_words[i + 1 :]
-        ) and not word.endswith(PUNCTUATION)
-        if word == "|" and all_next_words_are_special:
+        all_prev_words_are_tags = _all_words_are_tags(all_words[:i])
+        all_next_words_are_tags = _all_words_are_tags(all_words[i + 1 :])
+
+        if word == "|" and all_next_words_are_tags:
             return todo
 
-        if (
-            is_metadata_word(word)
-            and all_next_words_are_special
-            and word[-1] in PUNCTUATION
+        if is_metadata_tag(word) and not (
+            all_prev_words_are_tags or all_next_words_are_tags
         ):
             return todo
 
-        if _has_special_prefix(word) and (
-            word[-1] in PUNCTUATION or not all_next_words_are_special
+        if is_metadata_tag(word) and word[-1] in PUNCTUATION:
+            return todo
+
+        if is_any_prefix_tag(word) and (
+            word[-1] in PUNCTUATION or not all_next_words_are_tags
         ):
-            if non_special_words_found:
+            if regular_words_found:
                 new_words.append(word[1:])
             continue
 
-        if _is_special_word(word) and all_next_words_are_special:
+        if is_any_tag(word) and all_next_words_are_tags:
             continue
 
-        non_special_words_found = True
+        regular_words_found = True
         new_words.append(word)
 
-    if not non_special_words_found:
+    if not regular_words_found:
         return todo
 
     desc = " ".join(new_words).strip()
@@ -111,18 +113,6 @@ def group_projects_contexts_and_metadata(todo: Todo) -> Todo:
     return todo.new(desc=desc)
 
 
-def _has_special_prefix(word: str) -> bool:
-    """Returns True if `word` is a project or context."""
-    return is_prefix_word(CONTEXT_PREFIX, word) or is_prefix_word(
-        PROJECT_PREFIX, word
-    )
-
-
-def _is_special_word(word: str) -> bool:
-    """Returns True if `word` is a project, context, or metadata."""
-    return _has_special_prefix(word) or is_metadata_word(word)
-
-
-def _all_words_are_special(words: Iterable[str]) -> bool:
+def _all_words_are_tags(words: Iterable[str]) -> bool:
     """Returns True if all `words` are special words."""
-    return all(_is_special_word(w) for w in words)
+    return all(is_any_tag(w) for w in words)

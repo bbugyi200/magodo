@@ -18,8 +18,8 @@ from ._shared import (
     PUNCTUATION,
     RE_DATE,
     from_date,
-    is_metadata_word,
-    is_prefix_word,
+    is_metadata_tag,
+    is_prefix_tag,
     to_date,
 )
 from .types import Metadata, Priority
@@ -95,7 +95,7 @@ class Todo:
             (context_list, CONTEXT_PREFIX),
         ]:
             for word in all_words:
-                if is_prefix_word(prefix, word):
+                if is_prefix_tag(prefix, word):
                     value = word[len(prefix) :]
                     value = _clean_value(value)
                     some_list.append(value)
@@ -106,7 +106,7 @@ class Todo:
         metadata: Optional[Metadata] = None
         mdata: Metadata = {}
         for word in all_words:
-            if is_metadata_word(word):
+            if is_metadata_tag(word):
                 kv = word.split(":", maxsplit=1)
                 key, value = kv
                 value = _clean_value(value)

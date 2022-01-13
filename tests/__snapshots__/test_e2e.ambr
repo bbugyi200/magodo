@@ -916,5 +916,43 @@
         ),
       },
     },
+    <class 'dict'> {
+      'enchanted_todo': <class 'dict'> {
+        'contexts': <class 'tuple'> (
+        ),
+        'create_date': None,
+        'desc': 'o We also do not group:tags when a metadata tag is in the middle.',
+        'done_date': None,
+        'marked_done': False,
+        'metadata': <class 'dict'> {
+          'group': 'tags',
+        },
+        'priority': 'O',
+        'projects': <class 'tuple'> (
+        ),
+      },
+      'post_spells': <class 'list'> [
+        'group_projects_contexts_and_metadata',
+      ],
+      'pre_spells': <class 'list'> [
+        'x_tag',
+      ],
+      'spells': <class 'list'> [
+      ],
+      'todo': <class 'dict'> {
+        'contexts': <class 'tuple'> (
+        ),
+        'create_date': None,
+        'desc': 'o We also do not group:tags when a metadata tag is in the middle.',
+        'done_date': None,
+        'marked_done': False,
+        'metadata': <class 'dict'> {
+          'group': 'tags',
+        },
+        'priority': 'O',
+        'projects': <class 'tuple'> (
+        ),
+      },
+    },
   ]
 ---

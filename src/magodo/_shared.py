@@ -26,16 +26,36 @@ def from_date(date: dt.date) -> str:
     return date.strftime(DATE_FMT)
 
 
-def is_metadata_word(word: str) -> bool:
+def is_metadata_tag(word: str) -> bool:
     """Predicate that tells us if `word` is a metadata tag or not."""
     kv = word.split(":", maxsplit=1)
     return bool(len(kv) == 2 and kv[1] and not kv[1].startswith(":"))
 
 
-def is_prefix_word(prefix: str, word: str) -> bool:
+def is_prefix_tag(prefix: str, word: str) -> bool:
     """Predicate that tells us if a word is prefixed by `prefix`."""
     return (
         word.startswith(prefix)
         and not word.startswith(prefix + prefix)
         and len(prefix) < len(word)
     )
+
+
+def is_context_tag(word: str) -> bool:
+    """Returns True if `word` is a context tag."""
+    return is_prefix_tag(CONTEXT_PREFIX, word)
+
+
+def is_project_tag(word: str) -> bool:
+    """Returns True if `word` is a project tag."""
+    return is_prefix_tag(PROJECT_PREFIX, word)
+
+
+def is_any_prefix_tag(word: str) -> bool:
+    """Returns True if `word` is either a context or project tag."""
+    return is_context_tag(word) or is_project_tag(word)
+
+
+def is_any_tag(word: str) -> bool:
+    """Returns True if `word` is a project, context, or metadata."""
+    return is_any_prefix_tag(word) or is_metadata_tag(word)
