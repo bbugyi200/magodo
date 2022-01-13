@@ -7,6 +7,7 @@ from pathlib import Path
 from typing import Generic, Iterable, Iterator, List, Type
 
 from eris import Err
+from metaman import cname
 from typist import PathLike
 
 from .types import Todo_T
@@ -22,7 +23,7 @@ class TodoGroup(Generic[Todo_T]):
         self._todos = list(todos)
 
     def __repr__(self) -> str:  # noqa: D105
-        return f"{self.__class__.__name__}(todos={self._todos})"
+        return f"{cname(self)}({self._todos})"
 
     def __iter__(self) -> Iterator[Todo_T]:
         """Yields the Todo objects that belong to this group."""

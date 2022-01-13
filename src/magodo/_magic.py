@@ -27,7 +27,7 @@ class MagicTodoMixin(Generic[mtypes.MagicTodo_T], abc.ABC):
         self.todo = self.cast_spells(todo).unwrap()
 
     def __repr__(self) -> str:  # noqa: D105
-        return f"{cname(self)}(todo={self.todo})"
+        return f"{cname(self)}({self.todo})"
 
     def __eq__(self, other: object) -> bool:  # noqa: D105
         if not isinstance(other, type(self)):  # pragma: no cover
