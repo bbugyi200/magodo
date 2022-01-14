@@ -30,6 +30,9 @@ class TodoGroup(Generic[mtypes.Todo_T]):
         """Yields the Todo objects that belong to this group."""
         yield from self._todos
 
+    def __len__(self) -> int:  # noqa: D105
+        return len(self._todos)
+
     @classmethod
     def from_path(
         cls, todo_type: Type[mtypes.Todo_T], path_like: PathLike
