@@ -31,4 +31,4 @@ def test_group_from_path(
     """Test the TodoGroup.from_path() function."""
     todo_group = magodo.TodoGroup.from_path(magodo.MagicTodo, todo_file)
     todo_group = todo_group.filter_by(**kwargs)
-    assert [todo.to_dict() for todo in todo_group] == snapshot
+    assert [repr(todo) for todo in todo_group] == snapshot

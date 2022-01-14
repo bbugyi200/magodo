@@ -4,10 +4,11 @@
 
 from __future__ import annotations
 
+import abc
 import datetime as dt
 from functools import total_ordering
 import re
-from typing import Any, Dict, Final, List, Optional, Tuple, cast
+from typing import Any, Dict, Final, Generic, List, Optional, Tuple, cast
 
 from eris import ErisError, Err, Ok, Result
 from metaman import cname
@@ -23,7 +24,7 @@ from ._shared import (
     is_prefix_tag,
     to_date,
 )
-from .types import Metadata, Priority
+from .types import Metadata, Priority, Todo_T
 
 
 RE_TODO: Final = r"""
@@ -39,32 +40,10 @@ RE_TODO: Final = r"""
 )
 
 
-@total_ordering
-class Todo:
-    """Represents a single task in a todo list."""
+class TodoMixin(Generic[Todo_T], abc.ABC):
+    """Implements standard Todo-like behaviors.."""
 
-    def __init__(
-        self,
-        desc: str,
-        *,
-        contexts: Tuple[str, ...] = (),
-        create_date: dt.date = None,
-        done_date: dt.date = None,
-        marked_done: bool = False,
-        metadata: Metadata = None,
-        priority: Priority = DEFAULT_PRIORITY,
-        projects: Tuple[str, ...] = (),
-    ):
-        self.contexts = contexts
-        self.create_date = create_date
-        self.desc = desc
-        self.done_date = done_date
-        self.marked_done = marked_done
-        self.metadata = metadata or {}
-        self.priority = priority
-        self.projects = projects
-
-    def __repr__(self) -> str:  # noqa: D105
+    def __repr__(self: Todo_T) -> str:  # noqa: D105
         kwargs: Dict[str, Any] = {}
 
         if self.contexts:
@@ -83,7 +62,7 @@ class Todo:
             kwargs["metadata"] = self.metadata
 
         if self.priority != DEFAULT_PRIORITY:
-            kwargs["priority"] = self.priority
+            kwargs["priority"] = repr(self.priority)
 
         if self.projects:
             kwargs["projects"] = self.projects
@@ -97,7 +76,7 @@ class Todo:
 
         return f"{cname(self)}(desc={self.desc!r}{pretty_kwargs})"
 
-    def __eq__(self, other: object) -> bool:  # noqa: D105
+    def __eq__(self: Todo_T, other: object) -> bool:  # noqa: D105
         if not isinstance(other, type(self)):  # pragma: no cover
             return False
 
@@ -114,7 +93,7 @@ class Todo:
             ]
         )
 
-    def __lt__(self, other: object) -> bool:  # noqa: D105
+    def __lt__(self: Todo_T, other: object) -> bool:  # noqa: D105
         if not isinstance(other, type(self)):
             raise ValueError(
                 f"Unable to compare '{type(other)}' object with 'Todo' object."
@@ -152,6 +131,32 @@ class Todo:
             return self.create_date < other.create_date
 
         return self.desc < other.desc
+
+
+@total_ordering
+class Todo(TodoMixin):
+    """Represents a single task in a todo list."""
+
+    def __init__(
+        self,
+        desc: str,
+        *,
+        contexts: Tuple[str, ...] = (),
+        create_date: dt.date = None,
+        done_date: dt.date = None,
+        marked_done: bool = False,
+        metadata: Metadata = None,
+        priority: Priority = DEFAULT_PRIORITY,
+        projects: Tuple[str, ...] = (),
+    ):
+        self.contexts = contexts
+        self.create_date = create_date
+        self.desc = desc
+        self.done_date = done_date
+        self.marked_done = marked_done
+        self.metadata = metadata or {}
+        self.priority = priority
+        self.projects = projects
 
     @classmethod
     def from_line(cls, line: str) -> Result[Todo, ErisError]:

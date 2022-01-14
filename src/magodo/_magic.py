@@ -8,15 +8,14 @@ from functools import total_ordering
 from typing import Any, Dict, Generic, List, Tuple, Type
 
 from eris import ErisError, Err, Ok, Result
-from metaman import cname
 
 from . import types as mtypes
-from ._todo import Todo
+from ._todo import Todo, TodoMixin
 from .spells import POST_BUILTIN_SPELLS, PRE_BUILTIN_SPELLS
 
 
 @total_ordering
-class MagicTodoMixin(Generic[mtypes.MagicTodo_T], abc.ABC):
+class MagicTodoMixin(TodoMixin, Generic[mtypes.MagicTodo_T], abc.ABC):
     """Mixin class that implements the Todo protocol."""
 
     pre_spells: List[mtypes.TodoSpell] = PRE_BUILTIN_SPELLS
@@ -25,18 +24,6 @@ class MagicTodoMixin(Generic[mtypes.MagicTodo_T], abc.ABC):
     def __init__(self: mtypes.MagicTodo_T, todo: Todo):
         self._todo = todo
         self.todo = self.cast_spells(todo).unwrap()
-
-    def __repr__(self) -> str:  # noqa: D105
-        return f"{cname(self)}({self.todo})"
-
-    def __eq__(self, other: object) -> bool:  # noqa: D105
-        if not isinstance(other, type(self)):  # pragma: no cover
-            return False
-
-        return self.todo == other.todo
-
-    def __lt__(self, other: mtypes.MagicTodo_T) -> bool:  # noqa: D105
-        return self.todo < other.todo
 
     @classmethod
     def from_line(

@@ -23,7 +23,7 @@ from eris import ErisError, Result
 
 
 if TYPE_CHECKING:
-    from ._todo import Todo
+    from ._todo import Todo  # pragma: no cover
 
 
 # Type Variables (i.e. `TypeVar`s)
@@ -81,35 +81,44 @@ class AbstractTodo(Protocol):
 
     @property
     def contexts(self) -> Tuple[str, ...]:  # noqa: D102
-        pass
+        """A todo's contexts.
+
+        A word is normally marked as a context by prefixing it with '@'.
+        """
 
     @property
     def create_date(self) -> Optional[dt.date]:  # noqa: D102
-        pass
+        """The date this todo was created."""
 
     @property
     def desc(self) -> str:  # noqa: D102
-        pass
+        """A description of this todo."""
 
     @property
     def done_date(self) -> Optional[dt.date]:  # noqa: D102
-        pass
+        """The date this todo was completed."""
 
     @property
     def marked_done(self) -> bool:  # noqa: D102
-        pass
+        """Is this todo marked done with an 'x'?"""
 
     @property
     def metadata(self) -> Metadata:  # noqa: D102
-        pass
+        """A todo's corresponding metadata dictionary.
+
+        A word is metadata if it is of the form KEY:VALUE.
+        """
 
     @property
     def priority(self) -> Priority:  # noqa: D102
-        pass
+        """A todo's priority."""
 
     @property
     def projects(self) -> Tuple[str, ...]:  # noqa: D102
-        pass
+        """A todo's projects.
+
+        A word is normally marked as a project by prefixing it with '+'.
+        """
 
 
 @runtime_checkable
