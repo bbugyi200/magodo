@@ -3,10 +3,8 @@
 from __future__ import annotations
 
 import datetime as dt
-import typing
 from typing import (
     TYPE_CHECKING,
-    Any,
     Callable,
     Dict,
     List,
@@ -21,6 +19,7 @@ from typing import (
 )
 
 from eris import ErisError, Result
+from typist import Comparable, ToDictable
 
 
 if TYPE_CHECKING:
@@ -65,30 +64,9 @@ Priority = Literal[
 # Type of spell functions used by MagicTodo objects.
 TodoSpell = Callable[["Todo"], Result["Todo", ErisError]]
 
-C = typing.TypeVar("C", bound="Comparable")
-
-
-class Comparable(Protocol):
-    """A type that can be compared and sorted."""
-
-    def __eq__(self, other: Any) -> bool:  # noqa: D105
-        pass
-
-    def __lt__(self: C, other: C) -> bool:  # noqa: D105
-        pass
-
-    def __gt__(self: C, other: C) -> bool:  # noqa: D105
-        pass
-
-    def __le__(self: C, other: C) -> bool:  # noqa: D105
-        pass
-
-    def __ge__(self: C, other: C) -> bool:  # noqa: D105
-        pass
-
 
 @runtime_checkable
-class AbstractTodo(Comparable, Protocol):
+class AbstractTodo(Comparable, ToDictable, Protocol):
     """Describes how any valid Todo object should look."""
 
     @classmethod
@@ -97,9 +75,6 @@ class AbstractTodo(Comparable, Protocol):
 
     def to_line(self) -> str:
         """Converts a Todo object back to a string."""
-
-    def to_dict(self) -> dict[str, Any]:
-        """Converts a Todo object into a dictionary."""
 
     @property
     def contexts(self) -> Tuple[str, ...]:  # noqa: D102
