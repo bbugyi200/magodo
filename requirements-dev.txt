@@ -22,7 +22,7 @@ binaryornot==0.4.4
     # via cookiecutter
 black==21.12b0
     # via -r requirements-dev.in
-bolton-eris==0.2.2
+bolton-eris==0.2.3
     # via
     #   -r requirements.in
     #   magodo
@@ -33,7 +33,7 @@ bolton-metaman==0.1.1
     #   -r requirements.in
     #   bolton-eris
     #   magodo
-bolton-typist==0.1.2
+bolton-typist==0.2.0
     # via
     #   -r requirements.in
     #   bolton-eris
