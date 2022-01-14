@@ -116,7 +116,7 @@ class TodoGroup(Generic[mtypes.Todo_T]):
                 continue
 
             if projects is not None and not all(
-                ctx in todo.projects for ctx in projects
+                proj in todo.projects for proj in projects
             ):
                 continue
 
