@@ -75,7 +75,7 @@ def x_tag(todo: Todo) -> Result[Todo, ErisError]:
 @post_spell
 def group_tags(todo: Todo) -> Result[Todo, ErisError]:
     """Groups all @ctxs, +projs, and meta:data at the end of the line."""
-    if not (todo.contexts or todo.projects or todo.metadata is not None):
+    if not (todo.contexts or todo.projects or todo.metadata):
         return Ok(todo)
 
     all_words = todo.desc.split(" ")

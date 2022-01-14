@@ -48,19 +48,19 @@ class Todo:
         desc: str,
         *,
         contexts: Tuple[str, ...] = (),
-        create_date: Optional[dt.date] = None,
-        done_date: Optional[dt.date] = None,
+        create_date: dt.date = None,
+        done_date: dt.date = None,
         marked_done: bool = False,
-        metadata: Optional[Metadata] = None,
+        metadata: Metadata = None,
         priority: Priority = DEFAULT_PRIORITY,
         projects: Tuple[str, ...] = (),
     ):
-        self.desc = desc
         self.contexts = contexts
         self.create_date = create_date
+        self.desc = desc
         self.done_date = done_date
         self.marked_done = marked_done
-        self.metadata = metadata
+        self.metadata = metadata or {}
         self.priority = priority
         self.projects = projects
 

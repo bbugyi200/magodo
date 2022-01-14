@@ -5,7 +5,7 @@ from __future__ import annotations
 import abc
 import datetime as dt
 from functools import total_ordering
-from typing import Any, Dict, Generic, List, Optional, Tuple, Type
+from typing import Any, Dict, Generic, List, Tuple, Type
 
 from eris import ErisError, Err, Ok, Result
 from metaman import cname
@@ -114,7 +114,7 @@ class MagicTodoMixin(Generic[mtypes.MagicTodo_T], abc.ABC):
         return self.todo.marked_done
 
     @property
-    def metadata(self) -> Optional[mtypes.Metadata]:  # noqa: D102
+    def metadata(self) -> mtypes.Metadata:  # noqa: D102
         return self.todo.metadata
 
     @property

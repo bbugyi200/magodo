@@ -100,7 +100,7 @@ class AbstractTodo(Protocol):
         pass
 
     @property
-    def metadata(self) -> Optional[Metadata]:  # noqa: D102
+    def metadata(self) -> Metadata:  # noqa: D102
         pass
 
     @property

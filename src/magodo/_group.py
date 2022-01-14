@@ -2,36 +2,37 @@
 
 from __future__ import annotations
 
+import datetime as dt
 from logging import Logger
 from pathlib import Path
-from typing import Generic, Iterable, Iterator, List, Type
+from typing import Generic, Iterable, Iterator, List, Tuple, Type
 
 from eris import Err
 from metaman import cname
 from typist import PathLike
 
-from .types import Todo_T
+from . import types as mtypes
 
 
 logger = Logger(__name__)
 
 
-class TodoGroup(Generic[Todo_T]):
+class TodoGroup(Generic[mtypes.Todo_T]):
     """Manages a group of Todo objects."""
 
-    def __init__(self, todos: Iterable[Todo_T]) -> None:
+    def __init__(self, todos: Iterable[mtypes.Todo_T]) -> None:
         self._todos = list(todos)
 
     def __repr__(self) -> str:  # noqa: D105
         return f"{cname(self)}({self._todos})"
 
-    def __iter__(self) -> Iterator[Todo_T]:
+    def __iter__(self) -> Iterator[mtypes.Todo_T]:
         """Yields the Todo objects that belong to this group."""
         yield from self._todos
 
     @classmethod
     def from_path(
-        cls, todo_type: Type[Todo_T], path_like: PathLike
+        cls, todo_type: Type[mtypes.Todo_T], path_like: PathLike
     ) -> TodoGroup:
         """Reads all todo lines from a given file or directory (recursively).
 
@@ -42,7 +43,7 @@ class TodoGroup(Generic[Todo_T]):
 
         assert path.exists(), f"The provided path does not exist: {path}"
 
-        todos: List[Todo_T] = []
+        todos: List[mtypes.Todo_T] = []
         if path.is_file():
             logger.debug(
                 "Attempting to load todos from text file: file=%r", str(path)
@@ -72,3 +73,53 @@ class TodoGroup(Generic[Todo_T]):
                 todos.extend(other_todo_group)
 
         return cls(todos)
+
+    def filter_by(
+        self,
+        *,
+        contexts: Tuple[str, ...] = None,
+        create_date: dt.date = None,
+        desc: str = None,
+        done_date: dt.date = None,
+        marked_done: bool = None,
+        metadata: mtypes.Metadata = None,
+        priority: mtypes.Priority = None,
+        projects: Tuple[str, ...] = None,
+    ) -> TodoGroup:
+        """Filter this group using one or more Todo properties."""
+        todos = []
+
+        for todo in self._todos:
+            if contexts is not None and not all(
+                ctx in todo.contexts for ctx in contexts
+            ):
+                continue
+
+            if create_date is not None and todo.create_date != create_date:
+                continue
+
+            if desc is not None and desc.lower() not in todo.desc.lower():
+                continue
+
+            if done_date is not None and todo.done_date != done_date:
+                continue
+
+            if marked_done is not None and todo.marked_done != marked_done:
+                continue
+
+            if metadata is not None and not all(
+                v == todo.metadata.get(k, None) for (k, v) in metadata.items()
+            ):
+                continue
+
+            if priority is not None and todo.priority != priority:
+                continue
+
+            if projects is not None and not all(
+                ctx in todo.projects for ctx in projects
+            ):
+                continue
+
+            todos.append(todo)
+
+        return TodoGroup(todos)
