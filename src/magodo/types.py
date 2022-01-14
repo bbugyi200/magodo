@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import datetime as dt
+import typing
 from typing import (
     TYPE_CHECKING,
     Any,
@@ -64,9 +65,28 @@ Priority = Literal[
 # Type of spell functions used by MagicTodo objects.
 TodoSpell = Callable[["Todo"], Result["Todo", ErisError]]
 
+C = typing.TypeVar("C", bound="Comparable")
+
+
+class Comparable(Protocol):
+    def __eq__(self, other: Any) -> bool:
+        pass
+
+    def __lt__(self: C, other: C) -> bool:
+        pass
+
+    def __gt__(self: C, other: C) -> bool:
+        pass
+
+    def __le__(self: C, other: C) -> bool:
+        pass
+
+    def __ge__(self: C, other: C) -> bool:
+        pass
+
 
 @runtime_checkable
-class AbstractTodo(Protocol):
+class AbstractTodo(Comparable, Protocol):
     """Describes how any valid Todo object should look."""
 
     @classmethod

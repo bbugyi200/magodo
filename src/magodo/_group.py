@@ -21,7 +21,7 @@ class TodoGroup(Generic[mtypes.Todo_T]):
     """Manages a group of Todo objects."""
 
     def __init__(self, todos: Iterable[mtypes.Todo_T]) -> None:
-        self._todos = list(todos)
+        self._todos = sorted(todos)
 
     def __repr__(self) -> str:  # noqa: D105
         return f"{cname(self)}({self._todos})"
