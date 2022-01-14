@@ -125,7 +125,7 @@ def group_tags(todo: Todo) -> Result[Todo, ErisError]:
             PROJECT_PREFIX + ctx for ctx in sorted(todo.projects)
         )
 
-    if todo.metadata is not None:
+    if todo.metadata:
         desc += " " + " ".join(
             f"{k}:{v}" for (k, v) in sorted(todo.metadata.items())
         )

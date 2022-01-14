@@ -1,12 +1,12 @@
 # name: test_group_from_path[ctx-bar]
   <class 'list'> [
-    "MagicTodo(desc='High-priority item | @high ', contexts=('high',), metadata={}, priority='A')",
+    "MagicTodo(desc='High-priority item | @high', contexts=('high',), metadata={}, priority='A')",
   ]
 ---
 # name: test_group_from_path[ctx-foo]
   <class 'list'> [
-    "MagicTodo(desc='High-priority item | @high ', contexts=('high',), metadata={}, priority='A')",
-    "MagicTodo(desc='High-priority item. | @high ', contexts=('high',), metadata={}, priority='A')",
+    "MagicTodo(desc='High-priority item | @high', contexts=('high',), metadata={}, priority='A')",
+    "MagicTodo(desc='High-priority item. | @high', contexts=('high',), metadata={}, priority='A')",
   ]
 ---
 # name: test_group_from_path[desc-bar]
@@ -20,31 +20,31 @@
 ---
 # name: test_group_from_path[none-bar]
   <class 'list'> [
-    "MagicTodo(desc='High-priority item | @high ', contexts=('high',), metadata={}, priority='A')",
-    "MagicTodo(desc='And another... | +another ', metadata={}, priority='B', projects=('another',))",
+    "MagicTodo(desc='High-priority item | @high', contexts=('high',), metadata={}, priority='A')",
+    "MagicTodo(desc='And another... | +another', metadata={}, priority='B', projects=('another',))",
     "MagicTodo(desc='And +finally... one:more!', create_date=2022-01-11, metadata={'one': 'more'}, priority='C', projects=('finally',))",
     "MagicTodo(desc='First item.', metadata={}, priority='N')",
     "MagicTodo(desc='Item is due:2022-01-31.', create_date=2022-01-11, metadata={'due': '2022-01-31'}, priority='N')",
-    "MagicTodo(desc='This todo came from the C.txt file. | +C.txt ', metadata={}, projects=('C.txt',))",
+    "MagicTodo(desc='This todo came from the C.txt file. | +C.txt', metadata={}, projects=('C.txt',))",
     "MagicTodo(desc='Done item', create_date=2022-01-01, done_date=2022-01-10, marked_done=True, metadata={}, priority='B')",
   ]
 ---
 # name: test_group_from_path[none-foo]
   <class 'list'> [
-    "MagicTodo(desc='High-priority item | @high ', contexts=('high',), metadata={}, priority='A')",
-    "MagicTodo(desc='High-priority item. | @high ', contexts=('high',), metadata={}, priority='A')",
+    "MagicTodo(desc='High-priority item | @high', contexts=('high',), metadata={}, priority='A')",
+    "MagicTodo(desc='High-priority item. | @high', contexts=('high',), metadata={}, priority='A')",
     "MagicTodo(desc='1234 Todos can start with numbers:5678.', metadata={'numbers': '5678'}, priority='N')",
     "MagicTodo(desc='Ditto for keys: with no values.', metadata={}, priority='N')",
     'MagicTodo(desc="Don\'t + make + normal + pluses + projects.", metadata={}, priority=\'N\')',
     "MagicTodo(desc='First item.', metadata={}, priority='N')",
     "MagicTodo(desc='Item is due:2022-01-31.', create_date=2022-01-11, metadata={'due': '2022-01-31'}, priority='N')",
-    "MagicTodo(desc='We allow descriptions to start with contexts. | @context ', contexts=('context',), metadata={}, priority='N')",
-    "MagicTodo(desc='We allow descriptions to start with projects. | +project ', metadata={}, priority='N', projects=('project',))",
+    "MagicTodo(desc='We allow descriptions to start with contexts. | @context', contexts=('context',), metadata={}, priority='N')",
+    "MagicTodo(desc='We allow descriptions to start with projects. | +project', metadata={}, priority='N', projects=('project',))",
     "MagicTodo(desc='We strip +punctuation. But not if the value:. is just @punctuation, ya:dig?', contexts=('punctuation',), metadata={'value': '.', 'ya': 'dig'}, priority='N', projects=('punctuation',))",
     'MagicTodo(desc=\'(N) But this "o" can only be used if a priority is NOT provided.\', metadata={})',
     'MagicTodo(desc=\'A lowercase "o" can also be used when running in "strict" mode.\', metadata={})',
     "MagicTodo(desc='Double colons should be::ignored.', metadata={})",
-    'MagicTodo(desc="Sometimes we want to use apostrophe with project\'s or contexts\'. | @contexts +project ", contexts=(\'contexts\',), metadata={}, projects=(\'project\',))',
+    'MagicTodo(desc="Sometimes we want to use apostrophe with project\'s or contexts\'. | @contexts +project", contexts=(\'contexts\',), metadata={}, projects=(\'project\',))',
     "MagicTodo(desc='We also do not group:tags when a metadata tag is in the middle.', metadata={'group': 'tags'})",
     "MagicTodo(desc='We also ignore double ++pluses and double @@at signs.', metadata={})",
     "MagicTodo(desc='Done item', create_date=2022-01-01, done_date=2022-01-10, marked_done=True, metadata={}, priority='B')",
