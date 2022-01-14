@@ -1,4 +1,4 @@
-"""Contains all of magodo's default Todo spell functions."""
+"""Contains all of magodo's default MagicTodo spell functions."""
 
 from __future__ import annotations
 

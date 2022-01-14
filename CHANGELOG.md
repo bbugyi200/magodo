@@ -39,7 +39,7 @@ No notable changes have been made.
 
 ### Changed
 
-* *BREAKING CHANGE*: Changed name of pacakge from "todotxt" to "magodo".
+* *BREAKING CHANGE*: Changed name of package from "todotxt" to "magodo".
 
 ### Miscellaneous
 
