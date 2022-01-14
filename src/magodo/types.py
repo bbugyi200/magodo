@@ -69,19 +69,21 @@ C = typing.TypeVar("C", bound="Comparable")
 
 
 class Comparable(Protocol):
-    def __eq__(self, other: Any) -> bool:
+    """A type that can be compared and sorted."""
+
+    def __eq__(self, other: Any) -> bool:  # noqa: D105
         pass
 
-    def __lt__(self: C, other: C) -> bool:
+    def __lt__(self: C, other: C) -> bool:  # noqa: D105
         pass
 
-    def __gt__(self: C, other: C) -> bool:
+    def __gt__(self: C, other: C) -> bool:  # noqa: D105
         pass
 
-    def __le__(self: C, other: C) -> bool:
+    def __le__(self: C, other: C) -> bool:  # noqa: D105
         pass
 
-    def __ge__(self: C, other: C) -> bool:
+    def __ge__(self: C, other: C) -> bool:  # noqa: D105
         pass
 
 
