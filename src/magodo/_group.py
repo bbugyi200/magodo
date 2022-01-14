@@ -5,7 +5,7 @@ from __future__ import annotations
 import datetime as dt
 from logging import Logger
 from pathlib import Path
-from typing import Generic, Iterable, Iterator, List, Tuple, Type
+from typing import Generic, Iterable, Iterator, List, Type
 
 from eris import Err
 from metaman import cname
@@ -77,14 +77,14 @@ class TodoGroup(Generic[mtypes.Todo_T]):
     def filter_by(
         self,
         *,
-        contexts: Tuple[str, ...] = None,
+        contexts: Iterable[str] = None,
         create_date: dt.date = None,
         desc: str = None,
         done_date: dt.date = None,
         marked_done: bool = None,
         metadata: mtypes.Metadata = None,
         priority: mtypes.Priority = None,
-        projects: Tuple[str, ...] = None,
+        projects: Iterable[str] = None,
     ) -> TodoGroup:
         """Filter this group using one or more Todo properties."""
         todos = []
