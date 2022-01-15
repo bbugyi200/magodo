@@ -78,15 +78,12 @@ def group_tags(todo: Todo) -> Result[Todo, ErisError]:
     if not (todo.contexts or todo.projects or todo.metadata):
         return Ok(todo)
 
-    all_words = todo.desc.split(" ")
+    all_words = [w for w in todo.desc.split(" ") if w != "|"]
     new_words = []
     regular_words_found = False
     for i, word in enumerate(all_words[:]):
         all_prev_words_are_tags = _all_words_are_tags(all_words[:i])
         all_next_words_are_tags = _all_words_are_tags(all_words[i + 1 :])
-
-        if word == "|" and all_next_words_are_tags:
-            return Ok(todo)
 
         if is_metadata_tag(word) and not (
             all_prev_words_are_tags or all_next_words_are_tags
