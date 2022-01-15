@@ -249,7 +249,7 @@ class Todo(TodoMixin):
             result += "x "
 
         if self.priority != DEFAULT_PRIORITY:
-            result += f"({self.priority})"
+            result += f"({self.priority}) "
 
         if self.done_date is not None:
             result += from_date(self.done_date) + " "
