@@ -9,9 +9,22 @@ The format is based on [Keep a Changelog], and this project adheres to
 [Semantic Versioning]: https://semver.org/
 
 
-## [Unreleased](https://github.com/bbugyi200/magodo/compare/0.5.1...HEAD)
+## [Unreleased](https://github.com/bbugyi200/magodo/compare/0.5.2...HEAD)
 
 No notable changes have been made.
+
+
+## [0.5.2](https://github.com/bbugyi200/magodo/compare/0.5.1...0.5.2) - 2022-01-15
+
+## Changed
+
+* Use 'id' in sorting algorithm.
+* Take 'ctime' metadata tag into account when sorting.
+
+### Fixed
+
+* Fix `spells.group_tags()`.
+* Fix missing space after priority.
 
 
 ## [0.5.1](https://github.com/bbugyi200/magodo/compare/0.5.0...0.5.1) - 2022-01-14
