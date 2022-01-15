@@ -112,23 +112,27 @@ class TodoMixin(Generic[Todo_T], abc.ABC):
             return False
 
         if self.done_date is not None and other.done_date is not None:
-            self_mdata = self.metadata or {}
-            other_mdata = other.metadata or {}
             if self.done_date != other.done_date:
                 return self.done_date < other.done_date
-            elif (self_dtime := self_mdata.get("dtime", None)) and (
-                other_dtime := other_mdata.get("dtime", None)
+            elif (self_dtime := self.metadata.get("dtime", None)) and (
+                other_dtime := other.metadata.get("dtime", None)
             ):
                 assert isinstance(self_dtime, str)
                 assert isinstance(other_dtime, str)
                 return self_dtime < other_dtime
 
-        if (
-            self.create_date
-            and other.create_date
-            and self.create_date != other.create_date
-        ):
-            return self.create_date < other.create_date
+        if self.create_date and other.create_date:
+            if self.create_date == other.create_date:
+                if (
+                    (self_ctime := self.metadata.get("ctime", None))
+                    and (other_ctime := other.metadata.get("ctime", None))
+                    and self_ctime != other_ctime
+                ):
+                    assert isinstance(self_ctime, str)
+                    assert isinstance(other_ctime, str)
+                    return self_ctime < other_ctime
+            else:
+                return self.create_date < other.create_date
 
         return self.desc < other.desc
 
