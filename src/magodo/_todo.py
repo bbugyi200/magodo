@@ -134,6 +134,13 @@ class TodoMixin(Generic[Todo_T], abc.ABC):
             else:
                 return self.create_date < other.create_date
 
+        if (self_id := self.metadata.get("id", None)) and (
+            other_id := other.metadata.get("id", None)
+        ):
+            assert isinstance(self_id, str)
+            assert isinstance(other_id, str)
+            return self_id < other_id
+
         return self.desc < other.desc
 
 
