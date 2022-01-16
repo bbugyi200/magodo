@@ -9,9 +9,16 @@ The format is based on [Keep a Changelog], and this project adheres to
 [Semantic Versioning]: https://semver.org/
 
 
-## [Unreleased](https://github.com/bbugyi200/magodo/compare/0.5.3...HEAD)
+## [Unreleased](https://github.com/bbugyi200/magodo/compare/0.6.0...HEAD)
 
 No notable changes have been made.
+
+
+## [0.6.0](https://github.com/bbugyi200/magodo/compare/0.5.3...0.6.0) - 2022-01-15
+
+### Changed
+
+* *BREAKING CHANGE*: Move default spells from `MagicTodoMixin` to `MagicTodo`.
 
 
 ## [0.5.3](https://github.com/bbugyi200/magodo/compare/0.5.2...0.5.3) - 2022-01-15
