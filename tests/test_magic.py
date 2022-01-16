@@ -26,7 +26,7 @@ params = mark.parametrize
             ),
             Todo(
                 desc="Some done todo. | dtime:1030",
-                marked_done=True,
+                done=True,
                 create_date=to_date("2022-01-12"),
                 metadata={"dtime": "1030"},
             ),
@@ -42,7 +42,7 @@ params = mark.parametrize
             Todo(
                 desc="Some done todo with a ctx. | @ctx dtime:1030",
                 contexts=("ctx",),
-                marked_done=True,
+                done=True,
                 create_date=to_date("2022-01-12"),
                 metadata={"dtime": "1030"},
             ),
@@ -59,4 +59,4 @@ def test_magic_todo(
     actual = magic_todo_type.from_line(line).unwrap()
     expected = magic_todo_type(todo)
     assert expected.todo == etodo
-    assert actual.to_dict() == expected.to_dict()
+    assert repr(actual) == repr(expected)

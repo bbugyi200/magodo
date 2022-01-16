@@ -11,22 +11,22 @@ from eris import Err
 from metaman import cname
 from typist import PathLike
 
-from . import types as mtypes
+from .types import Metadata, Priority, T
 
 
 logger = Logger(__name__)
 
 
-class TodoGroup(Generic[mtypes.Todo_T]):
+class TodoGroup(Generic[T]):
     """Manages a group of Todo objects."""
 
-    def __init__(self, todos: Iterable[mtypes.Todo_T]) -> None:
+    def __init__(self, todos: Iterable[T]) -> None:
         self._todos = sorted(todos)
 
     def __repr__(self) -> str:  # noqa: D105
         return f"{cname(self)}({self._todos})"
 
-    def __iter__(self) -> Iterator[mtypes.Todo_T]:
+    def __iter__(self) -> Iterator[T]:
         """Yields the Todo objects that belong to this group."""
         yield from self._todos
 
@@ -34,9 +34,7 @@ class TodoGroup(Generic[mtypes.Todo_T]):
         return len(self._todos)
 
     @classmethod
-    def from_path(
-        cls, todo_type: Type[mtypes.Todo_T], path_like: PathLike
-    ) -> TodoGroup:
+    def from_path(cls, todo_type: Type[T], path_like: PathLike) -> TodoGroup:
         """Reads all todo lines from a given file or directory (recursively).
 
         Pre-conditions:
@@ -46,7 +44,7 @@ class TodoGroup(Generic[mtypes.Todo_T]):
 
         assert path.exists(), f"The provided path does not exist: {path}"
 
-        todos: List[mtypes.Todo_T] = []
+        todos: List[T] = []
         if path.is_file():
             logger.debug(
                 "Attempting to load todos from text file: file=%r", str(path)
@@ -84,9 +82,9 @@ class TodoGroup(Generic[mtypes.Todo_T]):
         create_date: dt.date = None,
         desc: str = None,
         done_date: dt.date = None,
-        marked_done: bool = None,
-        metadata: mtypes.Metadata = None,
-        priority: mtypes.Priority = None,
+        done: bool = None,
+        metadata: Metadata = None,
+        priority: Priority = None,
         projects: Iterable[str] = None,
     ) -> TodoGroup:
         """Filter this group using one or more Todo properties."""
@@ -107,7 +105,7 @@ class TodoGroup(Generic[mtypes.Todo_T]):
             if done_date is not None and todo.done_date != done_date:
                 continue
 
-            if marked_done is not None and todo.marked_done != marked_done:
+            if done is not None and todo.done != done:
                 continue
 
             if metadata is not None and not all(

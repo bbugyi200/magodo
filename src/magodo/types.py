@@ -27,8 +27,12 @@ if TYPE_CHECKING:
 
 
 # Type Variables (i.e. `TypeVar`s)
+#
+# NOTE: We alias these (e.g. 'Todo_T' to 'T') for internal use ONLY.
 Todo_T = TypeVar("Todo_T", bound="AbstractTodo")
+T = TypeVar("T", bound="AbstractTodo")
 MagicTodo_T = TypeVar("MagicTodo_T", bound="AbstractMagicTodo")
+M = TypeVar("M", bound="AbstractMagicTodo")
 
 # Type of the Todo.metadata attribute.
 Metadata = Dict[str, Union[str, List[str]]]

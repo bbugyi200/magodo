@@ -39,14 +39,14 @@ params = mark.parametrize
             Todo(
                 desc="done todo",
                 create_date=to_date("2022-01-10"),
-                marked_done=True,
+                done=True,
             ),
         ),
         (
             "x (A) todo with priority",
             Todo(
                 desc="todo with priority",
-                marked_done=True,
+                done=True,
                 priority="A",
             ),
         ),
@@ -130,7 +130,7 @@ def test_todo(line: str, expect_todo: AbstractTodo) -> None:
     assert actual.done_date == expect_todo.done_date
     assert actual.projects == expect_todo.projects
     assert actual.contexts == expect_todo.contexts
-    assert actual.marked_done == expect_todo.marked_done
+    assert actual.done == expect_todo.done
     assert actual.metadata == expect_todo.metadata
 
 
@@ -146,7 +146,7 @@ def test_todo(line: str, expect_todo: AbstractTodo) -> None:
             [1, 0, 2],
         ),
         (
-            [Todo("o foo"), Todo("o bar"), Todo("o baz", marked_done=True)],
+            [Todo("o foo"), Todo("o bar"), Todo("o baz", done=True)],
             [1, 0, 2],
         ),
         (

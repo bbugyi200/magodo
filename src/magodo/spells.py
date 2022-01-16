@@ -67,7 +67,7 @@ def x_tag(todo: Todo) -> Result[Todo, ErisError]:
     dtime = todo.metadata["x"]
     desc = " ".join(todo.desc.split(" ")[1:]) + f" dtime:{dtime}"
 
-    new_todo = todo.new(desc=desc, marked_done=True)
+    new_todo = todo.new(desc=desc, done=True)
     line = new_todo.to_line()
     return Todo.from_line(line)
 
