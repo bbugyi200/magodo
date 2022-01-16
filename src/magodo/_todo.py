@@ -221,24 +221,20 @@ class Todo(TodoMixin):
         projects = tuple(project_list)
         contexts = tuple(context_list)
 
-        metadata: Optional[Metadata] = None
-        mdata: Metadata = {}
+        metadata: Metadata = {}
         for word in all_words:
             if is_metadata_tag(word):
                 kv = word.split(":", maxsplit=1)
                 key, value = kv
                 value = _clean_value(value)
 
-                if key in mdata:
+                if key in metadata:
                     continue
 
                 if "," in value:
-                    mdata[key] = [v for v in value.split(",") if v.strip()]
+                    metadata[key] = [v for v in value.split(",") if v.strip()]
                 else:
-                    mdata[key] = value
-
-        if mdata:
-            metadata = mdata
+                    metadata[key] = value
 
         todo = cls(
             contexts=contexts,
