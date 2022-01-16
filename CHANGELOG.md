@@ -9,9 +9,16 @@ The format is based on [Keep a Changelog], and this project adheres to
 [Semantic Versioning]: https://semver.org/
 
 
-## [Unreleased](https://github.com/bbugyi200/magodo/compare/0.5.2...HEAD)
+## [Unreleased](https://github.com/bbugyi200/magodo/compare/0.5.3...HEAD)
 
 No notable changes have been made.
+
+
+## [0.5.3](https://github.com/bbugyi200/magodo/compare/0.5.2...0.5.3) - 2022-01-15
+
+### Fixed
+
+* Don't allow duplicate tags.
 
 
 ## [0.5.2](https://github.com/bbugyi200/magodo/compare/0.5.1...0.5.2) - 2022-01-15
