@@ -11,7 +11,7 @@ other lines are apart of text paragraphs.
 ----- Todo List #2 -----
 x (B) 2022-01-10 2022-01-01 Done item
 (N) 2022-01-11 Item is due:2022-01-31.
-x (Z) 1999-01-01 1900-01-01 This +test item is awesome:True and has lots of @stuff too_long:NoWay DoFoo:22
+x (Z) 1999-01-01 1900-01-01 This +test item is awesome:True awesome and has lots of @stuff too_long:NoWay DoFoo:22
 Not a valid "strict" todo
 x Done item with no priority is a valid "strict" todo
 o A lowercase "o" can also be used when running in "strict" mode.
@@ -26,4 +26,4 @@ x:1545 Todos can easily log their "done times" with this trick.
 o Double colons should be::ignored.
 o Sometimes we want to use apostrophe with +project's or @contexts'.
 o We also ignore double ++pluses and double @@at signs.
-o We also do not group:tags when a metadata tag is in the middle.
+o We also do not group:tags group tags when a metadata tag is in the middle.

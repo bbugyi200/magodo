@@ -215,7 +215,8 @@ class Todo(TodoMixin):
                 if is_prefix_tag(prefix, word):
                     value = word[len(prefix) :]
                     value = _clean_value(value)
-                    some_list.append(value)
+                    if value not in some_list:
+                        some_list.append(value)
 
         projects = tuple(project_list)
         contexts = tuple(context_list)
@@ -229,12 +230,10 @@ class Todo(TodoMixin):
                 value = _clean_value(value)
 
                 if key in mdata:
-                    value_list = mdata[key]
-                    if not isinstance(value_list, list):
-                        value_list = [value_list]
-                        mdata[key] = value_list
+                    continue
 
-                    value_list.append(value)
+                if "," in value:
+                    mdata[key] = [v for v in value.split(",") if v.strip()]
                 else:
                     mdata[key] = value
 

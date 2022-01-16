@@ -45,10 +45,10 @@
     'MagicTodo(desc=\'A lowercase "o" can also be used when running in "strict" mode.\', metadata={})',
     "MagicTodo(desc='Double colons should be::ignored.', metadata={})",
     'MagicTodo(desc="Sometimes we want to use apostrophe with project\'s or contexts\'. | @contexts +project", contexts=(\'contexts\',), metadata={}, projects=(\'project\',))',
-    "MagicTodo(desc='We also do not group:tags when a metadata tag is in the middle.', metadata={'group': 'tags'})",
+    "MagicTodo(desc='We also do not group tags when a metadata tag is in the middle. | group:tags', metadata={'group': 'tags'})",
     "MagicTodo(desc='We also ignore double ++pluses and double @@at signs.', metadata={})",
     "MagicTodo(desc='Done item', create_date=2022-01-01, done_date=2022-01-10, marked_done=True, metadata={}, priority='B')",
     'MagicTodo(desc=\'Todos can easily log their "done times" with this trick. | dtime:1545\', marked_done=True, metadata={\'dtime\': \'1545\'})',
-    "MagicTodo(desc='This +test item is awesome:True and has lots of @stuff too_long:NoWay DoFoo:22', contexts=('stuff',), create_date=1900-01-01, done_date=1999-01-01, marked_done=True, metadata={'awesome': 'True', 'too_long': 'NoWay', 'DoFoo': '22'}, priority='Z', projects=('test',))",
+    "MagicTodo(desc='This test item is awesome and has lots of | @stuff +test DoFoo:22 awesome:True too_long:NoWay', contexts=('stuff',), create_date=1900-01-01, done_date=1999-01-01, marked_done=True, metadata={'awesome': 'True', 'too_long': 'NoWay', 'DoFoo': '22'}, priority='Z', projects=('test',))",
   ]
 ---

@@ -84,11 +84,7 @@ def group_tags(todo: Todo) -> Result[Todo, ErisError]:
     for i, word in enumerate(all_words[:]):
         all_prev_words_are_tags = _all_words_are_tags(all_words[:i])
         all_next_words_are_tags = _all_words_are_tags(all_words[i + 1 :])
-
-        if is_metadata_tag(word) and not (
-            all_prev_words_are_tags or all_next_words_are_tags
-        ):
-            return Ok(todo)
+        is_edge_tag = all_next_words_are_tags or all_prev_words_are_tags
 
         if is_metadata_tag(word) and word[-1] in PUNCTUATION:
             return Ok(todo)
@@ -100,7 +96,10 @@ def group_tags(todo: Todo) -> Result[Todo, ErisError]:
                 new_words.append(word[1:])
             continue
 
-        if is_any_tag(word) and all_next_words_are_tags:
+        if is_any_prefix_tag(word) and is_edge_tag:
+            continue
+
+        if is_metadata_tag(word):
             continue
 
         regular_words_found = True

@@ -2,19 +2,20 @@
 
 from __future__ import annotations
 
-from typing import Sequence
+from typing import Sequence, cast
 
 from pytest import mark
 
 from magodo import DEFAULT_PRIORITY, MagicTodo, Todo
 from magodo._shared import to_date
+from magodo.types import AbstractTodo
 
 
 params = mark.parametrize
 
 
 @params(
-    "line,expected",
+    "line,expect_todo",
     [
         ("no priority todo", Todo(desc="no priority todo")),
         (f"({DEFAULT_PRIORITY}) basic todo", Todo(desc="basic todo")),
@@ -75,15 +76,15 @@ params = mark.parametrize
             ),
         ),
         (
-            f"({DEFAULT_PRIORITY}) todo with some dep:123, another dep:456,"
-            " and a 3rd dep:789... foo:bar @crazy",
+            f"({DEFAULT_PRIORITY}) todo with some dep:123,10,20,30, another"
+            " dep:456, and a 3rd dep:789... foo:bar @crazy",
             Todo(
                 desc=(
-                    "todo with some dep:123, another dep:456, and a 3rd"
-                    " dep:789... foo:bar @crazy"
+                    "todo with some dep:123,10,20,30, another dep:456, and a"
+                    " 3rd dep:789... foo:bar @crazy"
                 ),
                 contexts=("crazy",),
-                metadata={"dep": ["123", "456", "789"], "foo": "bar"},
+                metadata={"dep": ["123", "10", "20", "30"], "foo": "bar"},
             ),
         ),
         (
@@ -94,12 +95,43 @@ params = mark.parametrize
                 metadata={"x": "1030"},
             ),
         ),
+        (
+            "o +regression @test Do +duplicate +duplicate @keys @keys"
+            " foo:bar,baz foo:bar foo:boom bar:BAR still show when they should"
+            " be ignored?",
+            MagicTodo(
+                Todo(
+                    desc=(
+                        "o Do duplicate duplicate keys keys still show when"
+                        " they should be ignored? | @keys @test +duplicate"
+                        " +regression bar:BAR foo:bar,baz"
+                    ),
+                    contexts=(
+                        "test",
+                        "keys",
+                    ),
+                    projects=(
+                        "regression",
+                        "duplicate",
+                    ),
+                    metadata={"foo": ["bar", "baz"], "bar": "BAR"},
+                )
+            ),
+        ),
     ],
 )
-def test_todo(line: str, expected: Todo) -> None:
+def test_todo(line: str, expect_todo: AbstractTodo) -> None:
     """Test the Todo type."""
-    actual = Todo.from_line(line)
-    assert actual.unwrap() == expected
+    actual = cast(MagicTodo, type(expect_todo).from_line(line).unwrap())
+
+    assert actual.desc == expect_todo.desc
+    assert actual.priority == expect_todo.priority
+    assert actual.create_date == expect_todo.create_date
+    assert actual.done_date == expect_todo.done_date
+    assert actual.projects == expect_todo.projects
+    assert actual.contexts == expect_todo.contexts
+    assert actual.marked_done == expect_todo.marked_done
+    assert actual.metadata == expect_todo.metadata
 
 
 @params(
