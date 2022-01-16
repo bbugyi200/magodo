@@ -18,8 +18,8 @@ from .spells import POST_BUILTIN_SPELLS, PRE_BUILTIN_SPELLS
 class MagicTodoMixin(TodoMixin, Generic[mtypes.MagicTodo_T], abc.ABC):
     """Mixin class that implements the Todo protocol."""
 
-    pre_spells: List[mtypes.TodoSpell] = PRE_BUILTIN_SPELLS
-    post_spells: List[mtypes.TodoSpell] = POST_BUILTIN_SPELLS
+    pre_spells: List[mtypes.TodoSpell] = []
+    post_spells: List[mtypes.TodoSpell] = []
 
     def __init__(self: mtypes.MagicTodo_T, todo: Todo):
         self._todo = todo
@@ -116,4 +116,6 @@ class MagicTodoMixin(TodoMixin, Generic[mtypes.MagicTodo_T], abc.ABC):
 class MagicTodo(MagicTodoMixin):
     """The default MagicTodo class."""
 
+    pre_spells: List[mtypes.TodoSpell] = PRE_BUILTIN_SPELLS
     spells: List[mtypes.TodoSpell] = []
+    post_spells: List[mtypes.TodoSpell] = POST_BUILTIN_SPELLS
