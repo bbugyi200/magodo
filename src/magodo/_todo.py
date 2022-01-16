@@ -55,8 +55,8 @@ class TodoMixin(Generic[Todo_T], abc.ABC):
         if self.done_date is not None:
             kwargs["done_date"] = self.done_date
 
-        if self.marked_done:
-            kwargs["marked_done"] = self.marked_done
+        if self.done:
+            kwargs["done"] = self.done
 
         if self.metadata is not None:
             kwargs["metadata"] = self.metadata
@@ -86,7 +86,7 @@ class TodoMixin(Generic[Todo_T], abc.ABC):
                 self.contexts == other.contexts,
                 self.create_date == other.create_date,
                 self.done_date == other.done_date,
-                self.marked_done == other.marked_done,
+                self.done == other.done,
                 self.metadata == other.metadata,
                 self.priority == other.priority,
                 self.projects == other.projects,
@@ -99,8 +99,8 @@ class TodoMixin(Generic[Todo_T], abc.ABC):
                 f"Unable to compare '{type(other)}' object with 'Todo' object."
             )
 
-        if self.marked_done != other.marked_done:
-            return not self.marked_done and other.marked_done
+        if self.done != other.done:
+            return not self.done and other.done
 
         if self.priority != other.priority:
             return self.priority < other.priority
@@ -155,7 +155,7 @@ class Todo(TodoMixin):
         contexts: Tuple[str, ...] = (),
         create_date: dt.date = None,
         done_date: dt.date = None,
-        marked_done: bool = False,
+        done: bool = False,
         metadata: Metadata = None,
         priority: Priority = DEFAULT_PRIORITY,
         projects: Tuple[str, ...] = (),
@@ -164,7 +164,7 @@ class Todo(TodoMixin):
         self.create_date = create_date
         self.desc = desc
         self.done_date = done_date
-        self.marked_done = marked_done
+        self.done = done
         self.metadata = metadata or {}
         self.priority = priority
         self.projects = projects
@@ -186,9 +186,9 @@ class Todo(TodoMixin):
                 " https://github.com/todotxt/todo.txt for the specification."
             )
 
-        marked_done: bool = False
+        done: bool = False
         if re_todo_match.group("x"):
-            marked_done = True
+            done = True
 
         priority: Priority = DEFAULT_PRIORITY
         if grp := re_todo_match.group("priority"):
@@ -241,7 +241,7 @@ class Todo(TodoMixin):
             create_date=create_date,
             desc=desc,
             done_date=done_date,
-            marked_done=marked_done,
+            done=done,
             metadata=metadata,
             priority=priority,
             projects=projects,
@@ -251,7 +251,7 @@ class Todo(TodoMixin):
     def to_line(self) -> str:
         """Converts this Todo object back to a line."""
         result = ""
-        if self.marked_done:
+        if self.done:
             result += "x "
 
         if self.priority != DEFAULT_PRIORITY:
@@ -267,17 +267,13 @@ class Todo(TodoMixin):
 
         return result
 
-    def to_dict(self) -> dict[str, Any]:
-        """Converts this Todo into a dictionary."""
-        return self.__dict__
-
     def new(self, **kwargs: Any) -> Todo:
         """Creates a new Todo using the current Todo's attrs as defaults."""
         contexts = kwargs.get("contexts", self.contexts)
         create_date = kwargs.get("create_date", self.create_date)
         desc = kwargs.get("desc", self.desc)
         done_date = kwargs.get("done_date", self.done_date)
-        marked_done = kwargs.get("marked_done", self.marked_done)
+        done = kwargs.get("done", self.done)
         metadata = kwargs.get("metadata", self.metadata)
         priority: Priority = kwargs.get("priority", self.priority)
         projects = kwargs.get("projects", self.projects)
@@ -286,7 +282,7 @@ class Todo(TodoMixin):
             create_date=create_date,
             desc=desc,
             done_date=done_date,
-            marked_done=marked_done,
+            done=done,
             metadata=metadata,
             priority=priority,
             projects=projects,

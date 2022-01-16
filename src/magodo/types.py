@@ -5,6 +5,7 @@ from __future__ import annotations
 import datetime as dt
 from typing import (
     TYPE_CHECKING,
+    Any,
     Callable,
     Dict,
     List,
@@ -19,7 +20,7 @@ from typing import (
 )
 
 from eris import ErisError, Result
-from typist import Comparable, ToDictable
+from typist import Comparable
 
 
 if TYPE_CHECKING:
@@ -70,7 +71,7 @@ TodoSpell = Callable[["Todo"], Result["Todo", ErisError]]
 
 
 @runtime_checkable
-class AbstractTodo(Comparable, ToDictable, Protocol):
+class AbstractTodo(Comparable, Protocol):
     """Describes how any valid Todo object should look."""
 
     @classmethod
@@ -79,6 +80,9 @@ class AbstractTodo(Comparable, ToDictable, Protocol):
 
     def to_line(self) -> str:
         """Converts a Todo object back to a string."""
+
+    def new(self: T, **kwargs: Any) -> T:
+        """Creates a new Todo using the current Todo's attrs as defaults."""
 
     @property
     def contexts(self) -> Tuple[str, ...]:  # noqa: D102
@@ -100,7 +104,7 @@ class AbstractTodo(Comparable, ToDictable, Protocol):
         """The date this todo was completed."""
 
     @property
-    def marked_done(self) -> bool:  # noqa: D102
+    def done(self) -> bool:  # noqa: D102
         """Is this todo marked done with an 'x'?"""
 
     @property

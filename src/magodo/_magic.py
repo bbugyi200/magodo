@@ -5,36 +5,27 @@ from __future__ import annotations
 import abc
 import datetime as dt
 from functools import total_ordering
-from typing import Any, Dict, Generic, Iterable, List, Tuple, Type
+from typing import Any, Generic, List, Tuple, Type
 
 from eris import ErisError, Err, Ok, Result
 
 from ._todo import Todo, TodoMixin
 from .spells import POST_BUILTIN_SPELLS, PRE_BUILTIN_SPELLS
-from .types import (
-    AbstractMagicTodo,
-    MagicTodo_T,
-    Metadata,
-    Priority,
-    TodoSpell,
-)
+from .types import M, Metadata, Priority, TodoSpell
 
 
 @total_ordering
-class MagicTodoMixin(TodoMixin, Generic[MagicTodo_T], abc.ABC):
+class MagicTodoMixin(TodoMixin, Generic[M], abc.ABC):
     """Mixin class that implements the Todo protocol."""
 
-    pre_spells: List[TodoSpell] = []
-    post_spells: List[TodoSpell] = []
+    todo_spells: List[TodoSpell] = []
 
-    def __init__(self: MagicTodo_T, todo: Todo):
+    def __init__(self: M, todo: Todo):
         self._todo = todo
         self.todo = self.cast_spells(todo).unwrap()
 
     @classmethod
-    def from_line(
-        cls: Type[MagicTodo_T], line: str
-    ) -> Result[MagicTodo_T, ErisError]:
+    def from_line(cls: Type[M], line: str) -> Result[M, ErisError]:
         """Converts a string into a MagicTodo object."""
         todo_result = Todo.from_line(line)
 
@@ -56,20 +47,8 @@ class MagicTodoMixin(TodoMixin, Generic[MagicTodo_T], abc.ABC):
         """Converts this MagicTodo back to a string."""
         return self.todo.to_line()
 
-    def to_dict(self: MagicTodo_T) -> dict[str, Any]:
-        """Converts this MagicTodo into a dictionary."""
-        result: Dict[str, Any] = {}
-        result["_todo"] = self.todo.to_dict()
-        result["todo"] = self.todo.to_dict()
-        result["pre_spells"] = [spell.__name__ for spell in self.pre_spells]
-        result["spells"] = [spell.__name__ for spell in self.spells]
-        result["post_spells"] = [spell.__name__ for spell in self.post_spells]
-        return result
-
     @classmethod
-    def cast_spells(
-        cls: Type[MagicTodo_T], todo: Todo
-    ) -> Result[Todo, ErisError]:
+    def cast_spells(cls: Type[M], todo: Todo) -> Result[Todo, ErisError]:
         """Casts all spells associated with this MagicTodo on `todo`."""
         new_todo = todo.new()
         for spell_list in [cls.pre_spells, cls.spells, cls.post_spells]:
@@ -85,6 +64,9 @@ class MagicTodoMixin(TodoMixin, Generic[MagicTodo_T], abc.ABC):
                 new_todo = new_todo_result.ok()
 
         return Ok(new_todo)
+
+    def new(self, **kwargs: Any) -> Todo:
+        """Creates a new Todo using the current Todo's attrs as defaults."""
 
     @property
     def contexts(self) -> Tuple[str, ...]:  # noqa: D102
@@ -103,8 +85,8 @@ class MagicTodoMixin(TodoMixin, Generic[MagicTodo_T], abc.ABC):
         return self.todo.done_date
 
     @property
-    def marked_done(self) -> bool:  # noqa: D102
-        return self.todo.marked_done
+    def done(self) -> bool:  # noqa: D102
+        return self.todo.done
 
     @property
     def metadata(self) -> Metadata:  # noqa: D102
@@ -125,14 +107,3 @@ class MagicTodo(MagicTodoMixin):
     pre_spells: List[TodoSpell] = PRE_BUILTIN_SPELLS
     spells: List[TodoSpell] = []
     post_spells: List[TodoSpell] = POST_BUILTIN_SPELLS
-
-
-def magic_todo_factory(
-    outer_spells: Iterable[TodoSpell],
-) -> Type[AbstractMagicTodo]:
-    """Create a MagicTodo from a group of spells."""
-
-    class InnerMagicTodo(MagicTodoMixin):
-        spells = list(outer_spells)
-
-    return InnerMagicTodo
