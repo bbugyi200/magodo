@@ -32,9 +32,9 @@ if TYPE_CHECKING:
 # NOTE: We alias these (e.g. 'Todo_T' to 'T') for internal use ONLY.
 Todo_T = TypeVar("Todo_T", bound="AbstractTodo")
 T = TypeVar("T", bound="AbstractTodo")
-MagicTodo_T = TypeVar("MagicTodo_T", bound="AbstractMagicTodo")
-M = TypeVar("M", bound="AbstractMagicTodo")
 
+# Type of a spell function which transforms a line (i.e. a str).
+LineSpell = Callable[[str], str]
 # Type of the Todo.metadata attribute.
 Metadata = Dict[str, Union[str, List[str]]]
 # A todo item's priority is always a capital letter.
@@ -75,7 +75,7 @@ class AbstractTodo(Comparable, Protocol):
     """Describes how any valid Todo object should look."""
 
     @classmethod
-    def from_line(cls: Type[Todo_T], line: str) -> Result[Todo_T, ErisError]:
+    def from_line(cls: Type[T], line: str) -> Result[T, ErisError]:
         """Constructs a new Todo object from a string."""
 
     def to_line(self) -> str:
@@ -130,15 +130,15 @@ class AbstractTodo(Comparable, Protocol):
 class AbstractMagicTodo(AbstractTodo, Protocol):
     """Describes how subclasses of MagicTodoMixin should look."""
 
-    pre_spells: List[TodoSpell]
-    spells: List[TodoSpell]
-    post_spells: List[TodoSpell]
+    to_line_spells: List[LineSpell]
+    from_line_spells: List[LineSpell]
+    todo_spells: List[TodoSpell]
 
     def __init__(self, todo: "Todo") -> None:
         pass
 
     @classmethod
-    def cast_spells(cls, todo: "Todo") -> Result["Todo", ErisError]:
+    def cast_todo_spells(cls, todo: "Todo") -> Result["Todo", ErisError]:
         """Casts all spells associated with this MagicTodo on `todo`."""
 
     @property
