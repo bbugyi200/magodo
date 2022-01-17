@@ -24,7 +24,7 @@ from ._shared import (
     is_prefix_tag,
     to_date,
 )
-from .types import Metadata, Priority, Todo_T
+from .types import Metadata, Priority, T
 
 
 RE_TODO: Final = r"""
@@ -40,10 +40,10 @@ RE_TODO: Final = r"""
 )
 
 
-class TodoMixin(Generic[Todo_T], abc.ABC):
+class TodoMixin(Generic[T], abc.ABC):
     """Implements standard Todo-like behaviors.."""
 
-    def __repr__(self: Todo_T) -> str:  # noqa: D105
+    def __repr__(self: T) -> str:  # noqa: D105
         kwargs: Dict[str, Any] = {}
 
         if self.contexts:
@@ -76,7 +76,7 @@ class TodoMixin(Generic[Todo_T], abc.ABC):
 
         return f"{cname(self)}(desc={self.desc!r}{pretty_kwargs})"
 
-    def __eq__(self: Todo_T, other: object) -> bool:  # noqa: D105
+    def __eq__(self: T, other: object) -> bool:  # noqa: D105
         if not isinstance(other, type(self)):  # pragma: no cover
             return False
 
@@ -93,7 +93,7 @@ class TodoMixin(Generic[Todo_T], abc.ABC):
             ]
         )
 
-    def __lt__(self: Todo_T, other: object) -> bool:  # noqa: D105
+    def __lt__(self: T, other: object) -> bool:  # noqa: D105
         if not isinstance(other, type(self)):
             raise ValueError(
                 f"Unable to compare '{type(other)}' object with 'Todo' object."

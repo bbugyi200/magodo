@@ -28,9 +28,6 @@ if TYPE_CHECKING:
 
 
 # Type Variables (i.e. `TypeVar`s)
-#
-# NOTE: We alias these (e.g. 'Todo_T' to 'T') for internal use ONLY.
-Todo_T = TypeVar("Todo_T", bound="AbstractTodo")
 T = TypeVar("T", bound="AbstractTodo")
 
 # Type of a spell function which transforms a line (i.e. a str).
@@ -140,6 +137,13 @@ class AbstractMagicTodo(AbstractTodo, Protocol):
     @classmethod
     def cast_todo_spells(cls, todo: "Todo") -> Result["Todo", ErisError]:
         """Casts all spells associated with this MagicTodo on `todo`."""
+
+    @classmethod
+    def cast_from_line_spells(cls, line: str) -> str:
+        """Casts all from_line spells on `line`."""
+
+    def cast_to_line_spells(self, line: str) -> str:
+        """Casts all to_line spells on `line`."""
 
     @property
     def todo(self) -> "Todo":
