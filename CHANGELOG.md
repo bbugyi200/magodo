@@ -9,9 +9,25 @@ The format is based on [Keep a Changelog], and this project adheres to
 [Semantic Versioning]: https://semver.org/
 
 
-## [Unreleased](https://github.com/bbugyi200/magodo/compare/0.6.0...HEAD)
+## [Unreleased](https://github.com/bbugyi200/magodo/compare/0.7.0...HEAD)
 
 No notable changes have been made.
+
+
+## [0.7.0](https://github.com/bbugyi200/magodo/compare/0.6.0...0.7.0) - 2022-01-17
+
+### Added
+
+* New `AbstractMagicTodo.to_line_spells` and `AbstractMagicTodo.from_line_spells` attributes.
+
+### Changed
+
+* *BREAKING CHANGE*: Renamed `AbstractMagicTodo.spells` to `AbstractMagicTodo.todo_spells`.
+
+### Removed
+
+* *BREAKING CHANGE*: Remove `MagicTodo` from API.
+* *BREAKING CHANGE*: Remove `AbstractMagicTodo.pre_spells` and `AbstractMagicTodo.post_spells` attributes.
 
 
 ## [0.6.0](https://github.com/bbugyi200/magodo/compare/0.5.3...0.6.0) - 2022-01-15
