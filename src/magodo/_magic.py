@@ -10,7 +10,6 @@ from typing import Any, List, Tuple, Type, TypeVar
 from eris import ErisError, Err, Ok, Result
 
 from ._todo import Todo, TodoMixin
-from .spells import POST_BUILTIN_SPELLS, PRE_BUILTIN_SPELLS
 from .types import LineSpell, Metadata, Priority, TodoSpell
 
 
@@ -120,11 +119,3 @@ class MagicTodoMixin(TodoMixin, abc.ABC):
     @property
     def projects(self: M) -> Tuple[str, ...]:  # noqa: D102
         return self.todo.projects
-
-
-class MagicTodo(MagicTodoMixin):
-    """The default MagicTodo class."""
-
-    todo_spells: List[TodoSpell] = (
-        PRE_BUILTIN_SPELLS + [] + POST_BUILTIN_SPELLS
-    )

@@ -6,9 +6,11 @@ from typing import Sequence, cast
 
 from pytest import mark
 
-from magodo import DEFAULT_PRIORITY, MagicTodo, Todo
+from magodo import DEFAULT_PRIORITY, Todo
 from magodo._shared import to_date
 from magodo.types import AbstractTodo
+
+from .shared import MagicTodo
 
 
 params = mark.parametrize

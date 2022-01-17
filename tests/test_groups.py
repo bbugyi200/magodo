@@ -8,9 +8,10 @@ from typing import Any
 from pytest import mark, param
 from syrupy.assertion import SnapshotAssertion as Snapshot
 
-import magodo
+from magodo import TodoGroup
 
 from .data import get_all_todo_paths
+from .shared import MagicTodo
 
 
 params = mark.parametrize
@@ -29,6 +30,6 @@ def test_group_from_path(
     snapshot: Snapshot, todo_file: Path, kwargs: dict[str, Any]
 ) -> None:
     """Test the TodoGroup.from_path() function."""
-    todo_group = magodo.TodoGroup.from_path(magodo.MagicTodo, todo_file)
+    todo_group = TodoGroup.from_path(MagicTodo, todo_file)
     todo_group = todo_group.filter_by(**kwargs)
     assert [repr(todo) for todo in todo_group] == snapshot

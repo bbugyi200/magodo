@@ -32,14 +32,11 @@ def register_spell_factory(
     return register_spell
 
 
-PRE_BUILTIN_SPELLS: List[TodoSpell] = []
-pre_spell = register_spell_factory(PRE_BUILTIN_SPELLS)
-
-POST_BUILTIN_SPELLS: List[TodoSpell] = []
-post_spell = register_spell_factory(POST_BUILTIN_SPELLS)
+ALL_SPELLS: List[TodoSpell] = []
+all_spells = register_spell_factory(ALL_SPELLS)
 
 
-@pre_spell
+@all_spells
 def handle_prefix(todo: Todo) -> Result[Todo, ErisError]:
     """Handles / validatees a magic todo's prefix.."""
     if todo.priority == DEFAULT_PRIORITY and not todo.desc.startswith(
@@ -58,7 +55,7 @@ def handle_prefix(todo: Todo) -> Result[Todo, ErisError]:
     return Ok(todo)
 
 
-@pre_spell
+@all_spells
 def x_tag(todo: Todo) -> Result[Todo, ErisError]:
     """Handles tags of the form x:1234 where 1234 is the current time."""
     if todo.metadata is None or "x" not in todo.metadata:
@@ -72,7 +69,7 @@ def x_tag(todo: Todo) -> Result[Todo, ErisError]:
     return Todo.from_line(line)
 
 
-@post_spell
+@all_spells
 def group_tags(todo: Todo) -> Result[Todo, ErisError]:
     """Groups all @ctxs, +projs, and meta:data at the end of the line."""
     if not (todo.contexts or todo.projects or todo.metadata):

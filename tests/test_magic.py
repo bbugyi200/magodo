@@ -6,9 +6,11 @@ from typing import Type
 
 from pytest import mark
 
-from magodo import MagicTodo, Todo
+from magodo import Todo
 from magodo._shared import to_date
 from magodo.types import AbstractMagicTodo
+
+from .shared import MagicTodo
 
 
 params = mark.parametrize
