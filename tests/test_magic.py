@@ -2,18 +2,36 @@
 
 from __future__ import annotations
 
-from typing import Type
+from typing import List, Type
 
 from pytest import mark
 
-from magodo import Todo
+from magodo import MagicTodoMixin, Todo
 from magodo._shared import to_date
-from magodo.types import AbstractMagicTodo
+from magodo.types import AbstractMagicTodo, TodoSpell
 
 from .shared import MagicTodo
 
 
 params = mark.parametrize
+
+
+def to_test_line(line: str) -> str:
+    """Prepends 'test |' to `line`."""
+    return "test | " + line
+
+
+def from_test_line(line: str) -> str:
+    """Removes 'test | ' from `line`."""
+    return line.replace("test | ", "")
+
+
+class LineTodo(MagicTodoMixin):
+    """MagicTodo that adds 'test | ' to the beginning of each line."""
+
+    from_line_spells = [from_test_line]
+    to_line_spells = [to_test_line]
+    todo_spells: List[TodoSpell] = []
 
 
 @params(
@@ -62,3 +80,11 @@ def test_magic_todo(
     expected = magic_todo_type(todo)
     assert expected.todo == etodo
     assert repr(actual) == repr(expected)
+
+
+@params("line", ["foo bar baz", "test | foo bar baz"])
+def test_line_todo(line: str) -> None:
+    """Test that to_line and from_line spells work."""
+    todo = LineTodo.from_line(line).unwrap()
+    assert todo.desc == "foo bar baz"
+    assert todo.to_line() == "test | foo bar baz"
