@@ -16,8 +16,7 @@ from ._shared import (
     is_any_tag,
     is_metadata_tag,
 )
-from ._todo import Todo
-from .types import TodoSpell
+from .types import T, TodoSpell
 
 
 def register_spell_factory(
@@ -37,7 +36,7 @@ all_spells = register_spell_factory(ALL_SPELLS)
 
 
 @all_spells
-def handle_prefix(todo: Todo) -> Result[Todo, ErisError]:
+def handle_prefix(todo: T) -> Result[T, ErisError]:
     """Handles / validatees a magic todo's prefix.."""
     if todo.priority == DEFAULT_PRIORITY and not todo.desc.startswith(
         TODO_PREFIXES
@@ -56,7 +55,7 @@ def handle_prefix(todo: Todo) -> Result[Todo, ErisError]:
 
 
 @all_spells
-def x_tag(todo: Todo) -> Result[Todo, ErisError]:
+def x_tag(todo: T) -> Result[T, ErisError]:
     """Handles tags of the form x:1234 where 1234 is the current time."""
     if todo.metadata is None or "x" not in todo.metadata:
         return Ok(todo)
@@ -66,11 +65,11 @@ def x_tag(todo: Todo) -> Result[Todo, ErisError]:
 
     new_todo = todo.new(desc=desc, done=True)
     line = new_todo.to_line()
-    return Todo.from_line(line)
+    return type(todo).from_line(line)
 
 
 @all_spells
-def group_tags(todo: Todo) -> Result[Todo, ErisError]:
+def group_tags(todo: T) -> Result[T, ErisError]:
     """Groups all @ctxs, +projs, and meta:data at the end of the line."""
     if not (todo.contexts or todo.projects or todo.metadata):
         return Ok(todo)

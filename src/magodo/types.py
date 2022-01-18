@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import datetime as dt
 from typing import (
-    TYPE_CHECKING,
     Any,
     Callable,
     Dict,
@@ -21,10 +20,6 @@ from typing import (
 
 from eris import ErisError, Result
 from typist import Comparable
-
-
-if TYPE_CHECKING:
-    from ._todo import Todo  # pragma: no cover
 
 
 # Type Variables (i.e. `TypeVar`s)
@@ -64,7 +59,7 @@ Priority = Literal[
     "Z",
 ]
 # Type of spell functions used by MagicTodo objects.
-TodoSpell = Callable[["Todo"], Result["Todo", ErisError]]
+TodoSpell = Callable[[T], Result[T, ErisError]]
 
 
 @runtime_checkable
@@ -131,11 +126,8 @@ class AbstractMagicTodo(AbstractTodo, Protocol):
     from_line_spells: List[LineSpell]
     todo_spells: List[TodoSpell]
 
-    def __init__(self, todo: "Todo") -> None:
-        pass
-
     @classmethod
-    def cast_todo_spells(cls, todo: "Todo") -> Result["Todo", ErisError]:
+    def cast_todo_spells(cls, todo: T) -> Result[T, ErisError]:
         """Casts all spells associated with this MagicTodo on `todo`."""
 
     @classmethod
@@ -146,5 +138,5 @@ class AbstractMagicTodo(AbstractTodo, Protocol):
         """Casts all to_line spells on `line`."""
 
     @property
-    def todo(self) -> "Todo":
+    def todo(self) -> T:
         """The raw Todo object used by this MagicTodo."""
