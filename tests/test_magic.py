@@ -71,7 +71,7 @@ class LineTodo(MagicTodoMixin):
 )
 def test_magic_todo(
     line: str,
-    magic_todo_type: Type[AbstractMagicTodo],
+    magic_todo_type: Type[AbstractMagicTodo[Todo]],
     todo: Todo,
     etodo: Todo,
 ) -> None:

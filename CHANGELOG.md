@@ -9,9 +9,16 @@ The format is based on [Keep a Changelog], and this project adheres to
 [Semantic Versioning]: https://semver.org/
 
 
-## [Unreleased](https://github.com/bbugyi200/magodo/compare/0.7.0...HEAD)
+## [Unreleased](https://github.com/bbugyi200/magodo/compare/0.7.1...HEAD)
 
 No notable changes have been made.
+
+
+## [0.7.1](https://github.com/bbugyi200/magodo/compare/0.7.0...0.7.1) - 2022-01-23
+
+### Changed
+
+* The `AbstractMagicTodo` protocol now accepts a type variable bound on `AbstractTodo`.
 
 
 ## [0.7.0](https://github.com/bbugyi200/magodo/compare/0.6.0...0.7.0) - 2022-01-17

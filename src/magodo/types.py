@@ -7,6 +7,7 @@ from typing import (
     Any,
     Callable,
     Dict,
+    Generic,
     List,
     Literal,
     Optional,
@@ -119,12 +120,15 @@ class AbstractTodo(Comparable, Protocol):
 
 
 @runtime_checkable
-class AbstractMagicTodo(AbstractTodo, Protocol):
+class AbstractMagicTodo(AbstractTodo, Protocol, Generic[T]):
     """Describes how subclasses of MagicTodoMixin should look."""
 
     to_line_spells: List[LineSpell]
     from_line_spells: List[LineSpell]
     todo_spells: List[TodoSpell]
+
+    def __init__(self, todo: T) -> None:
+        pass
 
     @classmethod
     def cast_todo_spells(cls, todo: T) -> Result[T, ErisError]:
