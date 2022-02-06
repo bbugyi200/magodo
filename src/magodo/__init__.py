@@ -3,7 +3,7 @@
 import logging as _logging
 
 from . import spells, types
-from ._group import TodoGroup
+from ._reader import TodoReader
 from ._magic import MagicTodoMixin
 from ._shared import DEFAULT_PRIORITY
 from ._todo import Todo
@@ -13,7 +13,7 @@ __all__ = [
     "DEFAULT_PRIORITY",
     "MagicTodoMixin",
     "Todo",
-    "TodoGroup",
+    "TodoReader",
     "spells",
     "types",
 ]

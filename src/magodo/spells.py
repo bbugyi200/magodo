@@ -2,13 +2,15 @@
 
 from __future__ import annotations
 
-from typing import Callable, Iterable, List, MutableSequence
+import datetime as dt
+from functools import lru_cache as cache
+from typing import Callable, Final, Iterable, List, MutableSequence, cast
 
-from eris import ErisError, Err, Ok, Result
+from eris import ErisResult, Err, Ok
+from typist import literal_to_list
 
 from ._shared import (
     CONTEXT_PREFIX,
-    DEFAULT_PRIORITY,
     PROJECT_PREFIX,
     PUNCTUATION,
     TODO_PREFIXES,
@@ -16,10 +18,10 @@ from ._shared import (
     is_any_tag,
     is_metadata_tag,
 )
-from .types import T, TodoSpell
+from .types import LineSpell, Priority, T, TodoSpell, ValidateSpell
 
 
-def register_spell_factory(
+def register_todo_spell_factory(
     mut_spell_registry: MutableSequence[TodoSpell],
 ) -> Callable[[TodoSpell], TodoSpell]:
     """Factory for decorators used to register spell functions."""
@@ -31,48 +33,87 @@ def register_spell_factory(
     return register_spell
 
 
-ALL_SPELLS: List[TodoSpell] = []
-all_spells = register_spell_factory(ALL_SPELLS)
+def register_line_spell_factory(
+    mut_spell_registry: MutableSequence[LineSpell],
+) -> Callable[[LineSpell], LineSpell]:
+    """Factory for decorators used to register spell functions."""
+
+    def register_spell(spell: LineSpell) -> LineSpell:
+        mut_spell_registry.append(spell)
+        return spell
+
+    return register_spell
 
 
-@all_spells
-def handle_prefix(todo: T) -> Result[T, ErisError]:
+def register_validate_spell_factory(
+    mut_spell_registry: MutableSequence[ValidateSpell],
+) -> Callable[[ValidateSpell], ValidateSpell]:
+    """Factory for decorators used to register spell functions."""
+
+    def register_spell(spell: ValidateSpell) -> ValidateSpell:
+        mut_spell_registry.append(spell)
+        return spell
+
+    return register_spell
+
+
+DEFAULT_TODO_SPELLS: List[TodoSpell] = []
+todo_spell = register_todo_spell_factory(DEFAULT_TODO_SPELLS)
+
+DEFAULT_TO_LINE_SPELLS: List[LineSpell] = []
+to_line_spell = register_line_spell_factory(DEFAULT_TO_LINE_SPELLS)
+
+DEFAULT_FROM_LINE_SPELLS: List[LineSpell] = []
+from_line_spell = register_line_spell_factory(DEFAULT_FROM_LINE_SPELLS)
+
+DEFAULT_VALIDATE_SPELLS: List[ValidateSpell] = []
+validate_spell = register_validate_spell_factory(DEFAULT_VALIDATE_SPELLS)
+
+O_PREFIX: Final = "o "
+
+
+@cache
+def todo_prefixes() -> tuple[str, ...]:
+    """Returns all valid todo prefixes."""
+    result = list(TODO_PREFIXES)
+    for P in cast(List[str], literal_to_list(Priority)):
+        result.append(f"({P}) ")
+    return tuple(result)
+
+
+@validate_spell
+def validate_prefix(line: str) -> ErisResult[None]:
     """Handles / validatees a magic todo's prefix.."""
-    if todo.priority == DEFAULT_PRIORITY and not todo.desc.startswith(
-        TODO_PREFIXES
-    ):
+    if not line.startswith(tuple(todo_prefixes())):
         return Err(
             "Magic todos must satisfy one of; (1) Have a non-default"
             " (i.e. not 'O') priority set (2) Have been marked complete"
             " with an 'x' prefix (3) Have been marked open with an 'o'"
-            f" prefix. todo={todo!r}"
+            f" prefix. line={line!r}"
         )
 
-    if todo.desc.startswith("o "):
-        return Ok(todo.new(desc=todo.desc[2:]))
-
-    return Ok(todo)
+    return Ok(None)
 
 
-@all_spells
-def x_tag(todo: T) -> Result[T, ErisError]:
+@todo_spell
+def x_tag(todo: T) -> T:
     """Handles tags of the form x:1234 where 1234 is the current time."""
     if todo.metadata is None or "x" not in todo.metadata:
-        return Ok(todo)
+        return todo
 
     dtime = todo.metadata["x"]
     desc = " ".join(todo.desc.split(" ")[1:]) + f" dtime:{dtime}"
 
     new_todo = todo.new(desc=desc, done=True)
     line = new_todo.to_line()
-    return type(todo).from_line(line)
+    return type(todo).from_line(line).unwrap()
 
 
-@all_spells
-def group_tags(todo: T) -> Result[T, ErisError]:
+@todo_spell
+def group_tags(todo: T) -> T:
     """Groups all @ctxs, +projs, and meta:data at the end of the line."""
     if not (todo.contexts or todo.projects or todo.metadata):
-        return Ok(todo)
+        return todo
 
     all_words = [w for w in todo.desc.split(" ") if w != "|"]
     new_words = []
@@ -83,7 +124,7 @@ def group_tags(todo: T) -> Result[T, ErisError]:
         is_edge_tag = all_next_words_are_tags or all_prev_words_are_tags
 
         if is_metadata_tag(word) and word[-1] in PUNCTUATION:
-            return Ok(todo)
+            return todo
 
         if is_any_prefix_tag(word) and (
             word[-1] in PUNCTUATION or not all_next_words_are_tags
@@ -102,7 +143,7 @@ def group_tags(todo: T) -> Result[T, ErisError]:
         new_words.append(word)
 
     if not regular_words_found:
-        return Ok(todo)
+        return todo
 
     desc = " ".join(new_words).strip()
     desc += " |"
@@ -122,9 +163,97 @@ def group_tags(todo: T) -> Result[T, ErisError]:
             f"{k}:{v}" for (k, v) in sorted(todo.metadata.items())
         )
 
-    return Ok(todo.new(desc=desc))
+    return todo.new(desc=desc)
 
 
 def _all_words_are_tags(words: Iterable[str]) -> bool:
     """Returns True if all `words` are special words."""
     return all(is_any_tag(w) for w in words)
+
+
+@todo_spell
+def add_create_date(todo: T) -> T:
+    """Adds today's date as the create date for this Todo."""
+    if todo.create_date is not None:
+        return todo
+
+    today = dt.date.today()
+    return todo.new(create_date=today)
+
+
+@todo_spell
+def add_done_date(todo: T) -> T:
+    """Adds today's date as the done date for this Todo (if done)."""
+    if todo.done_date is not None:
+        return todo
+
+    if not todo.done:
+        return todo
+
+    today = dt.date.today()
+    return todo.new(done_date=today)
+
+
+@todo_spell
+def add_ctime(todo: T) -> T:
+    """Adds creation time to T via the 'ctime' metadata tag."""
+    if "ctime" in todo.metadata:
+        return todo
+
+    now = dt.datetime.now()
+
+    metadata = dict(todo.metadata)
+    metadata["ctime"] = f"{now.hour:0>2}{now.minute:0>2}"
+
+    return todo.new(metadata=metadata)
+
+
+@to_line_spell
+def add_o_prefix(line: str) -> str:
+    """Adds the 'o ' prefix to the Todo line."""
+    if line.startswith(todo_prefixes()):
+        return line
+
+    return O_PREFIX + line
+
+
+@from_line_spell
+def remove_o_prefix(line: str) -> str:
+    """Removes the 'o ' prefix from the Todo line."""
+    if not line.startswith(O_PREFIX):
+        return line
+
+    return line[len(O_PREFIX) :]
+
+
+@to_line_spell
+def add_x_prefix(line: str) -> str:
+    """Adds the 'x:HHMM ' prefix to the Todo line (when done)."""
+    if not line.startswith("x "):
+        return line
+
+    words = line.split(" ")[1:]
+    for i, word in enumerate(words[:]):
+        if word.startswith("dtime:"):
+            del words[i]
+            dtime = word.split(":")[1]
+            break
+    else:
+        now = dt.datetime.now()
+        dtime = f"{now.hour:0>2}{now.minute:0>2}"
+
+    rest = " ".join(words)
+    return f"x:{dtime} {rest}"
+
+
+@from_line_spell
+def remove_x_prefix(line: str) -> str:
+    """Removes the 'x:HHMM ' prefix from the Todo line."""
+    if not line.startswith("x:"):
+        return line
+
+    xhhmm, *words = line.split(" ")
+    dtime = xhhmm.split(":")[1]
+
+    rest = " ".join(words)
+    return f"x {rest} dtime:{dtime}"

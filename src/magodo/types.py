@@ -26,8 +26,6 @@ from typist import Comparable
 # Type Variables (i.e. `TypeVar`s)
 T = TypeVar("T", bound="AbstractTodo")
 
-# Type of a spell function which transforms a line (i.e. a str).
-LineSpell = Callable[[str], str]
 # Type of the Todo.metadata attribute.
 Metadata = Dict[str, Union[str, List[str]]]
 # A todo item's priority is always a capital letter.
@@ -59,8 +57,13 @@ Priority = Literal[
     "Y",
     "Z",
 ]
+
+# Type of a spell function which transforms a line (i.e. a str).
+LineSpell = Callable[[str], str]
 # Type of spell functions used by MagicTodo objects.
-TodoSpell = Callable[[T], Result[T, ErisError]]
+TodoSpell = Callable[["AbstractTodo"], "AbstractTodo"]
+# Type of spell that validates a todo line.
+ValidateSpell = Callable[[str], Result[None, ErisError]]
 
 
 @runtime_checkable
@@ -126,6 +129,7 @@ class AbstractMagicTodo(AbstractTodo, Protocol, Generic[T]):
     to_line_spells: List[LineSpell]
     from_line_spells: List[LineSpell]
     todo_spells: List[TodoSpell]
+    validate_spells: List[ValidateSpell]
 
     def __init__(self, todo: T) -> None:
         pass

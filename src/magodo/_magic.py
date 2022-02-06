@@ -10,7 +10,7 @@ from typing import Any, List, Tuple, Type, TypeVar
 from eris import ErisError, Err, Ok, Result
 
 from ._todo import Todo, TodoMixin
-from .types import LineSpell, Metadata, Priority, TodoSpell
+from .types import LineSpell, Metadata, Priority, TodoSpell, ValidateSpell
 
 
 M = TypeVar("M", bound="MagicTodoMixin")
@@ -23,18 +23,23 @@ class MagicTodoMixin(TodoMixin, abc.ABC):
     to_line_spells: List[LineSpell] = []
     todo_spells: List[TodoSpell] = []
     from_line_spells: List[LineSpell] = []
+    validate_spells: List[ValidateSpell] = []
 
     def __init__(self: M, todo: Todo):
         self._todo = todo
-        self.todo = self.cast_todo_spells(todo).unwrap()
+        self.todo = self.cast_todo_spells(todo)
 
     @classmethod
     def from_line(cls: Type[M], line: str) -> Result[M, ErisError]:
         """Converts a string into a MagicTodo object."""
+        err: Err[Any, ErisError]
+        if error := cls.cast_validate_spells(line).err():
+            err = Err(f"Failed spell validation for this todo: line={line!r}")
+            return err.chain(error)
+
         line = cls.cast_from_line_spells(line)
         todo_result = Todo.from_line(line)
 
-        err: Err[Any, ErisError]
         if isinstance(todo_result, Err):
             err = Err(
                 "Failed to construct basic Todo object inside of MagicTodo."
@@ -42,9 +47,6 @@ class MagicTodoMixin(TodoMixin, abc.ABC):
             return err.chain(todo_result)
 
         todo = todo_result.ok()
-        if error := cls.cast_todo_spells(todo).err():
-            err = Err(f"Failed spell validation for this todo: todo={todo!r}")
-            return err.chain(error)
 
         return Ok(cls(todo))
 
@@ -55,21 +57,13 @@ class MagicTodoMixin(TodoMixin, abc.ABC):
         return line
 
     @classmethod
-    def cast_todo_spells(cls: Type[M], todo: Todo) -> Result[Todo, ErisError]:
+    def cast_todo_spells(cls: Type[M], todo: Todo) -> Todo:
         """Casts all spells associated with this MagicTodo on `todo`."""
         new_todo = todo.new()
         for todo_spell in cls.todo_spells:
-            new_todo_result = todo_spell(new_todo)
-            if isinstance(new_todo_result, Err):
-                err: Err[Any, ErisError] = Err(
-                    f"The {todo_spell.__name__!r} spell failed while"
-                    " processing this todo."
-                )
-                return err.chain(new_todo_result)
+            new_todo = todo_spell(new_todo)
 
-            new_todo = new_todo_result.ok()
-
-        return Ok(new_todo)
+        return new_todo
 
     @classmethod
     def cast_from_line_spells(cls: Type[M], line: str) -> str:
@@ -83,6 +77,22 @@ class MagicTodoMixin(TodoMixin, abc.ABC):
         for line_spell in self.to_line_spells:
             line = line_spell(line)
         return line
+
+    @classmethod
+    def cast_validate_spells(
+        cls: Type[M], line: str
+    ) -> Result[None, ErisError]:
+        """Casts all spells associated with this MagicTodo on `todo`."""
+        for validate_spell in cls.validate_spells:
+            new_todo_result = validate_spell(line)
+            if isinstance(new_todo_result, Err):
+                err: Err[Any, ErisError] = Err(
+                    f"The {validate_spell.__name__!r} validation spell failed"
+                    " while attempting to validate this line."
+                )
+                return err.chain(new_todo_result)
+
+        return Ok(None)
 
     def new(self: M, **kwargs: Any) -> M:
         """Creates a new Todo using the current Todo's attrs as defaults."""

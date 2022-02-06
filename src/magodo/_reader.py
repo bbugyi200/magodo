@@ -1,4 +1,4 @@
-"""Contains the TodoGroup class definition."""
+"""Contains the TodoReader class definition."""
 
 from __future__ import annotations
 
@@ -17,7 +17,7 @@ from .types import Metadata, Priority, T
 logger = Logger(__name__)
 
 
-class TodoGroup(Generic[T]):
+class TodoReader(Generic[T]):
     """Manages a group of Todo objects."""
 
     def __init__(self, todos: Iterable[T]) -> None:
@@ -34,7 +34,7 @@ class TodoGroup(Generic[T]):
         return len(self._todos)
 
     @classmethod
-    def from_path(cls, todo_type: Type[T], path_like: PathLike) -> TodoGroup:
+    def from_path(cls, todo_type: Type[T], path_like: PathLike) -> TodoReader:
         """Reads all todo lines from a given file or directory (recursively).
 
         Pre-conditions:
@@ -70,7 +70,7 @@ class TodoGroup(Generic[T]):
                 if other_path.is_file() and other_path.suffix != ".txt":
                     continue
 
-                other_todo_group = TodoGroup.from_path(todo_type, other_path)
+                other_todo_group = TodoReader.from_path(todo_type, other_path)
                 todos.extend(other_todo_group)
 
         return cls(todos)
@@ -86,7 +86,7 @@ class TodoGroup(Generic[T]):
         metadata: Metadata = None,
         priority: Priority = None,
         projects: Iterable[str] = None,
-    ) -> TodoGroup:
+    ) -> TodoReader:
         """Filter this group using one or more Todo properties."""
         todos = []
 
@@ -123,4 +123,4 @@ class TodoGroup(Generic[T]):
 
             todos.append(todo)
 
-        return TodoGroup(todos)
+        return TodoReader(todos)
