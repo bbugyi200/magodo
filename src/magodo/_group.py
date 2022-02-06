@@ -78,22 +78,42 @@ class TodoGroup(Generic[T]):
     def filter_by(
         self,
         *,
-        contexts: Iterable[str] = None,
+        contexts: Iterable[str] = (),
         create_date: dt.date = None,
         desc: str = None,
         done_date: dt.date = None,
         done: bool = None,
         metadata: Metadata = None,
-        priority: Priority = None,
-        projects: Iterable[str] = None,
+        priorities: Iterable[Priority] = (),
+        projects: Iterable[str] = (),
     ) -> TodoGroup:
         """Filter this group using one or more Todo properties."""
         todos = []
 
         for todo in self._todos:
-            if contexts is not None and not all(
-                ctx in todo.contexts for ctx in contexts
-            ):
+            skip_this_todo = False
+            for ctx in contexts:
+                if ctx.startswith("-") and ctx[1:] in todo.contexts:
+                    skip_this_todo = True
+                    break
+
+                if ctx not in todo.contexts:
+                    skip_this_todo = True
+                    break
+
+            for proj in projects:
+                if proj.startswith("-") and proj[1:] in todo.projects:
+                    skip_this_todo = True
+                    break
+
+                if proj not in todo.projects:
+                    skip_this_todo = True
+                    break
+
+            if skip_this_todo:
+                continue
+
+            if todo.priority not in priorities:
                 continue
 
             if create_date is not None and todo.create_date != create_date:
@@ -110,14 +130,6 @@ class TodoGroup(Generic[T]):
 
             if metadata is not None and not all(
                 v == todo.metadata.get(k, None) for (k, v) in metadata.items()
-            ):
-                continue
-
-            if priority is not None and todo.priority != priority:
-                continue
-
-            if projects is not None and not all(
-                proj in todo.projects for proj in projects
             ):
                 continue
 
