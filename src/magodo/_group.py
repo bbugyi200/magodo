@@ -5,13 +5,13 @@ from __future__ import annotations
 import datetime as dt
 from logging import Logger
 from pathlib import Path
-from typing import Generic, Iterable, Iterator, Type
+from typing import Generic, Iterable, Iterator, Mapping, Type
 
 from eris import Err
 from metaman import cname
 from typist import PathLike
 
-from .types import Metadata, Priority, T
+from .types import Metadata, MetadataChecker, Priority, T
 
 
 logger = Logger(__name__)
@@ -114,7 +114,7 @@ class TodoGroup(Generic[T]):
         desc: str = None,
         done_date: dt.date = None,
         done: bool = None,
-        metadata: Metadata = None,
+        metadata_checks: Mapping[str, MetadataChecker] = None,
         priorities: Iterable[Priority] = (),
         projects: Iterable[str] = (),
     ) -> TodoGroup:
@@ -141,9 +141,6 @@ class TodoGroup(Generic[T]):
                     skip_this_todo = True
                     break
 
-            if skip_this_todo:
-                continue
-
             if priorities and todo.priority not in priorities:
                 continue
 
@@ -159,9 +156,19 @@ class TodoGroup(Generic[T]):
             if done is not None and todo.done != done:
                 continue
 
-            if metadata is not None and not all(
-                v == todo.metadata.get(k, None) for (k, v) in metadata.items()
-            ):
+            if metadata_checks is not None:
+                for mkey, check in metadata_checks.items():
+                    if mkey not in todo.metadata:
+                        skip_this_todo = True
+                        break
+
+                    mvalue = todo.metadata[mkey]
+                    assert isinstance(mvalue, str)
+                    if not check(mvalue):
+                        skip_this_todo = True
+                        break
+
+            if skip_this_todo:
                 continue
 
             path_map[key] = self.path_map[key]

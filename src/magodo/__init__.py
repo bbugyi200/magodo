@@ -5,7 +5,7 @@ import logging as _logging
 from . import spells, types
 from ._group import TodoGroup
 from ._magic import MagicTodoMixin
-from ._shared import DEFAULT_PRIORITY
+from ._shared import DEFAULT_PRIORITY, to_date
 from ._todo import Todo
 
 
@@ -15,6 +15,7 @@ __all__ = [
     "Todo",
     "TodoGroup",
     "spells",
+    "to_date",
     "types",
 ]
 
