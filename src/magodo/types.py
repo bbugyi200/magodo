@@ -61,7 +61,7 @@ Priority = Literal[
 # Type of a spell function which transforms a line (i.e. a str).
 LineSpell = Callable[[str], str]
 # Type of spell functions used by MagicTodo objects.
-TodoSpell = Callable[["AbstractTodo"], "AbstractTodo"]
+TodoSpell = Callable[[T], T]
 # Type of spell that validates a todo line.
 ValidateSpell = Callable[[str], Result[None, ErisError]]
 
@@ -69,6 +69,10 @@ ValidateSpell = Callable[[str], Result[None, ErisError]]
 @runtime_checkable
 class AbstractTodo(Comparable, Protocol):
     """Describes how any valid Todo object should look."""
+
+    @property
+    def ident(self) -> str:
+        """A unique identifier for this Todo."""
 
     @classmethod
     def from_line(cls: Type[T], line: str) -> Result[T, ErisError]:

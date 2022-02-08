@@ -5,7 +5,7 @@ from __future__ import annotations
 import datetime as dt
 from logging import Logger
 from pathlib import Path
-from typing import Generic, Iterable, Iterator, List, Type
+from typing import Generic, Iterable, Iterator, Type
 
 from eris import Err
 from metaman import cname
@@ -17,39 +17,57 @@ from .types import Metadata, Priority, T
 logger = Logger(__name__)
 
 
+# TODO(bugyi): Change class name to DiskTodo [e.g. w/ from_disk() method instead of from_path()]?
 class TodoGroup(Generic[T]):
     """Manages a group of Todo objects."""
 
-    def __init__(self, todos: Iterable[T]) -> None:
-        self._todos = sorted(todos)
+    def __init__(
+        self, todo_map: dict[str, T], path_map: dict[str, Path]
+    ) -> None:
+        self.todo_map = todo_map
+        self.path_map = path_map
+
+        self.todos = list(todo_map.values())
 
     def __repr__(self) -> str:  # noqa: D105
-        return f"{cname(self)}({self._todos})"
+        return f"{cname(self)}({self.todos})"
 
     def __iter__(self) -> Iterator[T]:
         """Yields the Todo objects that belong to this group."""
-        yield from self._todos
+        yield from self.todos
 
     def __len__(self) -> int:  # noqa: D105
-        return len(self._todos)
+        return len(self.todos)
 
     @classmethod
-    def from_path(cls, todo_type: Type[T], path_like: PathLike) -> TodoGroup:
+    def from_path(
+        cls,
+        todo_type: Type[T],
+        path_like: PathLike,
+        *,
+        path_map: dict[str, Path] = None,
+        todo_map: dict[str, T] = None,
+    ) -> TodoGroup:
         """Reads all todo lines from a given file or directory (recursively).
 
         Pre-conditions:
             * `path_like` exists and is either a file or directory.
         """
         path = Path(path_like)
+        if path_map is None:
+            path_map = {}
+
+        if todo_map is None:
+            todo_map = {}
 
         assert path.exists(), f"The provided path does not exist: {path}"
 
-        todos: List[T] = []
         if path.is_file():
             logger.debug(
                 "Attempting to load todos from text file: file=%r", str(path)
             )
 
+            todos = []
             for line in path.read_text().split("\n"):
                 line = line.strip()
                 todo_result = todo_type.from_line(line)
@@ -57,8 +75,13 @@ class TodoGroup(Generic[T]):
                     continue
 
                 todo = todo_result.ok()
-                todos.append(todo)
                 logger.debug("New todo loaded: todo=%r", todo)
+                todos.append(todo)
+
+                key = todo.ident
+                path_map[key] = path
+                todo_map[key] = todo
+
         else:
             assert path.is_dir(), (
                 "The provided path exists but is neither a file nor a"
@@ -70,10 +93,19 @@ class TodoGroup(Generic[T]):
                 if other_path.is_file() and other_path.suffix != ".txt":
                     continue
 
-                other_todo_group = TodoGroup.from_path(todo_type, other_path)
-                todos.extend(other_todo_group)
+                TodoGroup.from_path(
+                    todo_type, other_path, path_map=path_map, todo_map=todo_map
+                )
 
-        return cls(todos)
+        return cls(todo_map, path_map)
+
+    def to_disk(self, file_path: PathLike) -> None:
+        """Writes a group of Todos into `file_path`."""
+        file_path = Path(file_path)
+        assert file_path.is_file()
+        file_path.write_text(
+            "\n".join(todo.to_line() for todo in sorted(self))
+        )
 
     def filter_by(
         self,
@@ -88,9 +120,9 @@ class TodoGroup(Generic[T]):
         projects: Iterable[str] = (),
     ) -> TodoGroup:
         """Filter this group using one or more Todo properties."""
-        todos = []
-
-        for todo in self._todos:
+        path_map = {}
+        todo_map = {}
+        for key, todo in self.todo_map.items():
             skip_this_todo = False
             for ctx in contexts:
                 if ctx.startswith("-") and ctx[1:] in todo.contexts:
@@ -113,7 +145,7 @@ class TodoGroup(Generic[T]):
             if skip_this_todo:
                 continue
 
-            if todo.priority not in priorities:
+            if priorities and todo.priority not in priorities:
                 continue
 
             if create_date is not None and todo.create_date != create_date:
@@ -133,6 +165,7 @@ class TodoGroup(Generic[T]):
             ):
                 continue
 
-            todos.append(todo)
+            path_map[key] = self.path_map[key]
+            todo_map[key] = todo
 
-        return TodoGroup(todos)
+        return TodoGroup(todo_map, path_map)
