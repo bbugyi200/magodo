@@ -10,14 +10,14 @@ from magodo import DEFAULT_PRIORITY, Todo
 from magodo._shared import to_date
 from magodo.types import AbstractTodo
 
-from .shared import MagicTodo
+from .shared import MOCK_TODO_KWARGS, MagicTodo, assert_todos_equal
 
 
 params = mark.parametrize
 
 
 @params(
-    "line,expect_todo",
+    "line,expected_todo",
     [
         ("no priority todo", Todo(desc="no priority todo")),
         (f"({DEFAULT_PRIORITY}) basic todo", Todo(desc="basic todo")),
@@ -104,7 +104,7 @@ params = mark.parametrize
             MagicTodo(
                 Todo(
                     desc=(
-                        "o Do duplicate duplicate keys keys still show when"
+                        "Do duplicate duplicate keys keys still show when"
                         " they should be ignored? | @keys @test +duplicate"
                         " +regression bar:BAR foo:bar,baz"
                     ),
@@ -122,18 +122,14 @@ params = mark.parametrize
         ),
     ],
 )
-def test_todo(line: str, expect_todo: AbstractTodo) -> None:
+def test_todo(line: str, expected_todo: AbstractTodo) -> None:
     """Test the Todo type."""
-    actual = cast(MagicTodo, type(expect_todo).from_line(line).unwrap())
+    actual = cast(MagicTodo, type(expected_todo).from_line(line).unwrap())
 
-    assert actual.desc == expect_todo.desc
-    assert actual.priority == expect_todo.priority
-    assert actual.create_date == expect_todo.create_date
-    assert actual.done_date == expect_todo.done_date
-    assert actual.projects == expect_todo.projects
-    assert actual.contexts == expect_todo.contexts
-    assert actual.done == expect_todo.done
-    assert actual.metadata == expect_todo.metadata
+    actual = actual.new(**MOCK_TODO_KWARGS)
+    expected_todo = expected_todo.new(**MOCK_TODO_KWARGS)
+
+    assert_todos_equal(actual, expected_todo)
 
 
 @params(

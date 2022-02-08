@@ -151,6 +151,8 @@ class TodoMixin(Generic[T], abc.ABC):
 class Todo(TodoMixin):
     """Represents a single task in a todo list."""
 
+    ident = "BASIC TODO"
+
     def __init__(
         self,
         desc: str,

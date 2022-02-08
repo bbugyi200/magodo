@@ -1,54 +1,26 @@
 # name: test_group_from_path[ctx-bar]
   <class 'list'> [
-    "MagicTodo(desc='High-priority item | @high', contexts=('high',), metadata={}, priority='A')",
   ]
 ---
 # name: test_group_from_path[ctx-foo]
   <class 'list'> [
-    "MagicTodo(desc='High-priority item | @high', contexts=('high',), metadata={}, priority='A')",
-    "MagicTodo(desc='High-priority item. | @high', contexts=('high',), metadata={}, priority='A')",
   ]
 ---
-# name: test_group_from_path[desc-bar]
+# name: test_group_from_path[filter-kwarg-desc-bar]
   <class 'list'> [
   ]
 ---
-# name: test_group_from_path[desc-foo]
+# name: test_group_from_path[filter-kwarg-desc-foo]
   <class 'list'> [
-    "MagicTodo(desc='Double colons should be::ignored.', metadata={})",
   ]
 ---
-# name: test_group_from_path[none-bar]
+# name: test_group_from_path[no-filter-kwargs-bar]
   <class 'list'> [
-    "MagicTodo(desc='High-priority item | @high', contexts=('high',), metadata={}, priority='A')",
-    "MagicTodo(desc='And another... | +another', metadata={}, priority='B', projects=('another',))",
-    "MagicTodo(desc='And +finally... one:more!', create_date=2022-01-11, metadata={'one': 'more'}, priority='C', projects=('finally',))",
-    "MagicTodo(desc='First item.', metadata={}, priority='N')",
-    "MagicTodo(desc='Item is due:2022-01-31.', create_date=2022-01-11, metadata={'due': '2022-01-31'}, priority='N')",
-    "MagicTodo(desc='This todo came from the C.txt file. | +C.txt', metadata={}, projects=('C.txt',))",
-    "MagicTodo(desc='Done item', create_date=2022-01-01, done_date=2022-01-10, done=True, metadata={}, priority='B')",
+    "MagicTodo(desc='Item is due:2022-01-31.', create_date=1900-01-01, done_date=2022-02-07, metadata={'ctime': 'HHMM', 'dtime': 'HHMM'}, priority='N')",
   ]
 ---
-# name: test_group_from_path[none-foo]
+# name: test_group_from_path[no-filter-kwargs-foo]
   <class 'list'> [
-    "MagicTodo(desc='High-priority item | @high', contexts=('high',), metadata={}, priority='A')",
-    "MagicTodo(desc='High-priority item. | @high', contexts=('high',), metadata={}, priority='A')",
-    "MagicTodo(desc='1234 Todos can start with numbers:5678.', metadata={'numbers': '5678'}, priority='N')",
-    "MagicTodo(desc='Ditto for keys: with no values.', metadata={}, priority='N')",
-    'MagicTodo(desc="Don\'t + make + normal + pluses + projects.", metadata={}, priority=\'N\')',
-    "MagicTodo(desc='First item.', metadata={}, priority='N')",
-    "MagicTodo(desc='Item is due:2022-01-31.', create_date=2022-01-11, metadata={'due': '2022-01-31'}, priority='N')",
-    "MagicTodo(desc='We allow descriptions to start with contexts. | @context', contexts=('context',), metadata={}, priority='N')",
-    "MagicTodo(desc='We allow descriptions to start with projects. | +project', metadata={}, priority='N', projects=('project',))",
-    "MagicTodo(desc='We strip +punctuation. But not if the value:. is just @punctuation, ya:dig?', contexts=('punctuation',), metadata={'value': '.', 'ya': 'dig'}, priority='N', projects=('punctuation',))",
-    'MagicTodo(desc=\'(N) But this "o" can only be used if a priority is NOT provided.\', metadata={})',
-    'MagicTodo(desc=\'A lowercase "o" can also be used when running in "strict" mode.\', metadata={})',
-    "MagicTodo(desc='Double colons should be::ignored.', metadata={})",
-    'MagicTodo(desc="Sometimes we want to use apostrophe with project\'s or contexts\'. | @contexts +project", contexts=(\'contexts\',), metadata={}, projects=(\'project\',))',
-    "MagicTodo(desc='We also do not group tags when a metadata tag is in the middle. | group:tags', metadata={'group': 'tags'})",
-    "MagicTodo(desc='We also ignore double ++pluses and double @@at signs.', metadata={})",
-    "MagicTodo(desc='Done item', create_date=2022-01-01, done_date=2022-01-10, done=True, metadata={}, priority='B')",
-    'MagicTodo(desc=\'Todos can easily log their "done times" with this trick. | dtime:1545\', done=True, metadata={\'dtime\': \'1545\'})',
-    "MagicTodo(desc='This test item is awesome and has lots of | @stuff +test DoFoo:22 awesome:True too_long:NoWay', contexts=('stuff',), create_date=1900-01-01, done_date=1999-01-01, done=True, metadata={'awesome': 'True', 'too_long': 'NoWay', 'DoFoo': '22'}, priority='Z', projects=('test',))",
+    "MagicTodo(desc='We also ignore double ++pluses and double @@at signs. | ctime:HHMM dtime:HHMM', create_date=1900-01-01, done_date=2022-02-07, metadata={'ctime': 'HHMM', 'dtime': 'HHMM'})",
   ]
 ---

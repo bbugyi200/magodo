@@ -7,10 +7,9 @@ from typing import List, Type
 from pytest import mark
 
 from magodo import MagicTodoMixin, Todo
-from magodo._shared import to_date
 from magodo.types import AbstractMagicTodo, TodoSpell
 
-from .shared import MagicTodo
+from .shared import MOCK_TODO_KWARGS, MagicTodo, assert_todos_equal
 
 
 params = mark.parametrize
@@ -33,38 +32,38 @@ class LineTodo(MagicTodoMixin):
     to_line_spells = [to_test_line]
     todo_spells: List[TodoSpell] = []
 
+    ident: str = "LINE TODO"
+
 
 @params(
-    "line,magic_todo_type,todo,etodo",
+    "line,magic_todo_type,pre_inner_todo,expected_inner_todo",
     [
         (
             "x:1030 2022-01-12 Some done todo.",
             MagicTodo,
             Todo(
-                desc="x:1030 2022-01-12 Some done todo.",
+                desc="x:1030 Some done todo.",
                 metadata={"x": "1030"},
+                done=True,
             ),
             Todo(
-                desc="Some done todo. | dtime:1030",
+                desc="Some done todo. | ctime:HHMM dtime:HHMM",
                 done=True,
-                create_date=to_date("2022-01-12"),
-                metadata={"dtime": "1030"},
             ),
         ),
         (
             "x:1030 2022-01-12 Some done todo with a @ctx.",
             MagicTodo,
             Todo(
-                desc="x:1030 2022-01-12 Some done todo with a @ctx.",
+                desc="x:1030 Some done todo with a @ctx.",
                 contexts=("ctx",),
                 metadata={"x": "1030"},
+                done=True,
             ),
             Todo(
-                desc="Some done todo with a ctx. | @ctx dtime:1030",
+                desc="Some done todo with a ctx. | @ctx ctime:HHMM dtime:HHMM",
                 contexts=("ctx",),
                 done=True,
-                create_date=to_date("2022-01-12"),
-                metadata={"dtime": "1030"},
             ),
         ),
     ],
@@ -72,14 +71,21 @@ class LineTodo(MagicTodoMixin):
 def test_magic_todo(
     line: str,
     magic_todo_type: Type[AbstractMagicTodo[Todo]],
-    todo: Todo,
-    etodo: Todo,
+    pre_inner_todo: Todo,
+    expected_inner_todo: Todo,
 ) -> None:
     """Test the MagicTodo.from_line() function."""
-    actual = magic_todo_type.from_line(line).unwrap()
-    expected = magic_todo_type(todo)
-    assert expected.todo == etodo
-    assert repr(actual) == repr(expected)
+    from_line_mtodo = magic_todo_type.from_line(line).unwrap()
+    from_line_mtodo = from_line_mtodo.new(**MOCK_TODO_KWARGS)
+
+    pre_inner_todo = pre_inner_todo.new(**MOCK_TODO_KWARGS)
+    from_todo_mtodo = magic_todo_type(pre_inner_todo).new(**MOCK_TODO_KWARGS)
+    post_inner_todo = from_todo_mtodo.todo.new(**MOCK_TODO_KWARGS)
+    expected_inner_todo = expected_inner_todo.new(**MOCK_TODO_KWARGS)
+
+    assert_todos_equal(post_inner_todo, expected_inner_todo)
+
+    assert repr(from_line_mtodo) == repr(from_todo_mtodo)
 
 
 @params("line", ["foo bar baz", "test | foo bar baz"])

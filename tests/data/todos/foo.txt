@@ -26,4 +26,3 @@ x:1545 Todos can easily log their "done times" with this trick.
 o Double colons should be::ignored.
 o Sometimes we want to use apostrophe with +project's or @contexts'.
 o We also ignore double ++pluses and double @@at signs.
-o We also do not group:tags group tags when a metadata tag is in the middle.
