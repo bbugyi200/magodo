@@ -17,7 +17,6 @@ from .types import Metadata, Priority, T
 logger = Logger(__name__)
 
 
-# TODO(bugyi): Change class name to DiskTodo [e.g. w/ from_disk() method instead of from_path()]?
 class TodoGroup(Generic[T]):
     """Manages a group of Todo objects."""
 
