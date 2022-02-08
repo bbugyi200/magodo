@@ -11,7 +11,7 @@ from eris import Err
 from metaman import cname
 from typist import PathLike
 
-from .types import Metadata, MetadataChecker, Priority, T
+from .types import MetadataChecker, Priority, T
 
 
 logger = Logger(__name__)
