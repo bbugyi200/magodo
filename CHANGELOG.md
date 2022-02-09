@@ -9,9 +9,16 @@ The format is based on [Keep a Changelog], and this project adheres to
 [Semantic Versioning]: https://semver.org/
 
 
-## [Unreleased](https://github.com/bbugyi200/magodo/compare/0.8.0...HEAD)
+## [Unreleased](https://github.com/bbugyi200/magodo/compare/0.8.1...HEAD)
 
 No notable changes have been made.
+
+
+## [0.8.1](https://github.com/bbugyi200/magodo/compare/0.8.0...0.8.1) - 2022-02-09
+
+### Added
+
+* Add `magodo.from_date()` function to public API.
 
 
 ## [0.8.0](https://github.com/bbugyi200/magodo/compare/0.7.1...0.8.0) - 2022-02-08
