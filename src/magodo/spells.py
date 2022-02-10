@@ -101,6 +101,9 @@ def x_tag(todo: T) -> T:
     if todo.metadata is None or "x" not in todo.metadata:
         return todo
 
+    if not todo.desc.startswith("x:"):
+        return todo
+
     dtime = todo.metadata["x"]
     desc = " ".join(todo.desc.split(" ")[1:]) + f" dtime:{dtime}"
 
