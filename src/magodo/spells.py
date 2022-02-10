@@ -115,12 +115,16 @@ def group_tags(todo: T) -> T:
     if not (todo.contexts or todo.projects or todo.metadata):
         return todo
 
+    def all_words_are_tags(words: Iterable[str]) -> bool:
+        """Returns True if all `words` are special words."""
+        return all(is_any_tag(w) for w in words)
+
     all_words = [w for w in todo.desc.split(" ") if w != "|"]
     new_words = []
     regular_words_found = False
     for i, word in enumerate(all_words[:]):
-        all_prev_words_are_tags = _all_words_are_tags(all_words[:i])
-        all_next_words_are_tags = _all_words_are_tags(all_words[i + 1 :])
+        all_prev_words_are_tags = all_words_are_tags(all_words[:i])
+        all_next_words_are_tags = all_words_are_tags(all_words[i + 1 :])
         is_edge_tag = all_next_words_are_tags or all_prev_words_are_tags
 
         if is_metadata_tag(word) and word[-1] in PUNCTUATION:
@@ -164,11 +168,6 @@ def group_tags(todo: T) -> T:
         )
 
     return todo.new(desc=desc)
-
-
-def _all_words_are_tags(words: Iterable[str]) -> bool:
-    """Returns True if all `words` are special words."""
-    return all(is_any_tag(w) for w in words)
 
 
 @todo_spell
