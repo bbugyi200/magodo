@@ -9,7 +9,7 @@ from typing import Callable, Final, Iterable, List, MutableSequence, cast
 from eris import ErisResult, Err, Ok
 from typist import literal_to_list
 
-from ._shared import (
+from ._common import (
     CONTEXT_PREFIX,
     PROJECT_PREFIX,
     PUNCTUATION,

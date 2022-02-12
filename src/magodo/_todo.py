@@ -13,7 +13,7 @@ from typing import Any, Dict, Final, Generic, List, Optional, Tuple, cast
 from eris import ErisError, Err, Ok, Result
 from metaman import cname
 
-from ._shared import (
+from ._common import (
     CONTEXT_PREFIX,
     DEFAULT_PRIORITY,
     PROJECT_PREFIX,

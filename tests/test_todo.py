@@ -7,7 +7,7 @@ from typing import Sequence, cast
 from pytest import mark
 
 from magodo import DEFAULT_PRIORITY, Todo
-from magodo._shared import to_date
+from magodo._common import to_date
 from magodo.types import AbstractTodo
 
 from .shared import MOCK_TODO_KWARGS, MagicTodo, assert_todos_equal
