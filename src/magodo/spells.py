@@ -3,22 +3,20 @@
 from __future__ import annotations
 
 import datetime as dt
-from functools import lru_cache as cache
-from typing import Callable, Final, Iterable, List, MutableSequence, cast
+from typing import Callable, Final, Iterable, List, MutableSequence
 
 from eris import ErisResult, Err, Ok
-from typist import literal_to_list
 
 from ._common import (
     CONTEXT_PREFIX,
     PROJECT_PREFIX,
     PUNCTUATION,
-    TODO_PREFIXES,
     is_any_prefix_tag,
     is_any_tag,
     is_metadata_tag,
+    todo_prefixes,
 )
-from .types import LineSpell, Priority, T, TodoSpell, ValidateSpell
+from .types import LineSpell, T, TodoSpell, ValidateSpell
 
 
 def register_todo_spell_factory(
@@ -70,15 +68,6 @@ DEFAULT_VALIDATE_SPELLS: List[ValidateSpell] = []
 validate_spell = register_validate_spell_factory(DEFAULT_VALIDATE_SPELLS)
 
 O_PREFIX: Final = "o "
-
-
-@cache
-def todo_prefixes() -> tuple[str, ...]:
-    """Returns all valid todo prefixes."""
-    result = list(TODO_PREFIXES)
-    for P in cast(List[str], literal_to_list(Priority)):
-        result.append(f"({P}) ")
-    return tuple(result)
 
 
 @validate_spell

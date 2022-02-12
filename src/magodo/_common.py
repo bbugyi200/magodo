@@ -3,7 +3,10 @@
 from __future__ import annotations
 
 import datetime as dt
-from typing import Final
+from functools import lru_cache as cache
+from typing import Final, List, cast
+
+from typist import literal_to_list
 
 from .types import Priority
 
@@ -60,3 +63,12 @@ def is_any_prefix_tag(word: str) -> bool:
 def is_any_tag(word: str) -> bool:
     """Returns True if `word` is a project, context, or metadata."""
     return is_any_prefix_tag(word) or is_metadata_tag(word)
+
+
+@cache
+def todo_prefixes() -> tuple[str, ...]:
+    """Returns all valid todo prefixes."""
+    result = list(TODO_PREFIXES)
+    for P in cast(List[str], literal_to_list(Priority)):
+        result.append(f"({P}) ")
+    return tuple(result)
