@@ -112,9 +112,11 @@ def group_tags(todo: T) -> T:
         return all(is_any_tag(w) for w in words)
 
     all_words = [w for w in todo.desc.split(" ") if w != "|"]
-    new_words = []
-    regular_words_found = False
+    regular_words: list[str] = []
     for i, word in enumerate(all_words[:]):
+        if not word:
+            continue
+
         all_prev_words_are_tags = all_words_are_tags(all_words[:i])
         all_next_words_are_tags = all_words_are_tags(all_words[i + 1 :])
         is_edge_tag = all_next_words_are_tags or all_prev_words_are_tags
@@ -125,8 +127,8 @@ def group_tags(todo: T) -> T:
         if is_any_prefix_tag(word) and (
             word[-1] in PUNCTUATION or not all_next_words_are_tags
         ):
-            if regular_words_found:
-                new_words.append(word[1:])
+            if regular_words:
+                regular_words.append(word[1:])
             continue
 
         if is_any_prefix_tag(word) and is_edge_tag:
@@ -135,17 +137,16 @@ def group_tags(todo: T) -> T:
         if is_metadata_tag(word):
             continue
 
-        regular_words_found = True
-        new_words.append(word)
+        regular_words.append(word)
 
-    if not regular_words_found:
-        return todo
-
-    desc = " ".join(new_words).strip()
-    desc += " |"
+    desc = " ".join(regular_words).strip()
+    first_space = ""
+    if regular_words:
+        first_space = " "
+        desc += " |"
 
     if todo.contexts:
-        desc += " " + " ".join(
+        desc += first_space + " ".join(
             CONTEXT_PREFIX + ctx for ctx in sorted(todo.contexts)
         )
 
