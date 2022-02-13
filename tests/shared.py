@@ -4,7 +4,13 @@ import datetime as dt
 from typing import List
 
 from magodo import MagicTodoMixin
-from magodo.spells import DEFAULT_TODO_SPELLS, add_o_prefix, remove_o_prefix
+from magodo.spells import (
+    DEFAULT_PRE_TODO_SPELLS,
+    DEFAULT_TODO_SPELLS,
+    DEFAULT_POST_TODO_SPELLS,
+    add_o_prefix,
+    remove_o_prefix,
+)
 from magodo.types import AbstractTodo, LineSpell, TodoSpell
 
 
@@ -22,8 +28,11 @@ MOCK_TODO_KWARGS = {
 class MagicTodo(MagicTodoMixin):
     """The default MagicTodo class."""
 
-    to_line_spells: List[LineSpell] = [add_o_prefix]
+    pre_todo_spells: List[TodoSpell] = DEFAULT_PRE_TODO_SPELLS
     todo_spells: List[TodoSpell] = DEFAULT_TODO_SPELLS
+    post_todo_spells: List[TodoSpell] = DEFAULT_POST_TODO_SPELLS
+
+    to_line_spells: List[LineSpell] = [add_o_prefix]
     from_line_spells: List[LineSpell] = [remove_o_prefix]
 
 

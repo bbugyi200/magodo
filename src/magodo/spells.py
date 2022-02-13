@@ -58,6 +58,12 @@ def register_validate_spell_factory(
 DEFAULT_TODO_SPELLS: List[TodoSpell] = []
 todo_spell = register_todo_spell_factory(DEFAULT_TODO_SPELLS)
 
+DEFAULT_PRE_TODO_SPELLS: List[TodoSpell] = []
+pre_todo_spell = register_todo_spell_factory(DEFAULT_PRE_TODO_SPELLS)
+
+DEFAULT_POST_TODO_SPELLS: List[TodoSpell] = []
+post_todo_spell = register_todo_spell_factory(DEFAULT_POST_TODO_SPELLS)
+
 DEFAULT_TO_LINE_SPELLS: List[LineSpell] = []
 to_line_spell = register_line_spell_factory(DEFAULT_TO_LINE_SPELLS)
 
@@ -94,6 +100,9 @@ def x_tag(todo: T) -> T:
         return todo
 
     dtime = todo.metadata["x"]
+    if len(dtime) != 4:
+        return todo
+
     desc = " ".join(todo.desc.split(" ")[1:]) + f" dtime:{dtime}"
 
     new_todo = todo.new(desc=desc, done=True)
@@ -101,7 +110,7 @@ def x_tag(todo: T) -> T:
     return type(todo).from_line(line).unwrap()
 
 
-@todo_spell
+@post_todo_spell
 def group_tags(todo: T) -> T:
     """Groups all @ctxs, +projs, and meta:data at the end of the line."""
     if not (todo.contexts or todo.projects or todo.metadata):
@@ -246,6 +255,8 @@ def remove_x_prefix(line: str) -> str:
 
     xhhmm, *words = line.split(" ")
     dtime = xhhmm.split(":")[1]
+    if len(dtime) != 4:
+        return line
 
     rest = " ".join(words)
     return f"x {rest} dtime:{dtime}"

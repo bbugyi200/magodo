@@ -5,6 +5,7 @@ from __future__ import annotations
 import abc
 import datetime as dt
 from functools import total_ordering
+import itertools as it
 from typing import Any, List, Tuple, Type, TypeVar
 import uuid
 
@@ -21,9 +22,13 @@ M = TypeVar("M", bound="MagicTodoMixin")
 class MagicTodoMixin(TodoMixin, abc.ABC):
     """Mixin class that implements the Todo protocol."""
 
-    to_line_spells: List[LineSpell] = []
+    pre_todo_spells: List[TodoSpell] = []
     todo_spells: List[TodoSpell] = []
+    post_todo_spells: List[TodoSpell] = []
+
+    to_line_spells: List[LineSpell] = []
     from_line_spells: List[LineSpell] = []
+
     validate_spells: List[ValidateSpell] = []
 
     def __init__(self: M, todo: Todo):
@@ -66,7 +71,9 @@ class MagicTodoMixin(TodoMixin, abc.ABC):
     def cast_todo_spells(cls: Type[M], todo: Todo) -> Todo:
         """Casts all spells associated with this MagicTodo on `todo`."""
         new_todo = todo.new()
-        for todo_spell in cls.todo_spells:
+        for todo_spell in it.chain(
+            cls.pre_todo_spells, cls.todo_spells, cls.post_todo_spells
+        ):
             new_todo = todo_spell(new_todo)
 
         return new_todo

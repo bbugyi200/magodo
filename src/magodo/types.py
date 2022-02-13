@@ -134,7 +134,9 @@ class AbstractMagicTodo(AbstractTodo, Protocol, Generic[T]):
 
     to_line_spells: List[LineSpell]
     from_line_spells: List[LineSpell]
+    pre_todo_spells: List[TodoSpell]
     todo_spells: List[TodoSpell]
+    post_todo_spells: List[TodoSpell]
     validate_spells: List[ValidateSpell]
 
     def __init__(self, todo: T) -> None:
