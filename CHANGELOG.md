@@ -9,9 +9,21 @@ The format is based on [Keep a Changelog], and this project adheres to
 [Semantic Versioning]: https://semver.org/
 
 
-## [Unreleased](https://github.com/bbugyi200/magodo/compare/0.8.3...HEAD)
+## [Unreleased](https://github.com/bbugyi200/magodo/compare/0.8.4...HEAD)
 
 No notable changes have been made.
+
+
+## [0.8.4](https://github.com/bbugyi200/magodo/compare/0.8.3...0.8.4) - 2022-02-13
+
+### Miscellaneous
+
+* Convert `Metadata` type from `list[str]|str` to `str`.
+
+### Removed
+
+* List splitting functionality of metatags---values with commas in them used to
+  be split into lists.
 
 
 ## [0.8.3](https://github.com/bbugyi200/magodo/compare/0.8.2...0.8.3) - 2022-02-13
