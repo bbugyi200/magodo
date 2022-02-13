@@ -5,9 +5,9 @@ from typing import List
 
 from magodo import MagicTodoMixin
 from magodo.spells import (
+    DEFAULT_POST_TODO_SPELLS,
     DEFAULT_PRE_TODO_SPELLS,
     DEFAULT_TODO_SPELLS,
-    DEFAULT_POST_TODO_SPELLS,
     add_o_prefix,
     remove_o_prefix,
 )
