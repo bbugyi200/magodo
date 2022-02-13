@@ -15,7 +15,6 @@ from typing import (
     Tuple,
     Type,
     TypeVar,
-    Union,
     runtime_checkable,
 )
 
@@ -27,7 +26,7 @@ from typist import Comparable
 T = TypeVar("T", bound="AbstractTodo")
 
 # Type of the Todo.metadata attribute.
-Metadata = Dict[str, Union[str, List[str]]]
+Metadata = Dict[str, str]
 # A todo item's priority is always a capital letter.
 Priority = Literal[
     "A",

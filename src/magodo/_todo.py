@@ -236,10 +236,7 @@ class Todo(TodoMixin):
                 if key in metadata:
                     continue
 
-                if "," in value:
-                    metadata[key] = [v for v in value.split(",") if v.strip()]
-                else:
-                    metadata[key] = value
+                metadata[key] = value
 
         todo = cls(
             contexts=contexts,

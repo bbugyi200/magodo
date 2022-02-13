@@ -86,7 +86,7 @@ params = mark.parametrize
                     " 3rd dep:789... foo:bar @crazy"
                 ),
                 contexts=("crazy",),
-                metadata={"dep": ["123", "10", "20", "30"], "foo": "bar"},
+                metadata={"dep": "123,10,20,30", "foo": "bar"},
             ),
         ),
         (
@@ -98,15 +98,15 @@ params = mark.parametrize
             ),
         ),
         (
-            "o +regression @test Do +duplicate +duplicate @keys @keys"
-            " foo:bar,baz foo:bar foo:boom bar:BAR still show when they should"
-            " be ignored?",
+            "o +regression @test Do +duplicate +duplicate @keys @keys foo:FOO"
+            " foo:bar foo:baz foo:boom bar:BAR still show when they should be"
+            " ignored?",
             MagicTodo(
                 Todo(
                     desc=(
                         "Do duplicate duplicate keys keys still show when"
                         " they should be ignored? | @keys @test +duplicate"
-                        " +regression bar:BAR foo:bar,baz"
+                        " +regression bar:BAR foo:FOO"
                     ),
                     contexts=(
                         "test",
@@ -116,7 +116,7 @@ params = mark.parametrize
                         "regression",
                         "duplicate",
                     ),
-                    metadata={"foo": ["bar", "baz"], "bar": "BAR"},
+                    metadata={"foo": "FOO", "bar": "BAR"},
                 )
             ),
         ),
