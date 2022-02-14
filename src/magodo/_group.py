@@ -98,14 +98,6 @@ class TodoGroup(Generic[T]):
 
         return cls(todo_map, path_map)
 
-    def to_disk(self, file_path: PathLike) -> None:
-        """Writes a group of Todos into `file_path`."""
-        file_path = Path(file_path)
-        assert file_path.is_file()
-        file_path.write_text(
-            "\n".join(todo.to_line() for todo in sorted(self))
-        )
-
     def filter_by(
         self,
         *,

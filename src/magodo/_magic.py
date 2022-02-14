@@ -7,7 +7,6 @@ import datetime as dt
 from functools import total_ordering
 import itertools as it
 from typing import Any, List, Tuple, Type, TypeVar
-import uuid
 
 from eris import ErisError, Err, Ok, Result
 
@@ -34,11 +33,6 @@ class MagicTodoMixin(TodoMixin, abc.ABC):
     def __init__(self: M, todo: Todo):
         self._todo = todo
         self.todo = self.cast_todo_spells(todo)
-
-    @property
-    def ident(self) -> str:
-        """Unique identifier."""
-        return str(uuid.uuid4())
 
     @classmethod
     def from_line(cls: Type[M], line: str) -> Result[M, ErisError]:

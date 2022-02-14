@@ -9,6 +9,7 @@ import datetime as dt
 from functools import total_ordering
 import re
 from typing import Any, Dict, Final, Generic, List, Optional, Tuple, cast
+import uuid
 
 from eris import ErisError, Err, Ok, Result
 from metaman import cname
@@ -42,6 +43,11 @@ RE_TODO: Final = r"""
 
 class TodoMixin(Generic[T], abc.ABC):
     """Implements standard Todo-like behaviors.."""
+
+    @property
+    def ident(self) -> str:
+        """Unique identifier."""
+        return str(uuid.uuid4())
 
     def __repr__(self: T) -> str:  # noqa: D105
         kwargs: Dict[str, Any] = {}
@@ -150,8 +156,6 @@ class TodoMixin(Generic[T], abc.ABC):
 @total_ordering
 class Todo(TodoMixin):
     """Represents a single task in a todo list."""
-
-    ident = "BASIC TODO"
 
     def __init__(
         self,
