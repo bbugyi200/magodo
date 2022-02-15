@@ -21,12 +21,14 @@ class TodoGroup(Generic[T]):
     """Manages a group of Todo objects."""
 
     def __init__(
-        self, todo_map: dict[str, T], path_map: dict[str, Path]
+        self,
+        todos: Iterable[T],
+        todo_map: dict[str, T],
+        path_map: dict[str, Path],
     ) -> None:
+        self.todos = list(todos)
         self.todo_map = todo_map
         self.path_map = path_map
-
-        self.todos = list(todo_map.values())
 
     def __repr__(self) -> str:  # noqa: D105
         return f"{cname(self)}({self.todos})"
@@ -61,12 +63,12 @@ class TodoGroup(Generic[T]):
 
         assert path.exists(), f"The provided path does not exist: {path}"
 
+        todos = []
         if path.is_file():
             logger.debug(
                 "Attempting to load todos from text file: file=%r", str(path)
             )
 
-            todos = []
             for line in path.read_text().split("\n"):
                 line = line.strip()
                 todo_result = todo_type.from_line(line)
@@ -92,11 +94,16 @@ class TodoGroup(Generic[T]):
                 if other_path.is_file() and other_path.suffix != ".txt":
                     continue
 
-                TodoGroup.from_path(
-                    todo_type, other_path, path_map=path_map, todo_map=todo_map
+                todos.extend(
+                    TodoGroup.from_path(
+                        todo_type,
+                        other_path,
+                        path_map=path_map,
+                        todo_map=todo_map,
+                    )
                 )
 
-        return cls(todo_map, path_map)
+        return cls(todos, todo_map, path_map)
 
     def filter_by(
         self,
@@ -111,8 +118,10 @@ class TodoGroup(Generic[T]):
         projects: Iterable[str] = (),
     ) -> TodoGroup:
         """Filter this group using one or more Todo properties."""
+        todos = []
         path_map = {}
         todo_map = {}
+
         for key, todo in self.todo_map.items():
             skip_this_todo = False
             for ctx in contexts:
@@ -163,7 +172,8 @@ class TodoGroup(Generic[T]):
             if skip_this_todo:
                 continue
 
+            todos.append(todo)
             path_map[key] = self.path_map[key]
             todo_map[key] = todo
 
-        return TodoGroup(todo_map, path_map)
+        return TodoGroup(todos, todo_map, path_map)
