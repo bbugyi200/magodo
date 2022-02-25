@@ -2,19 +2,29 @@
 
 from __future__ import annotations
 
+from dataclasses import dataclass
 import datetime as dt
 from logging import Logger
 from pathlib import Path
-from typing import Generic, Iterable, Iterator, Mapping, Type
+from typing import Generic, Iterable, Iterator, Type
 
 from eris import Err
 from metaman import cname
 from typist import PathLike
 
-from .types import MetadataChecker, Priority, T
+from .types import MetadataFunc, Priority, T
 
 
 logger = Logger(__name__)
+
+
+@dataclass
+class MetadataCheck:
+    """Wrapper for the MetadataFunc type."""
+
+    key: str
+    check: MetadataFunc
+    required: bool = True
 
 
 class TodoGroup(Generic[T]):
@@ -113,7 +123,7 @@ class TodoGroup(Generic[T]):
         desc: str = None,
         done_date: dt.date = None,
         done: bool = None,
-        metadata_checks: Mapping[str, MetadataChecker] = None,
+        metadata_checks: Iterable[MetadataCheck] = None,
         priorities: Iterable[Priority] = (),
         projects: Iterable[str] = (),
     ) -> TodoGroup:
@@ -158,14 +168,14 @@ class TodoGroup(Generic[T]):
                 continue
 
             if metadata_checks is not None:
-                for mkey, check in metadata_checks.items():
-                    if mkey not in todo.metadata:
+                for mcheck in metadata_checks:
+                    if mcheck.required and mcheck.key not in todo.metadata:
                         skip_this_todo = True
                         break
 
-                    mvalue = todo.metadata[mkey]
+                    mvalue = todo.metadata[mcheck.key]
                     assert isinstance(mvalue, str)
-                    if not check(mvalue):
+                    if not mcheck.check(mvalue):
                         skip_this_todo = True
                         break
 
