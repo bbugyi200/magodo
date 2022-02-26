@@ -23,7 +23,7 @@ class MetadataCheck:
     """Wrapper for the MetadataFunc type."""
 
     key: str
-    check: MetadataFunc
+    check: MetadataFunc = lambda _: True
     required: bool = True
 
 
@@ -123,7 +123,7 @@ class TodoGroup(Generic[T]):
         desc: str = None,
         done_date: dt.date = None,
         done: bool = None,
-        metadata_checks: Iterable[MetadataCheck] = None,
+        metadata_checks: Iterable[MetadataCheck] = (),
         priorities: Iterable[Priority] = (),
         projects: Iterable[str] = (),
     ) -> TodoGroup:
@@ -167,17 +167,20 @@ class TodoGroup(Generic[T]):
             if done is not None and todo.done != done:
                 continue
 
-            if metadata_checks is not None:
-                for mcheck in metadata_checks:
-                    if mcheck.required and mcheck.key not in todo.metadata:
-                        skip_this_todo = True
-                        break
+            for mcheck in metadata_checks:
+                key_not_found = mcheck.key not in todo.metadata
+                if mcheck.required and key_not_found:
+                    skip_this_todo = True
+                    break
 
-                    mvalue = todo.metadata[mcheck.key]
-                    assert isinstance(mvalue, str)
-                    if not mcheck.check(mvalue):
-                        skip_this_todo = True
-                        break
+                if key_not_found:
+                    continue
+
+                mvalue = todo.metadata[mcheck.key]
+                assert isinstance(mvalue, str)
+                if not mcheck.check(mvalue):
+                    skip_this_todo = True
+                    break
 
             if skip_this_todo:
                 continue
