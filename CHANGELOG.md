@@ -9,9 +9,21 @@ The format is based on [Keep a Changelog], and this project adheres to
 [Semantic Versioning]: https://semver.org/
 
 
-## [Unreleased](https://github.com/bbugyi200/magodo/compare/0.8.5...HEAD)
+## [Unreleased](https://github.com/bbugyi200/magodo/compare/0.9.0...HEAD)
 
 No notable changes have been made.
+
+
+## [0.9.0](https://github.com/bbugyi200/magodo/compare/0.8.5...0.9.0) - 2022-02-26
+
+### Add
+
+* Add `magodo.MetadataCheck` to API.
+
+### Changed
+
+* *BREAKING CHANGE*: Use `Iterable[MetadataCheck]` instead of dictionary for
+  the `magodo.TodoGroup.filter_by()` function's `metadata_checks` kwarg.
 
 
 ## [0.8.5](https://github.com/bbugyi200/magodo/compare/0.8.4...0.8.5) - 2022-02-14
