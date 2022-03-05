@@ -47,7 +47,12 @@ class TodoMixin(Generic[T], abc.ABC):
     @property
     def ident(self) -> str:
         """Unique identifier."""
-        return str(uuid.uuid4())
+        key = "_uuid_ident"
+        if not hasattr(self, key):
+            setattr(self, key, uuid.uuid4())
+
+        result: str = getattr(self, key)
+        return result
 
     def __repr__(self: T) -> str:  # noqa: D105
         kwargs: Dict[str, Any] = {}
