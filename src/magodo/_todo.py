@@ -17,6 +17,7 @@ from metaman import cname
 from ._common import (
     CONTEXT_PREFIX,
     DEFAULT_PRIORITY,
+    EPIC_PREFIX,
     PROJECT_PREFIX,
     PUNCTUATION,
     RE_DATE,
@@ -170,6 +171,7 @@ class Todo(TodoMixin):
         create_date: dt.date = None,
         done_date: dt.date = None,
         done: bool = False,
+        epics: Tuple[str, ...] = (),
         metadata: Metadata = None,
         priority: Priority = DEFAULT_PRIORITY,
         projects: Tuple[str, ...] = (),
@@ -179,6 +181,7 @@ class Todo(TodoMixin):
         self.desc = desc
         self.done_date = done_date
         self.done = done
+        self.epics = epics
         self.metadata = metadata or {}
         self.priority = priority
         self.projects = projects
@@ -221,9 +224,11 @@ class Todo(TodoMixin):
 
         project_list: List[str] = []
         context_list: List[str] = []
+        epics_list: List[str] = []
         for some_list, prefix in [
             (project_list, PROJECT_PREFIX),
             (context_list, CONTEXT_PREFIX),
+            (epics_list, EPIC_PREFIX),
         ]:
             for word in all_words:
                 if is_prefix_tag(prefix, word):
@@ -234,6 +239,7 @@ class Todo(TodoMixin):
 
         projects = tuple(project_list)
         contexts = tuple(context_list)
+        epics = tuple(epics_list)
 
         metadata: Metadata = {}
         for word in all_words:
@@ -253,6 +259,7 @@ class Todo(TodoMixin):
             desc=desc,
             done_date=done_date,
             done=done,
+            epics=epics,
             metadata=metadata,
             priority=priority,
             projects=projects,
@@ -285,6 +292,7 @@ class Todo(TodoMixin):
         desc = kwargs.get("desc", self.desc)
         done_date = kwargs.get("done_date", self.done_date)
         done = kwargs.get("done", self.done)
+        epics = kwargs.get("epics", self.epics)
         metadata = kwargs.get("metadata", self.metadata)
         priority: Priority = kwargs.get("priority", self.priority)
         projects = kwargs.get("projects", self.projects)
@@ -294,6 +302,7 @@ class Todo(TodoMixin):
             desc=desc,
             done_date=done_date,
             done=done,
+            epics=epics,
             metadata=metadata,
             priority=priority,
             projects=projects,

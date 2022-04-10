@@ -126,6 +126,10 @@ class MagicTodoMixin(TodoMixin, abc.ABC):
         return self.todo.done
 
     @property
+    def epics(self: M) -> Tuple[str, ...]:  # noqa: D102
+        return self.todo.epics
+
+    @property
     def metadata(self: M) -> Metadata:  # noqa: D102
         return self.todo.metadata
 

@@ -109,6 +109,13 @@ class AbstractTodo(Comparable, Protocol):
         """Is this todo marked done with an 'x'?"""
 
     @property
+    def epics(self) -> Tuple[str, ...]:  # noqa: D102
+        """A todo's contexts.
+
+        A word is normally marked as an epic by prefixing it with '#'.
+        """
+
+    @property
     def metadata(self) -> Metadata:  # noqa: D102
         """A todo's corresponding metadata dictionary.
 

@@ -9,6 +9,7 @@ from eris import ErisResult, Err, Ok
 
 from ._common import (
     CONTEXT_PREFIX,
+    EPIC_PREFIX,
     PROJECT_PREFIX,
     PUNCTUATION,
     is_any_prefix_tag,
@@ -112,8 +113,11 @@ def x_tag(todo: T) -> T:
 
 @post_todo_spell
 def group_tags(todo: T) -> T:
-    """Groups all @ctxs, +projs, and meta:data at the end of the line."""
-    if not (todo.contexts or todo.projects or todo.metadata):
+    """Spell that organizes Todo tags by grouping them at the end.
+
+    Groups all #epics, @ctxs, +projs, and meta:data at the end of the line.
+    """
+    if not (todo.epics or todo.contexts or todo.projects or todo.metadata):
         return todo
 
     def all_words_are_tags(words: Iterable[str]) -> bool:
@@ -149,25 +153,34 @@ def group_tags(todo: T) -> T:
         regular_words.append(word)
 
     desc = " ".join(regular_words).strip()
-    first_space = ""
+    space = ""
     if regular_words:
-        first_space = " "
         desc += " |"
+        space = " "
+
+    if todo.epics:
+        desc += space + " ".join(
+            EPIC_PREFIX + epic for epic in sorted(todo.epics)
+        )
+        space = " "
 
     if todo.contexts:
-        desc += first_space + " ".join(
+        desc += space + " ".join(
             CONTEXT_PREFIX + ctx for ctx in sorted(todo.contexts)
         )
+        space = " "
 
     if todo.projects:
-        desc += " " + " ".join(
+        desc += space + " ".join(
             PROJECT_PREFIX + ctx for ctx in sorted(todo.projects)
         )
+        space = " "
 
     if todo.metadata:
-        desc += " " + " ".join(
+        desc += space + " ".join(
             f"{k}:{v}" for (k, v) in sorted(todo.metadata.items())
         )
+        space = " "
 
     return todo.new(desc=desc)
 

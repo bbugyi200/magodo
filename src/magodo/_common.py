@@ -14,6 +14,7 @@ from .types import Priority
 CONTEXT_PREFIX: Final = "@"
 DATE_FMT: Final = "%Y-%m-%d"
 DEFAULT_PRIORITY: Final[Priority] = "O"
+EPIC_PREFIX: Final = "#"
 PROJECT_PREFIX: Final = "+"
 PUNCTUATION: Final = ",.?!;"
 RE_DATE: Final = r"[1-9][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9]"
@@ -55,9 +56,14 @@ def is_project_tag(word: str) -> bool:
     return is_prefix_tag(PROJECT_PREFIX, word)
 
 
+def is_epic_tag(word: str) -> bool:
+    """Returns True if `word` is an epic tag."""
+    return is_prefix_tag(EPIC_PREFIX, word)
+
+
 def is_any_prefix_tag(word: str) -> bool:
-    """Returns True if `word` is either a context or project tag."""
-    return is_context_tag(word) or is_project_tag(word)
+    """Returns True if `word` is either an epic, context, or project tag."""
+    return is_epic_tag(word) or is_context_tag(word) or is_project_tag(word)
 
 
 def is_any_tag(word: str) -> bool:
