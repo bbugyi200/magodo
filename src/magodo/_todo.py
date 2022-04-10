@@ -70,6 +70,9 @@ class TodoMixin(Generic[T], abc.ABC):
         if self.done:
             kwargs["done"] = self.done
 
+        if self.epics:
+            kwargs["epics"] = self.epics
+
         if self.metadata:
             kwargs["metadata"] = self.metadata
 
