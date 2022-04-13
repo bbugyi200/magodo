@@ -110,7 +110,7 @@ class AbstractTodo(Comparable, Protocol):
 
     @property
     def epics(self) -> Tuple[str, ...]:  # noqa: D102
-        """A todo's contexts.
+        """A todo's epics.
 
         A word is normally marked as an epic by prefixing it with '#'.
         """
