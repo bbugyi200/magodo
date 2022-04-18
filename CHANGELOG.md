@@ -9,9 +9,17 @@ The format is based on [Keep a Changelog], and this project adheres to
 [Semantic Versioning]: https://semver.org/
 
 
-## [Unreleased](https://github.com/bbugyi200/magodo/compare/0.9.0...HEAD)
+## [Unreleased](https://github.com/bbugyi200/magodo/compare/0.9.1...HEAD)
 
 No notable changes have been made.
+
+
+## [0.9.1](https://github.com/bbugyi200/magodo/compare/0.9.0...0.9.1) - 2022-04-18
+
+### Add
+
+* Added support for epics which are prefixed with a '#' instead of a '+'
+  (projects) or '@' (contexts).
 
 
 ## [0.9.0](https://github.com/bbugyi200/magodo/compare/0.8.5...0.9.0) - 2022-02-26
