@@ -1,25 +1,25 @@
 # name: test_group_from_path[ctx-bar]
-  <class 'list'> [
+  list([
     "MagicTodo(desc='High-priority item | @high ctime:HHMM dtime:HHMM', contexts=('high',), create_date=1900-01-01, done_date=2022-02-07, metadata={'ctime': 'HHMM', 'dtime': 'HHMM'}, priority='A')",
-  ]
----
+  ])
+# ---
 # name: test_group_from_path[ctx-foo]
-  <class 'list'> [
+  list([
     "MagicTodo(desc='High-priority item | @high ctime:HHMM dtime:HHMM', contexts=('high',), create_date=1900-01-01, done_date=2022-02-07, metadata={'ctime': 'HHMM', 'dtime': 'HHMM'}, priority='A')",
     "MagicTodo(desc='High-priority item. | @high ctime:HHMM dtime:HHMM', contexts=('high',), create_date=1900-01-01, done_date=2022-02-07, metadata={'ctime': 'HHMM', 'dtime': 'HHMM'}, priority='A')",
-  ]
----
+  ])
+# ---
 # name: test_group_from_path[filter-kwarg-desc-bar]
-  <class 'list'> [
-  ]
----
+  list([
+  ])
+# ---
 # name: test_group_from_path[filter-kwarg-desc-foo]
-  <class 'list'> [
+  list([
     "MagicTodo(desc='Double colons should be::ignored. | ctime:HHMM dtime:HHMM', create_date=1900-01-01, done_date=2022-02-07, metadata={'ctime': 'HHMM', 'dtime': 'HHMM'})",
-  ]
----
+  ])
+# ---
 # name: test_group_from_path[no-filter-kwargs-bar]
-  <class 'list'> [
+  list([
     "MagicTodo(desc='This todo came from the C.txt file. | +C.txt ctime:HHMM dtime:HHMM', create_date=1900-01-01, done_date=2022-02-07, metadata={'ctime': 'HHMM', 'dtime': 'HHMM'}, projects=('C.txt',))",
     "MagicTodo(desc='Some other done todo. | @done ctime:HHMM dtime:HHMM', contexts=('done',), create_date=1900-01-01, done_date=2022-02-07, done=True, metadata={'ctime': 'HHMM', 'dtime': 'HHMM'})",
     "MagicTodo(desc='And another... | +another ctime:HHMM dtime:HHMM', create_date=1900-01-01, done_date=2022-02-07, metadata={'ctime': 'HHMM', 'dtime': 'HHMM'}, priority='B', projects=('another',))",
@@ -40,10 +40,10 @@
     "MagicTodo(desc='High-priority item | @high ctime:HHMM dtime:HHMM', contexts=('high',), create_date=1900-01-01, done_date=2022-02-07, metadata={'ctime': 'HHMM', 'dtime': 'HHMM'}, priority='A')",
     "MagicTodo(desc='Done item | ctime:HHMM dtime:HHMM', create_date=1900-01-01, done_date=2022-02-07, done=True, metadata={'ctime': 'HHMM', 'dtime': 'HHMM'}, priority='B')",
     "MagicTodo(desc='Item is due:2022-01-31.', create_date=1900-01-01, done_date=2022-02-07, metadata={'ctime': 'HHMM', 'dtime': 'HHMM'}, priority='N')",
-  ]
----
+  ])
+# ---
 # name: test_group_from_path[no-filter-kwargs-foo]
-  <class 'list'> [
+  list([
     "MagicTodo(desc='I do lots of stuff in this file. Some lines are todo tasks, but some lines are headers. Some | ctime:HHMM dtime:HHMM', create_date=1900-01-01, done_date=2022-02-07, metadata={'ctime': 'HHMM', 'dtime': 'HHMM'})",
     "MagicTodo(desc='other lines are apart of text paragraphs. | ctime:HHMM dtime:HHMM', create_date=1900-01-01, done_date=2022-02-07, metadata={'ctime': 'HHMM', 'dtime': 'HHMM'})",
     "MagicTodo(desc='First item. | ctime:HHMM dtime:HHMM', create_date=1900-01-01, done_date=2022-02-07, metadata={'ctime': 'HHMM', 'dtime': 'HHMM'}, priority='N')",
@@ -66,5 +66,5 @@
     "MagicTodo(desc='Double colons should be::ignored. | ctime:HHMM dtime:HHMM', create_date=1900-01-01, done_date=2022-02-07, metadata={'ctime': 'HHMM', 'dtime': 'HHMM'})",
     'MagicTodo(desc="Sometimes we want to use apostrophe with project\'s or contexts\'. | @contexts +project ctime:HHMM dtime:HHMM", contexts=(\'contexts\',), create_date=1900-01-01, done_date=2022-02-07, metadata={\'ctime\': \'HHMM\', \'dtime\': \'HHMM\'}, projects=(\'project\',))',
     "MagicTodo(desc='We also ignore double ++pluses and double @@at signs. | ctime:HHMM dtime:HHMM', create_date=1900-01-01, done_date=2022-02-07, metadata={'ctime': 'HHMM', 'dtime': 'HHMM'})",
-  ]
----
+  ])
+# ---
