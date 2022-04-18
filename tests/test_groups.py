@@ -32,6 +32,7 @@ def test_group_from_path(
     """Test the TodoGroup.from_path() function."""
     todo_group = TodoGroup.from_path(MagicTodo, todo_file)
     todo_group = todo_group.filter_by(**filter_kwargs)
-    assert [
-        repr(todo.new(**MOCK_TODO_KWARGS)) for todo in todo_group
-    ] == snapshot
+    assert (
+        sorted(repr(todo.new(**MOCK_TODO_KWARGS)) for todo in todo_group)
+        == snapshot
+    )
