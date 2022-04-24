@@ -123,6 +123,7 @@ class TodoGroup(Generic[T]):
         desc: str = None,
         done_date: dt.date = None,
         done: bool = None,
+        epics: Iterable[str] = (),
         metadata_checks: Iterable[MetadataCheck] = (),
         priorities: Iterable[Priority] = (),
         projects: Iterable[str] = (),
@@ -134,23 +135,21 @@ class TodoGroup(Generic[T]):
 
         for key, todo in self.todo_map.items():
             skip_this_todo = False
-            for ctx in contexts:
-                if ctx.startswith("-") and ctx[1:] in todo.contexts:
-                    skip_this_todo = True
-                    break
 
-                if ctx not in todo.contexts:
-                    skip_this_todo = True
-                    break
+            for desired_props, attr in [
+                (contexts, "contexts"),
+                (epics, "epics"),
+                (projects, "projects"),
+            ]:
+                todo_props = getattr(todo, attr)
+                for prop in desired_props:
+                    if prop.startswith("-") and prop[1:] in todo_props:
+                        skip_this_todo = True
+                        break
 
-            for proj in projects:
-                if proj.startswith("-") and proj[1:] in todo.projects:
-                    skip_this_todo = True
-                    break
-
-                if proj not in todo.projects:
-                    skip_this_todo = True
-                    break
+                    if prop not in todo_props:
+                        skip_this_todo = True
+                        break
 
             if priorities and todo.priority not in priorities:
                 continue
