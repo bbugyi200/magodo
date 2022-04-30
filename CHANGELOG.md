@@ -9,9 +9,16 @@ The format is based on [Keep a Changelog], and this project adheres to
 [Semantic Versioning]: https://semver.org/
 
 
-## [Unreleased](https://github.com/bbugyi200/magodo/compare/0.9.1...HEAD)
+## [Unreleased](https://github.com/bbugyi200/magodo/compare/0.9.2...HEAD)
 
 No notable changes have been made.
+
+
+## [0.9.2](https://github.com/bbugyi200/magodo/compare/0.9.1...0.9.2) - 2022-04-30
+
+### Fixed
+
+* Add `epics` kwarg to `TodoGroup.filter_by()` method.
 
 
 ## [0.9.1](https://github.com/bbugyi200/magodo/compare/0.9.0...0.9.1) - 2022-04-18
