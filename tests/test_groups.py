@@ -24,6 +24,10 @@ params = mark.parametrize
         param({}, id="no-filter-kwargs"),
         param({"desc": "Double colons"}, id="filter-kwarg-desc"),
         param({"contexts": ["high"]}, id="ctx"),
+        param(
+            {"desc": "item", "projects": ["-test"]},
+            id="negative project match",
+        ),
     ],
 )
 def test_group_from_path(

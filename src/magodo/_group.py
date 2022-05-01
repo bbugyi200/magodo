@@ -147,7 +147,7 @@ class TodoGroup(Generic[T]):
                         skip_this_todo = True
                         break
 
-                    if prop not in todo_props:
+                    if not prop.startswith("-") and prop not in todo_props:
                         skip_this_todo = True
                         break
 

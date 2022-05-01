@@ -18,6 +18,24 @@
     "MagicTodo(desc='Double colons should be::ignored. | ctime:HHMM dtime:HHMM', create_date=1900-01-01, done_date=2022-02-07, metadata={'ctime': 'HHMM', 'dtime': 'HHMM'})",
   ])
 # ---
+# name: test_group_from_path[negative project match-bar]
+  list([
+    "MagicTodo(desc='Done item | ctime:HHMM dtime:HHMM', create_date=1900-01-01, done_date=2022-02-07, done=True, metadata={'ctime': 'HHMM', 'dtime': 'HHMM'}, priority='B')",
+    "MagicTodo(desc='First item. | ctime:HHMM dtime:HHMM', create_date=1900-01-01, done_date=2022-02-07, metadata={'ctime': 'HHMM', 'dtime': 'HHMM'}, priority='N')",
+    "MagicTodo(desc='High-priority item | @high ctime:HHMM dtime:HHMM', contexts=('high',), create_date=1900-01-01, done_date=2022-02-07, metadata={'ctime': 'HHMM', 'dtime': 'HHMM'}, priority='A')",
+    "MagicTodo(desc='Item is due:2022-01-31.', create_date=1900-01-01, done_date=2022-02-07, metadata={'ctime': 'HHMM', 'dtime': 'HHMM'}, priority='N')",
+  ])
+# ---
+# name: test_group_from_path[negative project match-foo]
+  list([
+    'MagicTodo(desc=\'Done item with no priority is a valid "strict" todo | ctime:HHMM dtime:HHMM\', create_date=1900-01-01, done_date=2022-02-07, done=True, metadata={\'ctime\': \'HHMM\', \'dtime\': \'HHMM\'})',
+    "MagicTodo(desc='Done item | ctime:HHMM dtime:HHMM', create_date=1900-01-01, done_date=2022-02-07, done=True, metadata={'ctime': 'HHMM', 'dtime': 'HHMM'}, priority='B')",
+    "MagicTodo(desc='First item. | ctime:HHMM dtime:HHMM', create_date=1900-01-01, done_date=2022-02-07, metadata={'ctime': 'HHMM', 'dtime': 'HHMM'}, priority='N')",
+    "MagicTodo(desc='High-priority item | @high ctime:HHMM dtime:HHMM', contexts=('high',), create_date=1900-01-01, done_date=2022-02-07, metadata={'ctime': 'HHMM', 'dtime': 'HHMM'}, priority='A')",
+    "MagicTodo(desc='High-priority item. | @high ctime:HHMM dtime:HHMM', contexts=('high',), create_date=1900-01-01, done_date=2022-02-07, metadata={'ctime': 'HHMM', 'dtime': 'HHMM'}, priority='A')",
+    "MagicTodo(desc='Item is due:2022-01-31.', create_date=1900-01-01, done_date=2022-02-07, metadata={'ctime': 'HHMM', 'dtime': 'HHMM'}, priority='N')",
+  ])
+# ---
 # name: test_group_from_path[no-filter-kwargs-bar]
   list([
     "MagicTodo(desc='And +finally... one:more!', create_date=1900-01-01, done_date=2022-02-07, metadata={'ctime': 'HHMM', 'dtime': 'HHMM'}, priority='C', projects=('finally',))",
