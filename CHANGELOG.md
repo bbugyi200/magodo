@@ -9,9 +9,16 @@ The format is based on [Keep a Changelog], and this project adheres to
 [Semantic Versioning]: https://semver.org/
 
 
-## [Unreleased](https://github.com/bbugyi200/magodo/compare/0.9.2...HEAD)
+## [Unreleased](https://github.com/bbugyi200/magodo/compare/0.9.3...HEAD)
 
 No notable changes have been made.
+
+
+## [0.9.3](https://github.com/bbugyi200/magodo/compare/0.9.2...0.9.3) - 2022-05-01
+
+### Fixed
+
+* Fix `TodoGroup.filter_by()` negative tag matches.
 
 
 ## [0.9.2](https://github.com/bbugyi200/magodo/compare/0.9.1...0.9.2) - 2022-04-30
