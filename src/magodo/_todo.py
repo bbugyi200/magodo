@@ -100,11 +100,12 @@ class TodoMixin(Generic[T], abc.ABC):
 
         return all(
             [
-                self.desc == other.desc,
                 self.contexts == other.contexts,
                 self.create_date == other.create_date,
-                self.done_date == other.done_date,
+                self.desc == other.desc,
                 self.done == other.done,
+                self.done_date == other.done_date,
+                self.epics == other.epics,
                 self.metadata == other.metadata,
                 self.priority == other.priority,
                 self.projects == other.projects,
