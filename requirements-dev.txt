@@ -10,7 +10,7 @@ alabaster==0.7.12
     # via sphinx
 arrow==1.2.2
     # via jinja2-time
-astroid==2.11.3
+astroid==2.11.5
     # via pylint
 attrs==21.4.0
     # via pytest
@@ -150,7 +150,7 @@ pyflakes==2.4.0
     # via flake8
 pygments==2.12.0
     # via sphinx
-pylint==2.13.7
+pylint==2.13.8
     # via -r requirements-dev.in
 pyparsing==3.0.8
     # via packaging
@@ -247,7 +247,7 @@ virtualenv==20.14.1
     # via tox
 wheel==0.37.1
     # via pip-tools
-wrapt==1.14.0
+wrapt==1.14.1
     # via astroid
 
 # The following packages are considered to be unsafe in a requirements file:
