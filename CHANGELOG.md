@@ -13,6 +13,10 @@ The format is based on [Keep a Changelog], and this project adheres to
 
 No notable changes have been made.
 
+### Fixed
+
+* Fix `Todo.__eq__` so we require epics to also be equal.
+
 
 ## [0.9.3](https://github.com/bbugyi200/magodo/compare/0.9.2...0.9.3) - 2022-05-01
 
