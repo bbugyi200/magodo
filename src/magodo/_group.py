@@ -6,7 +6,7 @@ from dataclasses import dataclass
 import datetime as dt
 from logging import Logger
 from pathlib import Path
-from typing import Container, Generic, Iterable, Iterator, Type
+from typing import Generic, Iterable, Iterator, Type
 
 from eris import Err
 from metaman import cname
