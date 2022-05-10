@@ -6,7 +6,7 @@ from dataclasses import dataclass
 import datetime as dt
 from logging import Logger
 from pathlib import Path
-from typing import Generic, Iterable, Iterator, Type
+from typing import Container, Generic, Iterable, Iterator, Type
 
 from eris import Err
 from metaman import cname
@@ -143,11 +143,15 @@ class TodoGroup(Generic[T]):
             ]:
                 todo_props = getattr(todo, attr)
                 for prop in desired_props:
-                    if prop.startswith("-") and prop[1:] in todo_props:
+                    if prop.startswith("-") and _has_property(
+                        todo_props, prop[1:]
+                    ):
                         skip_this_todo = True
                         break
 
-                    if not prop.startswith("-") and prop not in todo_props:
+                    if not prop.startswith("-") and not _has_property(
+                        todo_props, prop
+                    ):
                         skip_this_todo = True
                         break
 
@@ -189,3 +193,14 @@ class TodoGroup(Generic[T]):
             todo_map[key] = todo
 
         return TodoGroup(todos, todo_map, path_map)
+
+
+def _has_property(all_props: tuple[str], prop: str) -> bool:
+    if prop.endswith(".*"):
+        parent_prop = prop[:-2]
+        return any(
+            p == parent_prop or p.startswith(parent_prop + ".")
+            for p in all_props
+        )
+    else:
+        return prop in all_props
