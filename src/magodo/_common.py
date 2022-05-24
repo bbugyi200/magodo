@@ -37,13 +37,13 @@ def is_metadata_tag(word: str) -> bool:
     return bool(len(kv) == 2 and kv[1] and not kv[1].startswith(":"))
 
 
-def is_prefix_tag(prefix: str, word: str) -> bool:
-    """Predicate that tells us if a word is prefixed by `prefix`."""
-    return (
-        word.startswith(prefix)
-        and not word.startswith(prefix + prefix)
-        and len(prefix) < len(word)
-    )
+def is_prefix_tag(ch: str, word: str) -> bool:
+    """Predicate that tells us if a word is prefixed by `ch`.
+
+    Pre-Conditions:
+        * `ch` is only a single character.
+    """
+    return len(word) > 1 and word[0] == ch and word[1] != ch
 
 
 def is_context_tag(word: str) -> bool:
