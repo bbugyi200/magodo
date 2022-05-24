@@ -16,7 +16,3 @@ bolton-typist==0.2.0
     # via
     #   -r requirements.in
     #   bolton-eris
-
-# The following packages are considered to be unsafe in a requirements file:
-pip==22.1.1
-    # via -r requirements.in
