@@ -109,7 +109,7 @@ mccabe==0.6.1
     #   pylint
 mistune==0.8.4
     # via m2r2
-mypy==0.950
+mypy==0.960
     # via -r requirements-dev.in
 mypy-extensions==0.4.3
     # via
