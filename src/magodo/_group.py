@@ -187,12 +187,11 @@ class TodoGroup(Generic[T]):
                 (create_date_ranges, todo.create_date),
                 (done_date_ranges, todo.done_date),
             ]:
-                if not date_ranges:
+                if not date_ranges or date is None:
                     continue
 
                 if not any(
-                    date is not None
-                    and date_range.start
+                    date_range.start
                     <= date
                     <= (date_range.end or date_range.start)
                     for date_range in date_ranges
