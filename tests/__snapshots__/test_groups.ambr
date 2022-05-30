@@ -1,3 +1,13 @@
+# name: test_group_from_path[case-sensitive desc filter-bar]
+  list([
+    "MagicTodo(desc='Item is due:2022-01-31.', create_date=1900-01-01, done_date=2022-02-07, metadata={'ctime': 'HHMM', 'dtime': 'HHMM'}, priority='N')",
+  ])
+# ---
+# name: test_group_from_path[case-sensitive desc filter-foo]
+  list([
+    "MagicTodo(desc='Item is due:2022-01-31.', create_date=1900-01-01, done_date=2022-02-07, metadata={'ctime': 'HHMM', 'dtime': 'HHMM'}, priority='N')",
+  ])
+# ---
 # name: test_group_from_path[ctx-bar]
   list([
     "MagicTodo(desc='High-priority item | @high ctime:HHMM dtime:HHMM', contexts=('high',), create_date=1900-01-01, done_date=2022-02-07, metadata={'ctime': 'HHMM', 'dtime': 'HHMM'}, priority='A')",

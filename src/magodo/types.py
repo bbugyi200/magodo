@@ -64,7 +64,8 @@ TodoSpell = Callable[[T], T]
 # Type of spell that validates a todo line.
 ValidateSpell = Callable[[str], Result[None, ErisError]]
 
-MetadataFunc = Callable[[str], bool]
+SinglePredicate = Callable[[str], bool]
+DoublePredicate = Callable[[str, str], bool]
 
 
 @runtime_checkable

@@ -12,19 +12,28 @@ from eris import Err
 from metaman import cname
 from typist import PathLike
 
-from .types import MetadataFunc, Priority, T
+from .types import DoublePredicate, SinglePredicate, Priority, T
 
 
 logger = Logger(__name__)
 
 
-@dataclass
-class MetadataCheck:
-    """Wrapper for the MetadataFunc type."""
+@dataclass(frozen=True)
+class MetadataFilter:
+    """A specification for filtering on metadata."""
 
     key: str
-    check: MetadataFunc = lambda _: True
+    check: SinglePredicate = lambda _: True
     required: bool = True
+
+
+@dataclass(frozen=True)
+class DescFilter:
+    """A description filter specification."""
+
+    value: str
+    check: DoublePredicate = lambda x, y: x in y
+    case_sensitive: bool | None = None
 
 
 class TodoGroup(Generic[T]):
@@ -115,16 +124,16 @@ class TodoGroup(Generic[T]):
 
         return cls(todos, todo_map, path_map)
 
-    def filter_by(
+    def filter_by(  # noqa: C901
         self,
         *,
         contexts: Iterable[str] = (),
         create_date: dt.date = None,
-        desc: str = None,
+        desc_filters: Iterable[DescFilter] = (),
         done_date: dt.date = None,
         done: bool = None,
         epics: Iterable[str] = (),
-        metadata_checks: Iterable[MetadataCheck] = (),
+        metadata_filters: Iterable[MetadataFilter] = (),
         priorities: Iterable[Priority] = (),
         projects: Iterable[str] = (),
     ) -> TodoGroup:
@@ -161,8 +170,20 @@ class TodoGroup(Generic[T]):
             if create_date is not None and todo.create_date != create_date:
                 continue
 
-            if desc is not None and desc.lower() not in todo.desc.lower():
-                continue
+            for dfilter in desc_filters:
+                case_sensitive = dfilter.case_sensitive
+                if case_sensitive is None:
+                    case_sensitive = not bool(dfilter.value.islower())
+
+                desc = dfilter.value
+                todo_desc = todo.desc
+                if not case_sensitive:
+                    desc = desc.lower()
+                    todo_desc = todo_desc.lower()
+
+                if not dfilter.check(desc, todo_desc):
+                    skip_this_todo = True
+                    break
 
             if done_date is not None and todo.done_date != done_date:
                 continue
@@ -170,18 +191,18 @@ class TodoGroup(Generic[T]):
             if done is not None and todo.done != done:
                 continue
 
-            for mcheck in metadata_checks:
-                key_not_found = mcheck.key not in todo.metadata
-                if mcheck.required and key_not_found:
+            for mfilter in metadata_filters:
+                key_not_found = mfilter.key not in todo.metadata
+                if mfilter.required and key_not_found:
                     skip_this_todo = True
                     break
 
                 if key_not_found:
                     continue
 
-                mvalue = todo.metadata[mcheck.key]
+                mvalue = todo.metadata[mfilter.key]
                 assert isinstance(mvalue, str)
-                if not mcheck.check(mvalue):
+                if not mfilter.check(mvalue):
                     skip_this_todo = True
                     break
 
