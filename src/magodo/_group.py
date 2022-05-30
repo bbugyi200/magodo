@@ -12,6 +12,7 @@ from eris import Err
 from metaman import cname
 from typist import PathLike
 
+from ._common import to_date
 from .types import DoublePredicate, SinglePredicate, Priority, T
 
 
@@ -34,6 +35,21 @@ class DescFilter:
     value: str
     check: DoublePredicate = lambda x, y: x in y
     case_sensitive: bool | None = None
+
+
+@dataclass(frozen=True)
+class DateRange:
+    """Represents a range of dates."""
+
+    start: dt.date
+    end: dt.date | None = None
+
+    @classmethod
+    def from_strings(cls, start_str: str, end_str: str = None) -> DateRange:
+        """Constructs a DateRange from two strings."""
+        start = to_date(start_str)
+        end = to_date(end_str) if end_str else None
+        return cls(start, end)
 
 
 class TodoGroup(Generic[T]):
@@ -128,9 +144,9 @@ class TodoGroup(Generic[T]):
         self,
         *,
         contexts: Iterable[str] = (),
-        create_date: dt.date = None,
+        create_date_ranges: Iterable[DateRange] = (),
         desc_filters: Iterable[DescFilter] = (),
-        done_date: dt.date = None,
+        done_date_ranges: Iterable[DateRange] = (),
         done: bool = None,
         epics: Iterable[str] = (),
         metadata_filters: Iterable[MetadataFilter] = (),
@@ -167,8 +183,22 @@ class TodoGroup(Generic[T]):
             if priorities and todo.priority not in priorities:
                 continue
 
-            if create_date is not None and todo.create_date != create_date:
-                continue
+            for date_ranges, date in [
+                (create_date_ranges, todo.create_date),
+                (done_date_ranges, todo.done_date),
+            ]:
+                if not date_ranges:
+                    continue
+
+                if not any(
+                    date is not None
+                    and date_range.start
+                    <= date
+                    <= (date_range.end or date_range.start)
+                    for date_range in date_ranges
+                ):
+                    skip_this_todo = True
+                    break
 
             for dfilter in desc_filters:
                 case_sensitive = dfilter.case_sensitive
@@ -184,9 +214,6 @@ class TodoGroup(Generic[T]):
                 if not dfilter.check(desc, todo_desc):
                     skip_this_todo = True
                     break
-
-            if done_date is not None and todo.done_date != done_date:
-                continue
 
             if done is not None and todo.done != done:
                 continue

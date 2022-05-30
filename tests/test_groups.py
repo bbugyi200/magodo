@@ -8,7 +8,7 @@ from typing import Any
 from pytest import mark, param
 from syrupy.assertion import SnapshotAssertion as Snapshot
 
-from magodo import DescFilter, TodoGroup
+from magodo import DateRange, DescFilter, TodoGroup
 
 from .data import get_all_todo_paths
 from .shared import MOCK_TODO_KWARGS, MagicTodo
@@ -34,6 +34,27 @@ params = mark.parametrize
         param(
             {"desc_filters": [DescFilter("Item")], "projects": ["-test"]},
             id="case-sensitive desc filter",
+        ),
+        param(
+            {"create_date_ranges": [DateRange.from_strings("2022-01-11")]},
+            id="create date range",
+        ),
+        param(
+            {
+                "create_date_ranges": [
+                    DateRange.from_strings("2022-01-01", "2022-01-11")
+                ]
+            },
+            id="create date range (with end)",
+        ),
+        param(
+            {
+                "create_date_ranges": [
+                    DateRange.from_strings("2099-12-31"),
+                    DateRange.from_strings("2022-01-01", "2022-01-11")
+                ]
+            },
+            id="create date range (only one match needed)",
         ),
     ],
 )
