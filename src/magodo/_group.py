@@ -13,7 +13,7 @@ from metaman import cname
 from typist import PathLike
 
 from ._common import to_date
-from .types import DoublePredicate, SinglePredicate, Priority, T
+from .types import DoublePredicate, Priority, SinglePredicate, T
 
 
 logger = Logger(__name__)

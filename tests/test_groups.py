@@ -51,7 +51,7 @@ params = mark.parametrize
             {
                 "create_date_ranges": [
                     DateRange.from_strings("2099-12-31"),
-                    DateRange.from_strings("2022-01-01", "2022-01-11")
+                    DateRange.from_strings("2022-01-01", "2022-01-11"),
                 ]
             },
             id="create date range (only one match needed)",
