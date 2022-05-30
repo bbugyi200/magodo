@@ -9,9 +9,21 @@ The format is based on [Keep a Changelog], and this project adheres to
 [Semantic Versioning]: https://semver.org/
 
 
-## [Unreleased](https://github.com/bbugyi200/magodo/compare/0.9.5...HEAD)
+## [Unreleased](https://github.com/bbugyi200/magodo/compare/0.10.0...HEAD)
 
 No notable changes have been made.
+
+
+## [0.10.0](https://github.com/bbugyi200/magodo/compare/0.9.5...0.10.0) - 2022-05-30
+
+### Added
+
+* Support for filtering `TodoGroup`s using a date range.
+* Support for filtering `TodoGroup`s using a customizable description check.
+
+### Changed
+
+* *BREAKING CHANGE*: Renamed multiple variables and parameter names.
 
 
 ## [0.9.5](https://github.com/bbugyi200/magodo/compare/0.9.4...0.9.5) - 2022-05-10
