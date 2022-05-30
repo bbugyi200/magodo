@@ -1,3 +1,50 @@
+# name: test_group_from_path[case-sensitive desc filter-bar]
+  list([
+    "MagicTodo(desc='Item is due:2022-01-31.', create_date=1900-01-01, done_date=2022-02-07, metadata={'ctime': 'HHMM', 'dtime': 'HHMM'}, priority='N')",
+  ])
+# ---
+# name: test_group_from_path[case-sensitive desc filter-foo]
+  list([
+    "MagicTodo(desc='Item is due:2022-01-31.', create_date=1900-01-01, done_date=2022-02-07, metadata={'ctime': 'HHMM', 'dtime': 'HHMM'}, priority='N')",
+  ])
+# ---
+# name: test_group_from_path[create date range (only one match needed)-bar]
+  list([
+    "MagicTodo(desc='And +finally... one:more!', create_date=1900-01-01, done_date=2022-02-07, metadata={'ctime': 'HHMM', 'dtime': 'HHMM'}, priority='C', projects=('finally',))",
+    "MagicTodo(desc='Done item | ctime:HHMM dtime:HHMM', create_date=1900-01-01, done_date=2022-02-07, done=True, metadata={'ctime': 'HHMM', 'dtime': 'HHMM'}, priority='B')",
+    "MagicTodo(desc='Item is due:2022-01-31.', create_date=1900-01-01, done_date=2022-02-07, metadata={'ctime': 'HHMM', 'dtime': 'HHMM'}, priority='N')",
+  ])
+# ---
+# name: test_group_from_path[create date range (only one match needed)-foo]
+  list([
+    "MagicTodo(desc='Done item | ctime:HHMM dtime:HHMM', create_date=1900-01-01, done_date=2022-02-07, done=True, metadata={'ctime': 'HHMM', 'dtime': 'HHMM'}, priority='B')",
+    "MagicTodo(desc='Item is due:2022-01-31.', create_date=1900-01-01, done_date=2022-02-07, metadata={'ctime': 'HHMM', 'dtime': 'HHMM'}, priority='N')",
+  ])
+# ---
+# name: test_group_from_path[create date range (with end)-bar]
+  list([
+    "MagicTodo(desc='And +finally... one:more!', create_date=1900-01-01, done_date=2022-02-07, metadata={'ctime': 'HHMM', 'dtime': 'HHMM'}, priority='C', projects=('finally',))",
+    "MagicTodo(desc='Done item | ctime:HHMM dtime:HHMM', create_date=1900-01-01, done_date=2022-02-07, done=True, metadata={'ctime': 'HHMM', 'dtime': 'HHMM'}, priority='B')",
+    "MagicTodo(desc='Item is due:2022-01-31.', create_date=1900-01-01, done_date=2022-02-07, metadata={'ctime': 'HHMM', 'dtime': 'HHMM'}, priority='N')",
+  ])
+# ---
+# name: test_group_from_path[create date range (with end)-foo]
+  list([
+    "MagicTodo(desc='Done item | ctime:HHMM dtime:HHMM', create_date=1900-01-01, done_date=2022-02-07, done=True, metadata={'ctime': 'HHMM', 'dtime': 'HHMM'}, priority='B')",
+    "MagicTodo(desc='Item is due:2022-01-31.', create_date=1900-01-01, done_date=2022-02-07, metadata={'ctime': 'HHMM', 'dtime': 'HHMM'}, priority='N')",
+  ])
+# ---
+# name: test_group_from_path[create date range-bar]
+  list([
+    "MagicTodo(desc='And +finally... one:more!', create_date=1900-01-01, done_date=2022-02-07, metadata={'ctime': 'HHMM', 'dtime': 'HHMM'}, priority='C', projects=('finally',))",
+    "MagicTodo(desc='Item is due:2022-01-31.', create_date=1900-01-01, done_date=2022-02-07, metadata={'ctime': 'HHMM', 'dtime': 'HHMM'}, priority='N')",
+  ])
+# ---
+# name: test_group_from_path[create date range-foo]
+  list([
+    "MagicTodo(desc='Item is due:2022-01-31.', create_date=1900-01-01, done_date=2022-02-07, metadata={'ctime': 'HHMM', 'dtime': 'HHMM'}, priority='N')",
+  ])
+# ---
 # name: test_group_from_path[ctx-bar]
   list([
     "MagicTodo(desc='High-priority item | @high ctime:HHMM dtime:HHMM', contexts=('high',), create_date=1900-01-01, done_date=2022-02-07, metadata={'ctime': 'HHMM', 'dtime': 'HHMM'}, priority='A')",

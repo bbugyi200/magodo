@@ -12,19 +12,44 @@ from eris import Err
 from metaman import cname
 from typist import PathLike
 
-from .types import MetadataFunc, Priority, T
+from ._common import to_date
+from .types import DoublePredicate, Priority, SinglePredicate, T
 
 
 logger = Logger(__name__)
 
 
-@dataclass
-class MetadataCheck:
-    """Wrapper for the MetadataFunc type."""
+@dataclass(frozen=True)
+class MetadataFilter:
+    """A specification for filtering on metadata."""
 
     key: str
-    check: MetadataFunc = lambda _: True
+    check: SinglePredicate = lambda _: True
     required: bool = True
+
+
+@dataclass(frozen=True)
+class DescFilter:
+    """A description filter specification."""
+
+    value: str
+    check: DoublePredicate = lambda x, y: x in y
+    case_sensitive: bool | None = None
+
+
+@dataclass(frozen=True)
+class DateRange:
+    """Represents a range of dates."""
+
+    start: dt.date
+    end: dt.date | None = None
+
+    @classmethod
+    def from_strings(cls, start_str: str, end_str: str = None) -> DateRange:
+        """Constructs a DateRange from two strings."""
+        start = to_date(start_str)
+        end = to_date(end_str) if end_str else None
+        return cls(start, end)
 
 
 class TodoGroup(Generic[T]):
@@ -115,16 +140,16 @@ class TodoGroup(Generic[T]):
 
         return cls(todos, todo_map, path_map)
 
-    def filter_by(
+    def filter_by(  # noqa: C901
         self,
         *,
         contexts: Iterable[str] = (),
-        create_date: dt.date = None,
-        desc: str = None,
-        done_date: dt.date = None,
+        create_date_ranges: Iterable[DateRange] = (),
+        desc_filters: Iterable[DescFilter] = (),
+        done_date_ranges: Iterable[DateRange] = (),
         done: bool = None,
         epics: Iterable[str] = (),
-        metadata_checks: Iterable[MetadataCheck] = (),
+        metadata_filters: Iterable[MetadataFilter] = (),
         priorities: Iterable[Priority] = (),
         projects: Iterable[str] = (),
     ) -> TodoGroup:
@@ -158,30 +183,53 @@ class TodoGroup(Generic[T]):
             if priorities and todo.priority not in priorities:
                 continue
 
-            if create_date is not None and todo.create_date != create_date:
-                continue
+            for date_ranges, date in [
+                (create_date_ranges, todo.create_date),
+                (done_date_ranges, todo.done_date),
+            ]:
+                if not date_ranges:
+                    continue
 
-            if desc is not None and desc.lower() not in todo.desc.lower():
-                continue
+                if not any(
+                    date is not None
+                    and date_range.start
+                    <= date
+                    <= (date_range.end or date_range.start)
+                    for date_range in date_ranges
+                ):
+                    skip_this_todo = True
+                    break
 
-            if done_date is not None and todo.done_date != done_date:
-                continue
+            for dfilter in desc_filters:
+                case_sensitive = dfilter.case_sensitive
+                if case_sensitive is None:
+                    case_sensitive = not bool(dfilter.value.islower())
+
+                desc = dfilter.value
+                todo_desc = todo.desc
+                if not case_sensitive:
+                    desc = desc.lower()
+                    todo_desc = todo_desc.lower()
+
+                if not dfilter.check(desc, todo_desc):
+                    skip_this_todo = True
+                    break
 
             if done is not None and todo.done != done:
                 continue
 
-            for mcheck in metadata_checks:
-                key_not_found = mcheck.key not in todo.metadata
-                if mcheck.required and key_not_found:
+            for mfilter in metadata_filters:
+                key_not_found = mfilter.key not in todo.metadata
+                if mfilter.required and key_not_found:
                     skip_this_todo = True
                     break
 
                 if key_not_found:
                     continue
 
-                mvalue = todo.metadata[mcheck.key]
+                mvalue = todo.metadata[mfilter.key]
                 assert isinstance(mvalue, str)
-                if not mcheck.check(mvalue):
+                if not mfilter.check(mvalue):
                     skip_this_todo = True
                     break
 

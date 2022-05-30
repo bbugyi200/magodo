@@ -8,7 +8,7 @@ from typing import Any
 from pytest import mark, param
 from syrupy.assertion import SnapshotAssertion as Snapshot
 
-from magodo import TodoGroup
+from magodo import DateRange, DescFilter, TodoGroup
 
 from .data import get_all_todo_paths
 from .shared import MOCK_TODO_KWARGS, MagicTodo
@@ -22,11 +22,39 @@ params = mark.parametrize
     "filter_kwargs",
     [
         param({}, id="no-filter-kwargs"),
-        param({"desc": "Double colons"}, id="filter-kwarg-desc"),
+        param(
+            {"desc_filters": [DescFilter("Double colons")]},
+            id="filter-kwarg-desc",
+        ),
         param({"contexts": ["high"]}, id="ctx"),
         param(
-            {"desc": "item", "projects": ["-test"]},
+            {"desc_filters": [DescFilter("item")], "projects": ["-test"]},
             id="negative project match",
+        ),
+        param(
+            {"desc_filters": [DescFilter("Item")], "projects": ["-test"]},
+            id="case-sensitive desc filter",
+        ),
+        param(
+            {"create_date_ranges": [DateRange.from_strings("2022-01-11")]},
+            id="create date range",
+        ),
+        param(
+            {
+                "create_date_ranges": [
+                    DateRange.from_strings("2022-01-01", "2022-01-11")
+                ]
+            },
+            id="create date range (with end)",
+        ),
+        param(
+            {
+                "create_date_ranges": [
+                    DateRange.from_strings("2099-12-31"),
+                    DateRange.from_strings("2022-01-01", "2022-01-11"),
+                ]
+            },
+            id="create date range (only one match needed)",
         ),
     ],
 )
