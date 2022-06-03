@@ -9,9 +9,16 @@ The format is based on [Keep a Changelog], and this project adheres to
 [Semantic Versioning]: https://semver.org/
 
 
-## [Unreleased](https://github.com/bbugyi200/magodo/compare/0.10.0...HEAD)
+## [Unreleased](https://github.com/bbugyi200/magodo/compare/0.10.1...HEAD)
 
 No notable changes have been made.
+
+
+## [0.10.1](https://github.com/bbugyi200/magodo/compare/0.10.0...0.10.1) - 2022-06-03
+
+### Fixed
+
+* Always sort prefix tag tuples so Todo equality checks are not thrown off.
 
 
 ## [0.10.0](https://github.com/bbugyi200/magodo/compare/0.9.5...0.10.0) - 2022-05-30
