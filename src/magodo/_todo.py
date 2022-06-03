@@ -180,15 +180,15 @@ class Todo(TodoMixin):
         priority: Priority = DEFAULT_PRIORITY,
         projects: Tuple[str, ...] = (),
     ):
-        self.contexts = contexts
+        self.contexts = tuple(sorted(contexts))
         self.create_date = create_date
         self.desc = desc
         self.done_date = done_date
         self.done = done
-        self.epics = epics
+        self.epics = tuple(sorted(epics))
         self.metadata = metadata or {}
         self.priority = priority
-        self.projects = projects
+        self.projects = tuple(sorted(projects))
 
     @classmethod
     def from_line(cls, line: str) -> Result[Todo, ErisError]:
