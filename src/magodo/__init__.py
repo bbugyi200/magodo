@@ -2,7 +2,7 @@
 
 import logging as _logging
 
-from . import dates, spells, tags, types
+from . import dates, tags, types
 from ._common import DEFAULT_PRIORITY
 from ._magic import MagicTodoMixin
 from ._todo import Todo
@@ -13,7 +13,6 @@ __all__ = [
     "MagicTodoMixin",
     "Todo",
     "dates",
-    "spells",
     "tags",
     "types",
 ]
