@@ -2,24 +2,19 @@
 
 import logging as _logging
 
-from . import spells, types
-from ._common import DEFAULT_PRIORITY, from_date, to_date
-from ._group import DateRange, DescFilter, MetadataFilter, TodoGroup
+from . import dates, tags, types
+from ._common import DEFAULT_PRIORITY, PUNCTUATION
 from ._magic import MagicTodoMixin
 from ._todo import Todo
 
 
 __all__ = [
     "DEFAULT_PRIORITY",
-    "DateRange",
-    "DescFilter",
     "MagicTodoMixin",
-    "MetadataFilter",
+    "PUNCTUATION",
     "Todo",
-    "TodoGroup",
-    "from_date",
-    "spells",
-    "to_date",
+    "dates",
+    "tags",
     "types",
 ]
 

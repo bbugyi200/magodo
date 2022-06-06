@@ -110,7 +110,7 @@ class MagicTodoMixin(TodoMixin, abc.ABC):
         return self.todo.contexts
 
     @property
-    def create_date(self: M) -> dt.date | None:  # noqa: D102
+    def create_date(self: M) -> dt.date:  # noqa: D102
         return self.todo.create_date
 
     @property

@@ -14,21 +14,19 @@ import uuid
 from eris import ErisError, Err, Ok, Result
 from metaman import cname
 
-from ._common import (
+from ._common import DEFAULT_PRIORITY, PUNCTUATION
+from .dates import from_date, to_date
+from .tags import (
     CONTEXT_PREFIX,
-    DEFAULT_PRIORITY,
     EPIC_PREFIX,
     PROJECT_PREFIX,
-    PUNCTUATION,
-    RE_DATE,
-    from_date,
     is_metadata_tag,
     is_prefix_tag,
-    to_date,
 )
 from .types import Metadata, Priority, T
 
 
+RE_DATE: Final = r"[1-9][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9]"
 RE_TODO: Final = r"""
 (?P<x>x[ ]+)?                        # optional 'x'
 (?:\((?P<priority>[A-Z])\)[ ]+)?     # priority
@@ -91,9 +89,6 @@ class TodoMixin(Generic[T], abc.ABC):
 
         return f"{cname(self)}(desc={self.desc!r}{pretty_kwargs})"
 
-    def __hash__(self: T) -> int:  # noqa: D105
-        return hash(self.metadata.values())
-
     def __eq__(self: T, other: object) -> bool:  # noqa: D105
         if not isinstance(other, type(self)):  # pragma: no cover
             return False
@@ -133,8 +128,10 @@ class TodoMixin(Generic[T], abc.ABC):
         if self.done_date is not None and other.done_date is not None:
             if self.done_date != other.done_date:
                 return self.done_date < other.done_date
-            elif (self_dtime := self.metadata.get("dtime", None)) and (
-                other_dtime := other.metadata.get("dtime", None)
+            elif (
+                (self_dtime := self.metadata.get("dtime", None))
+                and (other_dtime := other.metadata.get("dtime", None))
+                and self_dtime != other_dtime
             ):
                 assert isinstance(self_dtime, str)
                 assert isinstance(other_dtime, str)
@@ -180,13 +177,32 @@ class Todo(TodoMixin):
         priority: Priority = DEFAULT_PRIORITY,
         projects: Tuple[str, ...] = (),
     ):
+        if create_date is None:
+            create_date = dt.date.today()
+
+        if metadata is None:
+            metadata = {}
+
+        if done and done_date is None:
+            done_date = dt.date.today()
+
+        time_keys = ["ctime"]
+        if done:
+            time_keys.append("dtime")
+
+        for key in time_keys:
+            if key not in metadata:
+                now = dt.datetime.now()
+                hhmm = f"{now.hour:0>2}{now.minute:0>2}"
+                metadata[key] = hhmm
+
         self.contexts = tuple(sorted(contexts))
         self.create_date = create_date
         self.desc = desc
         self.done_date = done_date
         self.done = done
         self.epics = tuple(sorted(epics))
-        self.metadata = metadata or {}
+        self.metadata = metadata
         self.priority = priority
         self.projects = tuple(sorted(projects))
 

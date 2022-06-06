@@ -1,17 +1,9 @@
 """Shared test utilities."""
 
 import datetime as dt
-from typing import List
 
 from magodo import MagicTodoMixin
-from magodo.spells import (
-    DEFAULT_POST_TODO_SPELLS,
-    DEFAULT_PRE_TODO_SPELLS,
-    DEFAULT_TODO_SPELLS,
-    add_o_prefix,
-    remove_o_prefix,
-)
-from magodo.types import AbstractTodo, LineSpell, TodoSpell
+from magodo.types import AbstractTodo
 
 
 CREATE_DATE = dt.datetime.strptime("1900-01-01", "%Y-%m-%d").date()
@@ -27,13 +19,6 @@ MOCK_TODO_KWARGS = {
 
 class MagicTodo(MagicTodoMixin):
     """The default MagicTodo class."""
-
-    pre_todo_spells: List[TodoSpell] = DEFAULT_PRE_TODO_SPELLS
-    todo_spells: List[TodoSpell] = DEFAULT_TODO_SPELLS
-    post_todo_spells: List[TodoSpell] = DEFAULT_POST_TODO_SPELLS
-
-    to_line_spells: List[LineSpell] = [add_o_prefix]
-    from_line_spells: List[LineSpell] = [remove_o_prefix]
 
 
 def assert_todos_equal(actual: AbstractTodo, expected: AbstractTodo) -> None:

@@ -9,9 +9,29 @@ The format is based on [Keep a Changelog], and this project adheres to
 [Semantic Versioning]: https://semver.org/
 
 
-## [Unreleased](https://github.com/bbugyi200/magodo/compare/0.10.1...HEAD)
+## [Unreleased](https://github.com/bbugyi200/magodo/compare/1.0.0...HEAD)
 
 No notable changes have been made.
+
+
+## [1.0.0](https://github.com/bbugyi200/magodo/compare/0.10.1....1.0.0) - 2022-06-06
+
+### Changed
+
+* Added logic to `Todo.__init__()` that ensures create/done dates and times always exist.
+* *BREAKING CHANGE*: Moved utility functions to `magodo.dates` and `magodo.tags` modules.
+
+### Removed
+
+* *BREAKING CHANGE*: Removed all default spells and `magodo.spells` module.
+
+### Fixed
+
+* Bug with sorting on 'dtime'.
+
+### Miscellaneous
+
+* First stable release! :)
 
 
 ## [0.10.1](https://github.com/bbugyi200/magodo/compare/0.10.0...0.10.1) - 2022-06-03

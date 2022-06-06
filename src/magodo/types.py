@@ -10,7 +10,6 @@ from typing import (
     Generic,
     List,
     Literal,
-    Optional,
     Protocol,
     Tuple,
     Type,
@@ -94,7 +93,7 @@ class AbstractTodo(Comparable, Protocol):
         """
 
     @property
-    def create_date(self) -> Optional[dt.date]:  # noqa: D102
+    def create_date(self) -> dt.date:  # noqa: D102
         """The date this todo was created."""
 
     @property
@@ -102,7 +101,7 @@ class AbstractTodo(Comparable, Protocol):
         """A description of this todo."""
 
     @property
-    def done_date(self) -> Optional[dt.date]:  # noqa: D102
+    def done_date(self) -> dt.date | None:  # noqa: D102
         """The date this todo was completed."""
 
     @property
