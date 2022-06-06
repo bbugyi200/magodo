@@ -130,8 +130,10 @@ class TodoMixin(Generic[T], abc.ABC):
         if self.done_date is not None and other.done_date is not None:
             if self.done_date != other.done_date:
                 return self.done_date < other.done_date
-            elif (self_dtime := self.metadata.get("dtime", None)) and (
-                other_dtime := other.metadata.get("dtime", None)
+            elif (
+                (self_dtime := self.metadata.get("dtime", None))
+                and (other_dtime := other.metadata.get("dtime", None))
+                and self_dtime != other_dtime
             ):
                 assert isinstance(self_dtime, str)
                 assert isinstance(other_dtime, str)
