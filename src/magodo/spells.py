@@ -92,23 +92,20 @@ def validate_prefix(line: str) -> ErisResult[None]:
 
 
 @todo_spell
-def x_tag(todo: T) -> T:
-    """Handles tags of the form x:1234 where 1234 is the current time."""
-    if todo.metadata is None or "x" not in todo.metadata:
+def add_dtime(todo: T) -> T:
+    """Ensures that all done Todos have a 'dtime' metatag."""
+    if not todo.done:
         return todo
 
-    if not todo.desc.startswith("x:"):
+    if "dtime" in todo.metadata:
         return todo
 
-    dtime = todo.metadata["x"]
-    if len(dtime) != 4:
-        return todo
+    metadata = dict(todo.metadata.items())
+    now = dt.datetime.now()
+    dtime = f"{now.hour:0>2}{now.minute:0>2}"
+    metadata["dtime"] = dtime
 
-    desc = " ".join(todo.desc.split(" ")[1:]) + f" dtime:{dtime}"
-
-    new_todo = todo.new(desc=desc, done=True)
-    line = new_todo.to_line()
-    return type(todo).from_line(line).unwrap()
+    return todo.new(metadata=metadata)
 
 
 @post_todo_spell
@@ -253,8 +250,7 @@ def add_x_prefix(line: str) -> str:
             dtime = word.split(":")[1]
             break
     else:
-        now = dt.datetime.now()
-        dtime = f"{now.hour:0>2}{now.minute:0>2}"
+        return line
 
     rest = " ".join(words)
     return f"x:{dtime} {rest}"
