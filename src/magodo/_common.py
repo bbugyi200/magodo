@@ -2,79 +2,9 @@
 
 from __future__ import annotations
 
-import datetime as dt
-from functools import lru_cache as cache
-from typing import Final, List, cast
-
-from typist import literal_to_list
+from typing import Final
 
 from .types import Priority
 
 
-CONTEXT_PREFIX: Final = "@"
-DATE_FMT: Final = "%Y-%m-%d"
 DEFAULT_PRIORITY: Final[Priority] = "O"
-EPIC_PREFIX: Final = "#"
-PROJECT_PREFIX: Final = "+"
-PUNCTUATION: Final = ",.?!;"
-RE_DATE: Final = r"[1-9][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9]"
-TODO_PREFIXES: Final = ("x ", "x:", "o ")
-
-
-def to_date(yyyymmdd: str) -> dt.date:
-    """Helper function for constructing a date object."""
-    return dt.datetime.strptime(yyyymmdd, DATE_FMT).date()
-
-
-def from_date(date: dt.date) -> str:
-    """Helper function for converting a date object to a string."""
-    return date.strftime(DATE_FMT)
-
-
-def is_metadata_tag(word: str) -> bool:
-    """Predicate that tells us if `word` is a metadata tag or not."""
-    kv = word.split(":", maxsplit=1)
-    return bool(len(kv) == 2 and kv[1] and not kv[1].startswith(":"))
-
-
-def is_prefix_tag(ch: str, word: str) -> bool:
-    """Predicate that tells us if a word is prefixed by `ch`.
-
-    Pre-Conditions:
-        * `ch` is only a single character.
-    """
-    return len(word) > 1 and word[0] == ch and word[1] != ch
-
-
-def is_context_tag(word: str) -> bool:
-    """Returns True if `word` is a context tag."""
-    return is_prefix_tag(CONTEXT_PREFIX, word)
-
-
-def is_project_tag(word: str) -> bool:
-    """Returns True if `word` is a project tag."""
-    return is_prefix_tag(PROJECT_PREFIX, word)
-
-
-def is_epic_tag(word: str) -> bool:
-    """Returns True if `word` is an epic tag."""
-    return is_prefix_tag(EPIC_PREFIX, word)
-
-
-def is_any_prefix_tag(word: str) -> bool:
-    """Returns True if `word` is either an epic, context, or project tag."""
-    return is_epic_tag(word) or is_context_tag(word) or is_project_tag(word)
-
-
-def is_any_tag(word: str) -> bool:
-    """Returns True if `word` is a project, context, or metadata."""
-    return is_any_prefix_tag(word) or is_metadata_tag(word)
-
-
-@cache
-def todo_prefixes() -> tuple[str, ...]:
-    """Returns all valid todo prefixes."""
-    result = list(TODO_PREFIXES)
-    for P in cast(List[str], literal_to_list(Priority)):
-        result.append(f"({P}) ")
-    return tuple(result)

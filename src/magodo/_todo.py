@@ -14,21 +14,20 @@ import uuid
 from eris import ErisError, Err, Ok, Result
 from metaman import cname
 
-from ._common import (
+from ._common import DEFAULT_PRIORITY
+from .dates import from_date, to_date
+from .tags import (
     CONTEXT_PREFIX,
-    DEFAULT_PRIORITY,
     EPIC_PREFIX,
     PROJECT_PREFIX,
-    PUNCTUATION,
-    RE_DATE,
-    from_date,
     is_metadata_tag,
     is_prefix_tag,
-    to_date,
 )
 from .types import Metadata, Priority, T
 
 
+PUNCTUATION: Final = ",.?!;"
+RE_DATE: Final = r"[1-9][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9]"
 RE_TODO: Final = r"""
 (?P<x>x[ ]+)?                        # optional 'x'
 (?:\((?P<priority>[A-Z])\)[ ]+)?     # priority

@@ -7,7 +7,7 @@ from typing import Sequence, cast
 from pytest import mark
 
 from magodo import DEFAULT_PRIORITY, Todo
-from magodo._common import to_date
+from magodo.dates import to_date
 from magodo.types import AbstractTodo
 
 from .shared import MOCK_TODO_KWARGS, MagicTodo, assert_todos_equal
@@ -95,29 +95,6 @@ params = mark.parametrize
                 desc="x:1030 2022-01-12 Some done todo with a @ctx.",
                 contexts=("ctx",),
                 metadata={"x": "1030"},
-            ),
-        ),
-        (
-            "o +regression @test Do +duplicate +duplicate @keys @keys foo:FOO"
-            " foo:bar foo:baz foo:boom bar:BAR still show when they should be"
-            " ignored?",
-            MagicTodo(
-                Todo(
-                    desc=(
-                        "Do duplicate duplicate keys keys still show when"
-                        " they should be ignored? | @keys @test +duplicate"
-                        " +regression bar:BAR foo:FOO"
-                    ),
-                    contexts=(
-                        "test",
-                        "keys",
-                    ),
-                    projects=(
-                        "regression",
-                        "duplicate",
-                    ),
-                    metadata={"foo": "FOO", "bar": "BAR"},
-                )
             ),
         ),
     ],
