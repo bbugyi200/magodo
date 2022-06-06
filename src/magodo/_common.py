@@ -8,3 +8,4 @@ from .types import Priority
 
 
 DEFAULT_PRIORITY: Final[Priority] = "O"
+PUNCTUATION: Final = ",.?!;"

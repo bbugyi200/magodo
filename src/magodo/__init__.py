@@ -3,7 +3,7 @@
 import logging as _logging
 
 from . import dates, tags, types
-from ._common import DEFAULT_PRIORITY
+from ._common import DEFAULT_PRIORITY, PUNCTUATION
 from ._magic import MagicTodoMixin
 from ._todo import Todo
 
@@ -11,6 +11,7 @@ from ._todo import Todo
 __all__ = [
     "DEFAULT_PRIORITY",
     "MagicTodoMixin",
+    "PUNCTUATION",
     "Todo",
     "dates",
     "tags",

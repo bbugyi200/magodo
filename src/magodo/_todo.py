@@ -14,7 +14,7 @@ import uuid
 from eris import ErisError, Err, Ok, Result
 from metaman import cname
 
-from ._common import DEFAULT_PRIORITY
+from ._common import DEFAULT_PRIORITY, PUNCTUATION
 from .dates import from_date, to_date
 from .tags import (
     CONTEXT_PREFIX,
@@ -26,7 +26,6 @@ from .tags import (
 from .types import Metadata, Priority, T
 
 
-PUNCTUATION: Final = ",.?!;"
 RE_DATE: Final = r"[1-9][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9]"
 RE_TODO: Final = r"""
 (?P<x>x[ ]+)?                        # optional 'x'
