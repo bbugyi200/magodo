@@ -91,9 +91,6 @@ class TodoMixin(Generic[T], abc.ABC):
 
         return f"{cname(self)}(desc={self.desc!r}{pretty_kwargs})"
 
-    def __hash__(self: T) -> int:  # noqa: D105
-        return hash(self.metadata.values())
-
     def __eq__(self: T, other: object) -> bool:  # noqa: D105
         if not isinstance(other, type(self)):  # pragma: no cover
             return False
