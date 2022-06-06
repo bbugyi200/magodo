@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import datetime as dt
 from typing import Callable, Final, Iterable, List, MutableSequence
 
 from eris import ErisResult, Err, Ok
@@ -91,23 +90,6 @@ def validate_prefix(line: str) -> ErisResult[None]:
     return Ok(None)
 
 
-@todo_spell
-def add_dtime(todo: T) -> T:
-    """Ensures that all done Todos have a 'dtime' metatag."""
-    if not todo.done:
-        return todo
-
-    if "dtime" in todo.metadata:
-        return todo
-
-    metadata = dict(todo.metadata.items())
-    now = dt.datetime.now()
-    dtime = f"{now.hour:0>2}{now.minute:0>2}"
-    metadata["dtime"] = dtime
-
-    return todo.new(metadata=metadata)
-
-
 @post_todo_spell
 def group_tags(todo: T) -> T:
     """Spell that organizes Todo tags by grouping them at the end.
@@ -180,43 +162,6 @@ def group_tags(todo: T) -> T:
         space = " "
 
     return todo.new(desc=desc)
-
-
-@todo_spell
-def add_create_date(todo: T) -> T:
-    """Adds today's date as the create date for this Todo."""
-    if todo.create_date is not None:
-        return todo
-
-    today = dt.date.today()
-    return todo.new(create_date=today)
-
-
-@todo_spell
-def add_done_date(todo: T) -> T:
-    """Adds today's date as the done date for this Todo (if done)."""
-    if todo.done_date is not None:
-        return todo
-
-    if not todo.done:
-        return todo
-
-    today = dt.date.today()
-    return todo.new(done_date=today)
-
-
-@todo_spell
-def add_ctime(todo: T) -> T:
-    """Adds creation time to T via the 'ctime' metadata tag."""
-    if "ctime" in todo.metadata:
-        return todo
-
-    now = dt.datetime.now()
-
-    metadata = dict(todo.metadata)
-    metadata["ctime"] = f"{now.hour:0>2}{now.minute:0>2}"
-
-    return todo.new(metadata=metadata)
 
 
 @to_line_spell

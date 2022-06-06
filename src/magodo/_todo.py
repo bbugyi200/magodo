@@ -177,13 +177,32 @@ class Todo(TodoMixin):
         priority: Priority = DEFAULT_PRIORITY,
         projects: Tuple[str, ...] = (),
     ):
+        if create_date is None:
+            create_date = dt.date.today()
+
+        if metadata is None:
+            metadata = {}
+
+        if done and done_date is None:
+            done_date = dt.date.today()
+
+        time_keys = ["ctime"]
+        if done:
+            time_keys.append("dtime")
+
+        for key in time_keys:
+            if key not in metadata:
+                now = dt.datetime.now()
+                hhmm = f"{now.hour:0>2}{now.minute:0>2}"
+                metadata[key] = hhmm
+
         self.contexts = tuple(sorted(contexts))
         self.create_date = create_date
         self.desc = desc
         self.done_date = done_date
         self.done = done
         self.epics = tuple(sorted(epics))
-        self.metadata = metadata or {}
+        self.metadata = metadata
         self.priority = priority
         self.projects = tuple(sorted(projects))
 
