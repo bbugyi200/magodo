@@ -12,5 +12,6 @@ Submodules
 .. toctree::
    :maxdepth: 4
 
-   magodo.spells
+   magodo.dates
+   magodo.tags
    magodo.types
