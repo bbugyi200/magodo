@@ -11,7 +11,7 @@ from typing import Any, List, Tuple, Type, TypeVar
 from eris import ErisError, Err, Ok, Result
 
 from ._todo import Todo, TodoMixin
-from .types import LineSpell, Metadata, Priority, TodoSpell, ValidateSpell
+from .types import LineSpell, Metadata, Priority, TodoSpell
 
 
 M = TypeVar("M", bound="MagicTodoMixin")
@@ -28,8 +28,6 @@ class MagicTodoMixin(TodoMixin, abc.ABC):
     to_line_spells: List[LineSpell] = []
     from_line_spells: List[LineSpell] = []
 
-    validate_spells: List[ValidateSpell] = []
-
     def __init__(self: M, todo: Todo):
         self._todo = todo
         self.todo = self.cast_todo_spells(todo)
@@ -37,16 +35,10 @@ class MagicTodoMixin(TodoMixin, abc.ABC):
     @classmethod
     def from_line(cls: Type[M], line: str) -> Result[M, ErisError]:
         """Converts a string into a MagicTodo object."""
-        err: Err[Any, ErisError]
-        if error := cls.cast_validate_spells(line).err():
-            err = Err(f"Failed spell validation for this todo: line={line!r}")
-            return err.chain(error)
-
         line = cls.cast_from_line_spells(line)
         todo_result = Todo.from_line(line)
-
         if isinstance(todo_result, Err):
-            err = Err(
+            err: Err[Any, ErisError] = Err(
                 "Failed to construct basic Todo object inside of MagicTodo."
             )
             return err.chain(todo_result)
@@ -84,22 +76,6 @@ class MagicTodoMixin(TodoMixin, abc.ABC):
         for line_spell in self.to_line_spells:
             line = line_spell(line)
         return line
-
-    @classmethod
-    def cast_validate_spells(
-        cls: Type[M], line: str
-    ) -> Result[None, ErisError]:
-        """Casts all spells associated with this MagicTodo on `todo`."""
-        for validate_spell in cls.validate_spells:
-            new_todo_result = validate_spell(line)
-            if isinstance(new_todo_result, Err):
-                err: Err[Any, ErisError] = Err(
-                    f"The {validate_spell.__name__!r} validation spell failed"
-                    " while attempting to validate this line."
-                )
-                return err.chain(new_todo_result)
-
-        return Ok(None)
 
     def new(self: M, **kwargs: Any) -> M:
         """Creates a new Todo using the current Todo's attrs as defaults."""

@@ -60,8 +60,6 @@ Priority = Literal[
 LineSpell = Callable[[str], str]
 # Type of spell functions used by MagicTodo objects.
 TodoSpell = Callable[[T], T]
-# Type of spell that validates a todo line.
-ValidateSpell = Callable[[str], Result[None, ErisError]]
 
 SinglePredicate = Callable[[str], bool]
 DoublePredicate = Callable[[str, str], bool]
@@ -143,7 +141,6 @@ class AbstractMagicTodo(AbstractTodo, Protocol, Generic[T]):
     pre_todo_spells: List[TodoSpell]
     todo_spells: List[TodoSpell]
     post_todo_spells: List[TodoSpell]
-    validate_spells: List[ValidateSpell]
 
     def __init__(self, todo: T) -> None:
         pass
