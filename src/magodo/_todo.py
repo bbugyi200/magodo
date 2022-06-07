@@ -133,8 +133,6 @@ class TodoMixin(Generic[T], abc.ABC):
                 and (other_dtime := other.metadata.get("dtime", None))
                 and self_dtime != other_dtime
             ):
-                assert isinstance(self_dtime, str)
-                assert isinstance(other_dtime, str)
                 return self_dtime < other_dtime
 
         if self.create_date and other.create_date:
@@ -144,8 +142,6 @@ class TodoMixin(Generic[T], abc.ABC):
                     and (other_ctime := other.metadata.get("ctime", None))
                     and self_ctime != other_ctime
                 ):
-                    assert isinstance(self_ctime, str)
-                    assert isinstance(other_ctime, str)
                     return self_ctime < other_ctime
             else:
                 return self.create_date < other.create_date
@@ -153,8 +149,6 @@ class TodoMixin(Generic[T], abc.ABC):
         if (self_id := self.metadata.get("id", None)) and (
             other_id := other.metadata.get("id", None)
         ):
-            assert isinstance(self_id, str)
-            assert isinstance(other_id, str)
             return self_id < other_id
 
         return self.desc < other.desc
