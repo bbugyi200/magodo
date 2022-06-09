@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import string
 from typing import Final
 
 
@@ -9,11 +10,40 @@ CONTEXT_PREFIX: Final = "@"
 EPIC_PREFIX: Final = "#"
 PROJECT_PREFIX: Final = "+"
 
+# valid todo metatag keys
+_VALID_KEY_CHARS: Final = string.ascii_letters + string.digits + "_-"
+
 
 def is_metadata_tag(word: str) -> bool:
-    """Predicate that tells us if `word` is a metadata tag or not."""
+    """Predicate that tells us if `word` is a metadata tag or not.
+
+    Examples:
+        >>> is_metadata_tag("key:value")
+        True
+
+        >>> is_metadata_tag("key::value")
+        False
+
+        >>> is_metadata_tag("'key:value'")
+        False
+
+        >>> is_metadata_tag("key234me:value")
+        True
+
+        >>> is_metadata_tag("key_23_for_me:value")
+        True
+
+        >>> is_metadata_tag("key-23-for-me:value")
+        True
+    """
     kv = word.split(":", maxsplit=1)
-    return bool(len(kv) == 2 and kv[1] and not kv[1].startswith(":"))
+    value_exists = bool(len(kv) == 2 and kv[1])
+
+    # break out 'key
+    key, value = kv if value_exists else ("", "")
+    no_double_colons = bool(not value.startswith(":"))
+    key_is_valid = all(ch in _VALID_KEY_CHARS for ch in key)
+    return value_exists and no_double_colons and key_is_valid
 
 
 def is_prefix_tag(ch: str, word: str) -> bool:
