@@ -9,9 +9,16 @@ The format is based on [Keep a Changelog], and this project adheres to
 [Semantic Versioning]: https://semver.org/
 
 
-## [Unreleased](https://github.com/bbugyi200/magodo/compare/1.1.0...HEAD)
+## [Unreleased](https://github.com/bbugyi200/magodo/compare/1.1.1...HEAD)
 
 No notable changes have been made.
+
+
+## [1.1.1](https://github.com/bbugyi200/magodo/compare/1.1.0....1.1.1) - 2022-06-09
+
+### Fixed
+
+* Fix metatag bug that required spaces in-between colons.
 
 
 ## [1.1.0](https://github.com/bbugyi200/magodo/compare/1.0.0....1.1.0) - 2022-06-06
