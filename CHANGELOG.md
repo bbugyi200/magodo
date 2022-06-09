@@ -62,7 +62,7 @@ No notable changes have been made.
 
 ## [0.9.5](https://github.com/bbugyi200/magodo/compare/0.9.4...0.9.5) - 2022-05-10
 
-### Add
+### Added
 
 * Add support for wildcard tag filters (i.e. filter values with '.*' postfix).
 
@@ -90,7 +90,7 @@ No notable changes have been made.
 
 ## [0.9.1](https://github.com/bbugyi200/magodo/compare/0.9.0...0.9.1) - 2022-04-18
 
-### Add
+### Added
 
 * Added support for epics which are prefixed with a '#' instead of a '+'
   (projects) or '@' (contexts).
@@ -98,7 +98,7 @@ No notable changes have been made.
 
 ## [0.9.0](https://github.com/bbugyi200/magodo/compare/0.8.5...0.9.0) - 2022-02-26
 
-### Add
+### Added
 
 * Add `magodo.MetadataCheck` to API.
 
