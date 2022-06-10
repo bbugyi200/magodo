@@ -3,7 +3,7 @@
 import datetime as dt
 
 from magodo import MagicTodoMixin
-from magodo.types import AbstractTodo
+from magodo.types import TodoProto
 
 
 CREATE_DATE = dt.datetime.strptime("1900-01-01", "%Y-%m-%d").date()

@@ -8,7 +8,7 @@ from pytest import mark
 
 from magodo import DEFAULT_PRIORITY, Todo
 from magodo.dates import to_date
-from magodo.types import AbstractTodo
+from magodo.types import TodoProto
 
 from .shared import MOCK_TODO_KWARGS, MagicTodo, assert_todos_equal
 
@@ -99,7 +99,7 @@ params = mark.parametrize
         ),
     ],
 )
-def test_todo(line: str, expected_todo: AbstractTodo) -> None:
+def test_todo(line: str, expected_todo: TodoProto) -> None:
     """Test the Todo type."""
     actual = cast(MagicTodo, type(expected_todo).from_line(line).unwrap())
 

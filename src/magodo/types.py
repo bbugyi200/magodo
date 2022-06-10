@@ -4,24 +4,24 @@ from __future__ import annotations
 
 import datetime as dt
 from typing import (
-    Any,
-    Callable,
-    Dict,
-    Generic,
-    List,
-    Literal,
-    Protocol,
-    Tuple,
-    Type,
-    TypeVar,
-    runtime_checkable,
-)
-
-from eris import ErisError, Result
-from typist import Comparable
 
 
-# Type Variables (i.e. `TypeVar`s)
+CREATE_DATE = dt.datetime.strptime("1900-01-01", "%Y-%m-%d").date()
+DONE_DATE = dt.datetime.strptime("2022-02-07", "%Y-%m-%d").date()
+METADATA = {"ctime": "HHMM", "dtime": "HHMM"}
+
+MOCK_TODO_KWARGS = {
+    "metadata": METADATA,
+    "create_date": CREATE_DATE,
+    "done_date": DONE_DATE,
+}
+
+
+class MagicTodo(MagicTodoMixin):
+    """The default MagicTodo class."""
+
+
+def assert_todos_equal(actual: TodoProto, expected: TodoProto) -> None:
 T = TypeVar("T", bound="AbstractTodo")
 
 # Type of the Todo.metadata attribute.
@@ -66,7 +66,7 @@ DoublePredicate = Callable[[str, str], bool]
 
 
 @runtime_checkable
-class AbstractTodo(Comparable, Protocol):
+class TodoProto(Comparable, Protocol):
     """Describes how any valid Todo object should look."""
 
     @property
@@ -133,7 +133,7 @@ class AbstractTodo(Comparable, Protocol):
 
 
 @runtime_checkable
-class AbstractMagicTodo(AbstractTodo, Protocol, Generic[T]):
+class AbstractMagicTodo(TodoProto, Protocol, Generic[T]):
     """Describes how subclasses of MagicTodoMixin should look."""
 
     to_line_spells: List[LineSpell]
