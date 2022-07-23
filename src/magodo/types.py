@@ -2,27 +2,24 @@
 
 from __future__ import annotations
 
+from dataclasses import dataclass
 import datetime as dt
 from typing import (
+    Any,
+    Callable,
+    Dict,
+    Generic,
+    Literal,
+    Protocol,
+    Tuple,
+    Type,
+    TypeVar,
+    runtime_checkable,
+)
 
+from eris import ErisError, Result
+from typist import Comparable
 
-CREATE_DATE = dt.datetime.strptime("1900-01-01", "%Y-%m-%d").date()
-DONE_DATE = dt.datetime.strptime("2022-02-07", "%Y-%m-%d").date()
-METADATA = {"ctime": "HHMM", "dtime": "HHMM"}
-
-MOCK_TODO_KWARGS = {
-    "metadata": METADATA,
-    "create_date": CREATE_DATE,
-    "done_date": DONE_DATE,
-}
-
-
-class MagicTodo(MagicTodoMixin):
-    """The default MagicTodo class."""
-
-
-def assert_todos_equal(actual: TodoProto, expected: TodoProto) -> None:
-T = TypeVar("T", bound="AbstractTodo")
 
 # Type of the Todo.metadata attribute.
 Metadata = Dict[str, str]
@@ -58,16 +55,17 @@ Priority = Literal[
 
 # Type of a spell function which transforms a line (i.e. a str).
 LineSpell = Callable[[str], str]
-# Type of spell functions used by MagicTodo objects.
-TodoSpell = Callable[[T], T]
 
-SinglePredicate = Callable[[str], bool]
-DoublePredicate = Callable[[str, str], bool]
+# Type Variables (i.e. `TypeVar`s)
+T = TypeVar("T", bound="TodoProto")
 
 
 @runtime_checkable
-class TodoProto(Comparable, Protocol):
+class TodoProto(Comparable, Protocol, Generic[T]):
     """Describes how any valid Todo object should look."""
+
+    def __init__(self, **kwargs: Any) -> None:
+        """DOCSTRING."""
 
     @property
     def ident(self) -> str:
@@ -84,7 +82,7 @@ class TodoProto(Comparable, Protocol):
         """Creates a new Todo using the current Todo's attrs as defaults."""
 
     @property
-    def contexts(self) -> Tuple[str, ...]:  # noqa: D102
+    def contexts(self) -> Tuple[str, ...]:
         """A todo's contexts.
 
         A word is normally marked as a context by prefixing it with '@'.
@@ -132,30 +130,18 @@ class TodoProto(Comparable, Protocol):
         """
 
 
-@runtime_checkable
-class AbstractMagicTodo(TodoProto, Protocol, Generic[T]):
-    """Describes how subclasses of MagicTodoMixin should look."""
+@dataclass
+class EnchantedTodo(Generic[T]):
+    """Return type for Todo spells.
 
-    to_line_spells: List[LineSpell]
-    from_line_spells: List[LineSpell]
-    pre_todo_spells: List[TodoSpell]
-    todo_spells: List[TodoSpell]
-    post_todo_spells: List[TodoSpell]
+    Attributes:
+        changed: Has any spell changed this todo?
+        todo: The possibly modified todo after casting spells on it.
+    """
 
-    def __init__(self, todo: T) -> None:
-        pass
+    todo: T
+    changed: bool = False
 
-    @classmethod
-    def cast_todo_spells(cls, todo: T) -> Result[T, ErisError]:
-        """Casts all spells associated with this MagicTodo on `todo`."""
 
-    @classmethod
-    def cast_from_line_spells(cls, line: str) -> str:
-        """Casts all from_line spells on `line`."""
-
-    def cast_to_line_spells(self, line: str) -> str:
-        """Casts all to_line spells on `line`."""
-
-    @property
-    def todo(self) -> T:
-        """The raw Todo object used by this MagicTodo."""
+# Type of spell functions used by MagicTodo objects.
+TodoSpell = Callable[[T], EnchantedTodo[T]]

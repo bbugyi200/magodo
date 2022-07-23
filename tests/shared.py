@@ -21,7 +21,7 @@ class MagicTodo(MagicTodoMixin):
     """The default MagicTodo class."""
 
 
-def assert_todos_equal(actual: AbstractTodo, expected: AbstractTodo) -> None:
+def assert_todos_equal(actual: TodoProto, expected: TodoProto) -> None:
     """Helper function for asserting that one Todo is equal to another."""
     assert (
         actual.desc == expected.desc

@@ -6,12 +6,14 @@ import abc
 import datetime as dt
 from functools import total_ordering
 import itertools as it
-from typing import Any, List, Tuple, Type, TypeVar
+from typing import Any, Iterable, List, Tuple, Type, TypeVar
 
 from eris import ErisError, Err, Ok, Result
 
+from magodo.types import T
+
 from ._todo import Todo, TodoMixin
-from .types import LineSpell, Metadata, Priority, TodoSpell
+from .types import EnchantedTodo, LineSpell, Metadata, Priority, TodoSpell
 
 
 M = TypeVar("M", bound="MagicTodoMixin")
@@ -30,7 +32,7 @@ class MagicTodoMixin(TodoMixin, abc.ABC):
 
     def __init__(self: M, todo: Todo):
         self._todo = todo
-        self.todo = self.cast_todo_spells(todo)
+        self.etodo = self.cast_todo_spells(todo)
 
     @classmethod
     def from_line(cls: Type[M], line: str) -> Result[M, ErisError]:
@@ -49,17 +51,18 @@ class MagicTodoMixin(TodoMixin, abc.ABC):
 
     def to_line(self: M) -> str:
         """Converts this MagicTodo back to a string."""
-        line = self.todo.to_line()
+        line = self.etodo.todo.to_line()
         line = self.cast_to_line_spells(line)
         return line
 
     @classmethod
-    def cast_todo_spells(cls: Type[M], todo: Todo) -> Todo:
+    def cast_todo_spells(cls: Type[M], todo: T) -> EnchantedTodo[T]:
         """Casts all spells associated with this MagicTodo on `todo`."""
-        new_todo = todo.new()
-        for todo_spell in it.chain(
+        new_todo = EnchantedTodo(todo.new())
+        todo_spell_chain: Iterable[TodoSpell] = it.chain(
             cls.pre_todo_spells, cls.todo_spells, cls.post_todo_spells
-        ):
+        )
+        for todo_spell in todo_spell_chain:
             new_todo = todo_spell(new_todo)
 
         return new_todo
@@ -79,40 +82,40 @@ class MagicTodoMixin(TodoMixin, abc.ABC):
 
     def new(self: M, **kwargs: Any) -> M:
         """Creates a new Todo using the current Todo's attrs as defaults."""
-        return type(self)(self.todo.new(**kwargs))
+        return type(self)(self.etodo.todo.new(**kwargs))
 
     @property
     def contexts(self: M) -> Tuple[str, ...]:  # noqa: D102
-        return self.todo.contexts
+        return self.etodo.todo.contexts
 
     @property
     def create_date(self: M) -> dt.date:  # noqa: D102
-        return self.todo.create_date
+        return self.etodo.todo.create_date
 
     @property
     def desc(self: M) -> str:  # noqa: D102
-        return self.todo.desc
+        return self.etodo.todo.desc
 
     @property
     def done_date(self: M) -> dt.date | None:  # noqa: D102
-        return self.todo.done_date
+        return self.etodo.todo.done_date
 
     @property
     def done(self: M) -> bool:  # noqa: D102
-        return self.todo.done
+        return self.etodo.todo.done
 
     @property
     def epics(self: M) -> Tuple[str, ...]:  # noqa: D102
-        return self.todo.epics
+        return self.etodo.todo.epics
 
     @property
     def metadata(self: M) -> Metadata:  # noqa: D102
-        return self.todo.metadata
+        return self.etodo.todo.metadata
 
     @property
     def priority(self: M) -> Priority:  # noqa: D102
-        return self.todo.priority
+        return self.etodo.todo.priority
 
     @property
     def projects(self: M) -> Tuple[str, ...]:  # noqa: D102
-        return self.todo.projects
+        return self.etodo.todo.projects
