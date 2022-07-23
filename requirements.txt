@@ -8,7 +8,7 @@ bolton-eris==0.2.3
     # via -r requirements.in
 bolton-ion==0.1.0
     # via bolton-eris
-bolton-metaman==0.1.1
+bolton-metaman==0.1.2
     # via
     #   -r requirements.in
     #   bolton-eris
